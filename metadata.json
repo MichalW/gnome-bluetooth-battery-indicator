@@ -1,0 +1,8 @@
+{
+  "name": "Bluetooth battery",
+  "description": "Bluetooth battery indicator",
+  "uuid": "bluetooth-battery@michalw.github.com",
+  "shell-version": [
+    "3.38"
+  ]
+}
