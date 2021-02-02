@@ -146,7 +146,12 @@ const SettingsWidget = GObject.registerClass(
                 });
             });
 
-            return switchButton;
+            const vBox = new Gtk.Box({
+                orientation: Gtk.Orientation.VERTICAL,
+            });
+
+            vBox.pack_start(switchButton, true, false, 0);
+            return vBox;
         }
     }
 );

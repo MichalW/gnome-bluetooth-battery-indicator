@@ -7,9 +7,9 @@ const { GLib, Gio } = imports.gi;
 const Me = ExtensionUtils.getCurrentExtension();
 const { isCmdFound } = Me.imports.utils;
 const { BluetoothController } = Me.imports.bluetooth;
+const { GETTEXT_DOMAIN } = Me.imports.constants;
 const { IndicatorController } = Me.imports.indicator;
 const { SettingsController } = Me.imports.settings;
-const { GETTEXT_DOMAIN } = Me.imports.constants;
 
 const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
@@ -75,17 +75,12 @@ class Extension {
     }
 
     _setNewDevices(devices) {
-        const settingsDevices = this._settings.getDevices();
-        const newDevices = devices.filter(({ mac }) =>
-            !settingsDevices.some((device) => device.mac === mac)
-        );
-
-        if (newDevices.length) {
-            this._settings.setDevices([
-                ...settingsDevices,
-                ...newDevices,
-            ]);
-        }
+        this._settings.setDevices([
+            ...devices.map((device) => ({
+                ...device,
+                ...this._settings.getDevice(device.mac),
+            }))
+        ]);
     }
 
     _getBatteryLevel(btMacAddress, index) {

@@ -24,6 +24,11 @@ var SettingsController = class SettingsController {
         return this._settings.get_strv(DEVICES_KEY).map(JSON.parse);
     }
 
+    getDevice(mac) {
+        const devices = this.getDevices();
+        return devices.find((device) => device.mac === mac);
+    }
+
     getActiveDevices() {
         return this.getDevices().filter(({ active }) => active);
     }

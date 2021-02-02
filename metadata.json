@@ -1,5 +1,5 @@
 {
-  "name": "Bluetooth battery",
+  "name": "Bluetooth battery indicator",
   "description": "Bluetooth battery indicator",
   "uuid": "bluetooth-battery@michalw.github.com",
   "url": "https://github.com/MichalW/gnome-bluetooth-battery-indicator",
