@@ -1,5 +1,3 @@
-// This script is from https://github.com/bjarosze/gnome-bluetooth-quick-connect
-
 const GLib = imports.gi.GLib;
 
 function spawn(command, callback) {
@@ -13,23 +11,6 @@ function spawn(command, callback) {
 
     if (callback)
         GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, callback);
-}
-
-
-function isDebugModeEnabled() {
-    return new Settings().isDebugModeEnabled();
-}
-
-class Logger {
-    constructor(settings) {
-        this._enabled = settings.isDebugModeEnabled();
-    }
-
-    info(message) {
-        if (!this._enabled) return;
-
-        global.log(`[bluetooth-quick-connect] ${message}`);
-    }
 }
 
 function addSignalsHelperMethods(prototype) {

@@ -5,11 +5,12 @@ const PopupMenu = imports.ui.popupMenu;
 const { GLib, Gio } = imports.gi;
 
 const Me = ExtensionUtils.getCurrentExtension();
-const { isCmdFound } = Me.imports.utils;
+const Utils = Me.imports.utils;
 const { BluetoothController } = Me.imports.bluetooth;
-const { GETTEXT_DOMAIN } = Me.imports.constants;
+const { GETTEXT_DOMAIN, SCRIPT_PATH } = Me.imports.constants;
 const { IndicatorController } = Me.imports.indicator;
 const { SettingsController } = Me.imports.settings;
+const { isCmdFound } = Me.imports.utils;
 
 const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
@@ -33,6 +34,16 @@ class Extension {
         this._getRefreshButton();
 
         this._loop = MainLoop.idle_add(this._runLoop.bind(this));
+
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 10, () => {
+            this._enableSignals();
+        });
+    }
+
+    _enableSignals() {
+        this._connectSignal(this._controller, 'device-changed', () => {
+            this._refresh();
+        });
     }
 
     _runLoop() {
@@ -84,7 +95,7 @@ class Extension {
     }
 
     _getBatteryLevel(btMacAddress, index) {
-        const pyLocation = Me.dir.get_child('bluetooth_battery.py').get_path();
+        const pyLocation = Me.dir.get_child(SCRIPT_PATH).get_path();
         const pythonExec = ['python', 'python3', 'python2'].find(cmd => isCmdFound(cmd));
 
         if (!pythonExec) {
@@ -114,10 +125,13 @@ class Extension {
 
     disable() {
         MainLoop.source_remove(this._loop);
+        this._disconnectSignals();
         this._indicator.destroy();
         this._indicator = null;
     }
 }
+
+Utils.addSignalsHelperMethods(Extension.prototype);
 
 function init(meta) {
     return new Extension(meta.uuid);

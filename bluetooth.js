@@ -1,8 +1,5 @@
-// This script is from https://github.com/bjarosze/gnome-bluetooth-quick-connect
-
 const GnomeBluetooth = imports.gi.GnomeBluetooth;
 const Signals = imports.signals;
-// const GLib = imports.gi.GLib;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
@@ -14,30 +11,24 @@ var BluetoothController = class {
     }
 
     enable() {
-        this._connectSignal(this._model, 'row-changed', (arg0, arg1, iter) => {
-            if (iter) {
-                let device = this._buildDevice(iter);
-                this.emit('device-changed', device);
-            }
-
+        this._connectSignal(this._model, 'row-changed', () => {
+            this.emit('device-changed');
         });
         this._connectSignal(this._model, 'row-deleted', () => {
-            this.emit('device-deleted');
+            this.emit('device-changed');
         });
-        this._connectSignal(this._model, 'row-inserted', (arg0, arg1, iter) => {
-            if (iter) {
-                let device = this._buildDevice(iter);
-                this.emit('device-inserted', device);
-            }
+        this._connectSignal(this._model, 'row-inserted', () => {
+            this.emit('device-changed');
         });
     }
 
     getDevices() {
-        let adapter = this._getDefaultAdapter();
-        if (!adapter)
-            return [];
+        const devices = [];
+        const adapter = this._getDefaultAdapter();
 
-        let devices = [];
+        if (!adapter) {
+            return [];
+        }
 
         let [ret, iter] = this._model.iter_children(adapter);
         while (ret) {
@@ -50,9 +41,7 @@ var BluetoothController = class {
     }
 
     getConnectedDevices() {
-        return this.getDevices().filter((device) => {
-            return device.isConnected;
-        });
+        return this.getDevices().filter((device) => device.isConnected);
     }
 
     destroy() {
@@ -91,17 +80,5 @@ var BluetoothDevice = class {
         this.isPaired = this._model.get_value(iter, GnomeBluetooth.Column.PAIRED);
         this.mac = this._model.get_value(iter, GnomeBluetooth.Column.ADDRESS);
         this.isDefault = this._model.get_value(iter, GnomeBluetooth.Column.DEFAULT);
-    }
-
-    disconnect(callback) {
-        Utils.spawn(`bluetoothctl -- disconnect ${this.mac}`, callback)
-    }
-
-    connect(callback) {
-        Utils.spawn(`bluetoothctl -- connect ${this.mac}`, callback)
-    }
-
-    reconnect(callback) {
-        Utils.spawn(`bluetoothctl -- disconnect ${this.mac} && bluetoothctl -- connect ${this.mac}`, callback)
     }
 }
