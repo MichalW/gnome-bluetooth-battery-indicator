@@ -24,18 +24,21 @@ var SettingsController = class SettingsController {
         return this._settings.get_strv(DEVICES_KEY).map(JSON.parse);
     }
 
+    getPairedDevices() {
+        return this.getDevices().filter(({ isPaired }) => isPaired);
+    }
+
     getDevice(mac) {
         const devices = this.getDevices();
         return devices.find((device) => device.mac === mac);
     }
 
     getActiveDevices() {
-        return this.getDevices().filter(({ active }) => active);
+        return this.getPairedDevices().filter(({ active }) => active);
     }
 
     setDevices(devices) {
         this._settings.set_strv(DEVICES_KEY, devices.map(JSON.stringify));
-        this._updateSettingsTS();
     }
 
     setDevice(device) {
@@ -49,6 +52,7 @@ var SettingsController = class SettingsController {
             };
             this.setDevices(devices);
         }
+        this._updateSettingsTS();
     }
 
     getSettingsTS() {

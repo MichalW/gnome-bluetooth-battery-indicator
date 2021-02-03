@@ -41,7 +41,11 @@ var BluetoothController = class {
     }
 
     getConnectedDevices() {
-        return this.getDevices().filter((device) => device.isConnected);
+        return this.getDevices().filter(({ isConnected }) => isConnected);
+    }
+
+    getPairedDevices() {
+        return this.getDevices().filter(({ isPaired }) => isPaired);
     }
 
     destroy() {

@@ -17,7 +17,7 @@ var IndicatorController = GObject.registerClass(
             this._addBoxes(devices);
         }
 
-        _refresh(devices) {
+        refresh(devices) {
             this._container.remove_all_children();
             this._addBoxes(devices);
         }
@@ -74,7 +74,9 @@ var IndicatorController = GObject.registerClass(
         }
 
         setPercentLabel(percent, index) {
-            this._labels[index].text = percent;
+            if (this._labels[index]) {
+                this._labels[index].text = percent;
+            }
         }
     }
 );

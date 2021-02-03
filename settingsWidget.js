@@ -73,7 +73,7 @@ const SettingsWidget = GObject.registerClass(
                 border_width: BOX_PADDING,
             });
 
-            const devices = this._settings.getDevices();
+            const devices = this._settings.getPairedDevices();
             devices.forEach((device) => {
                 vBox.add(this._getDeviceBox(device));
             });
