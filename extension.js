@@ -1,8 +1,8 @@
 const ExtensionUtils = imports.misc.extensionUtils;
+const GLib = imports.gi.GLib;
 const Main = imports.ui.main;
 const MainLoop = imports.mainloop;
 const PopupMenu = imports.ui.popupMenu;
-const { GLib, Gio } = imports.gi;
 
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
@@ -10,7 +10,6 @@ const { BluetoothController } = Me.imports.bluetooth;
 const { GETTEXT_DOMAIN, SCRIPT_PATH } = Me.imports.constants;
 const { IndicatorController } = Me.imports.indicator;
 const { SettingsController } = Me.imports.settings;
-const { isCmdFound } = Me.imports.utils;
 
 const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
@@ -50,7 +49,7 @@ class Extension {
         this._refresh();
 
         const interval = this._settings.getInterval();
-        MainLoop.timeout_add_seconds(interval * 60, this._runLoop.bind(this));
+        this._loop = MainLoop.timeout_add_seconds(interval * 60, this._runLoop.bind(this));
     }
 
     _getRefreshButton() {
@@ -103,31 +102,21 @@ class Extension {
 
     _getBatteryLevel(btMacAddress, index) {
         const pyLocation = Me.dir.get_child(SCRIPT_PATH).get_path();
-        const pythonExec = ['python', 'python3', 'python2'].find(cmd => isCmdFound(cmd));
+        const pythonExec = Utils.getPythonExec();
 
         if (!pythonExec) {
-            log('ERROR: Python not found. fallback to default mode');
+            log('ERROR: Python not found.');
             return;
         }
 
-        try {
-            const [, , , out_fd] = GLib.spawn_async_with_pipes(null, [pythonExec, pyLocation, btMacAddress], null, 0, null);
-            const out_reader = new Gio.DataInputStream({
-                base_stream: new Gio.UnixInputStream({ fd: out_fd })
-            });
-
-            out_reader.read_upto_async('', 0, 0, null, (source_object, res) => {
-                const [out, length] = out_reader.read_upto_finish(res);
-                if (out && length) {
-                    log('bluetooth_battery: ' + out);
-                    const outArr = out.split(' ')
-                    const percent = outArr[outArr.length - 1];
-                    this._indicator.setPercentLabel(percent, index);
-                }
-            });
-        } catch (e) {
-            log('ERROR: Python execution failed. fallback to default mode' + e);
-        }
+        Utils.runPythonScript(
+            [pythonExec, pyLocation, btMacAddress],
+            (result) => {
+                const resultArray = result.split(' ');
+                const percent = resultArray[resultArray.length - 1];
+                this._indicator.setPercentLabel(percent, index);
+            }
+        )
     }
 
     disable() {

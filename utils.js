@@ -1,4 +1,5 @@
 const GLib = imports.gi.GLib;
+const Gio = imports.gi.Gio;
 
 function spawn(command, callback) {
     let [status, pid] = GLib.spawn_async(
@@ -34,12 +35,24 @@ function addSignalsHelperMethods(prototype) {
     };
 }
 
-function isCmdFound(cmd) {
+function getPythonExec() {
+    return ['python', 'python3', 'python2'].find(cmd => GLib.find_program_in_path(cmd));
+}
+
+function runPythonScript(argv, onSuccess) {
     try {
-        let [result, out, err, exit_code] = GLib.spawn_command_line_sync(cmd);
-        return true;
-    }
-    catch (e) {
-        return false;
+        const proc = Gio.Subprocess.new(argv, Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
+
+        proc.communicate_utf8_async(null, null, (proc, res) => {
+            const [, stdout] = proc.communicate_utf8_finish(res);
+
+            if (proc.get_successful() && stdout) {
+                log('Bluetooth battery indicator: ' + stdout);
+
+                onSuccess(stdout);
+            }
+        });
+    } catch (e) {
+        log('ERROR: Python execution failed: ' + e);
     }
 }
