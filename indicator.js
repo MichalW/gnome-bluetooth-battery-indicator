@@ -75,7 +75,7 @@ var IndicatorController = GObject.registerClass(
 
         setPercentLabel(percent, index) {
             if (this._labels[index]) {
-                this._labels[index].text = percent;
+                this._labels[index].text = (percent || '').trim();
             }
         }
     }
