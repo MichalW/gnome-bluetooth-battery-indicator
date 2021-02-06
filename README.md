@@ -2,6 +2,8 @@
 
 Gnome-Shell extension displaying battery percentage for bluetooth devices
 
+https://extensions.gnome.org/extension/3991/bluetooth-battery/
+
 ## Requirements
 
 * bluez (on ubuntu: sudo apt install bluez)
