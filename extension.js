@@ -72,15 +72,15 @@ class Extension {
             this._settingsTS = settingsTs;
         }
 
-        devices.forEach((device, index) => {
-            if (device.active && device.isPaired) {
+        devices
+            .filter((device) => device.active && device.isPaired)
+            .forEach((device, index) => {
                 if (device.isConnected) {
                     this._getBatteryLevel(device.mac, index);
                 } else {
                     this._indicator.setPercentLabel('', index);
                 }
-            }
-        });
+            });
 
         this._settings.setDevices(devices);
     }
