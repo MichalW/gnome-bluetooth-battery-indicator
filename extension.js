@@ -21,12 +21,10 @@ class Extension {
         ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
         this._controller = new BluetoothController();
         this._settings = new SettingsController();
-        this._settingsTS = 0;
     }
 
     enable() {
-        const devices = this._settings.getActiveDevices();
-        this._indicator = new IndicatorController(devices);
+        this._indicator = new IndicatorController();
         Main.panel.addToStatusArea(this._uuid, this._indicator);
 
         this._controller.enable();
@@ -61,26 +59,19 @@ class Extension {
     }
 
     _refresh() {
-        const settingsTs = this._settings.getSettingsTS();
-        const activeDevices = this._settings.getActiveDevices();
         const settingsDevices = this._settings.getDevices();
         const pairedDevices = this._controller.getPairedDevices();
         const devices = this._mergeDevices(settingsDevices, pairedDevices);
 
-        if (this._settingsTS !== settingsTs) {
-            this._indicator.refresh(activeDevices);
-            this._settingsTS = settingsTs;
-        }
+        const devicesToShow = devices.filter((device) => (
+            device.active && device.isPaired && device.isConnected
+        ));
 
-        devices
-            .filter((device) => device.active && device.isPaired)
-            .forEach((device, index) => {
-                if (device.isConnected) {
-                    this._getBatteryLevel(device.mac, index);
-                } else {
-                    this._indicator.setPercentLabel('', index);
-                }
-            });
+        this._indicator.refresh(devicesToShow);
+
+        devicesToShow.forEach((device, index) => {
+            this._getBatteryLevel(device.mac, index);
+        });
 
         this._settings.setDevices(devices);
     }

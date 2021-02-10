@@ -12,9 +12,5 @@
         <key name="devices" type="as">
             <default>[]</default>
         </key>
-
-        <key name="settings-ts" type="i">
-            <default>0</default>
-        </key>
     </schema>
 </schemalist>

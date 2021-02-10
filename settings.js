@@ -4,7 +4,6 @@ const { SETTINGS_ID } = Me.imports.constants;
 
 const INTERVAL_KEY = 'interval';
 const DEVICES_KEY = 'devices';
-const SETTINGS_TS_KEY = 'settings-ts';
 
 var SettingsController = class SettingsController {
     constructor() {
@@ -17,7 +16,6 @@ var SettingsController = class SettingsController {
 
     setInterval(interval) {
         this._settings.set_int(INTERVAL_KEY, interval);
-        this._updateSettingsTS();
     }
 
     getDevices() {
@@ -26,15 +24,6 @@ var SettingsController = class SettingsController {
 
     getPairedDevices() {
         return this.getDevices().filter(({ isPaired }) => isPaired);
-    }
-
-    getDevice(mac) {
-        const devices = this.getDevices();
-        return devices.find((device) => device.mac === mac);
-    }
-
-    getActiveDevices() {
-        return this.getPairedDevices().filter(({ active }) => active);
     }
 
     setDevices(devices) {
@@ -52,14 +41,5 @@ var SettingsController = class SettingsController {
             };
             this.setDevices(devices);
         }
-        this._updateSettingsTS();
-    }
-
-    getSettingsTS() {
-        return this._settings.get_int(SETTINGS_TS_KEY);
-    }
-
-    _updateSettingsTS() {
-        this._settings.set_int(SETTINGS_TS_KEY, new Date().valueOf());
     }
 }

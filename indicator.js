@@ -7,19 +7,25 @@ const UUID = "bluetooth-battery@michalw.github.com";
 
 var IndicatorController = GObject.registerClass(
     class Indicator extends PanelMenu.Button {
-        _init(devices) {
+        _init() {
             super._init(0.0, _('Bluetooth battery Indicator'));
             this._container = new St.BoxLayout();
             this._labels = [];
             this._icons = [];
+            this._prevDevicesSettings = [];
 
             this._addSettingsButton();
-            this._addBoxes(devices);
         }
 
         refresh(devices) {
-            this._container.remove_all_children();
-            this._addBoxes(devices);
+            const devicesSettings = devices.map(({ mac, icon }) => ({ mac, icon }));
+
+            if (JSON.stringify(devicesSettings) !== JSON.stringify(this._prevDevicesSettings)) {
+                this._container.remove_all_children();
+                this._addBoxes(devices);
+            }
+
+            this._prevDevicesSettings = devicesSettings;
         }
 
         _addMenuItem(item) {
@@ -40,10 +46,6 @@ var IndicatorController = GObject.registerClass(
 
                 this._container.add_child(box);
             });
-
-            if (!devices.length) {
-                this._container.add_child(this._getBoxIcon({}));
-            }
 
             this.add_child(this._container);
         }
