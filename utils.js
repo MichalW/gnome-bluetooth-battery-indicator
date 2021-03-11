@@ -36,7 +36,8 @@ function addSignalsHelperMethods(prototype) {
 }
 
 function getPythonExec() {
-    return ['python', 'python3', 'python2'].find(cmd => GLib.find_program_in_path(cmd));
+	//return ['python', 'python3', 'python2'].find(cmd => GLib.find_program_in_path(cmd));
+	return ['python3'].find(cmd => GLib.find_program_in_path(cmd)); //Hotfix for no percentage shown
 }
 
 function runPythonScript(argv, onSuccess) {
