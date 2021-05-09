@@ -28,26 +28,49 @@ const SettingsWidget = GObject.registerClass(
         }
 
         _getIndicatorSettingsFrame() {
-            const hBox = new Gtk.Box({
+            const hBox1 = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
                 border_width: BOX_PADDING,
             });
 
-            hBox.pack_start(this._getIntervalLabel(), false, false, 0);
-            hBox.pack_end(this._getIntervalSpinButton(), false, false, 0);
+            hBox1.pack_start(this._getIntervalLabel(), false, false, 0);
+            hBox1.pack_end(this._getIntervalSpinButton(), false, false, 0);
+
+            const hBox2 = new Gtk.Box({
+                orientation: Gtk.Orientation.HORIZONTAL,
+                border_width: BOX_PADDING,
+            });
+
+            hBox2.pack_start(this._getHideIndicatorLabel(), false, false, 0);
+            hBox2.pack_end(this._getHideIndicatorSwitchButton(), false, false, 0);
+
+            const vBox = new Gtk.Box({
+                orientation: Gtk.Orientation.VERTICAL,
+                border_width: BOX_PADDING,
+            });
+
+            vBox.add(hBox1);
+            vBox.add(hBox2);
 
             const frame = new Gtk.Frame({
                 label: _('Indicator Settings'),
                 margin_bottom: MARGIN_BOTTOM,
             });
 
-            frame.add(hBox);
+            frame.add(vBox);
+
             return frame;
         }
 
         _getIntervalLabel() {
             return new Gtk.Label({
                 label: _('Refresh interval (minutes)'),
+            });
+        }
+
+        _getHideIndicatorLabel() {
+            return new Gtk.Label({
+                label: _('Hide indicator if there are no devices'),
             });
         }
 
@@ -65,6 +88,23 @@ const SettingsWidget = GObject.registerClass(
             });
 
             return spinButton;
+        }
+
+        _getHideIndicatorSwitchButton() {
+            const switchButton = new Gtk.Switch({
+                active: this._settings.getHideIndicator()
+            });
+
+            switchButton.connect('notify::active', ({ active }) => {
+                this._settings.setHideIndicator(active);
+            });
+
+            const vBox = new Gtk.Box({
+                orientation: Gtk.Orientation.VERTICAL,
+            });
+
+            vBox.pack_start(switchButton, true, false, 0);
+            return vBox;
         }
 
         _getDevicesFrame() {

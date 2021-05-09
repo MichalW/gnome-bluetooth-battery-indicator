@@ -9,6 +9,11 @@
             <summary>Refresh interval (minutes)</summary>
         </key>
 
+        <key name="hide-indicator" type="b">
+            <default>false</default>
+            <summary>Refresh interval (minutes)</summary>
+        </key>
+
         <key name="devices" type="as">
             <default>[]</default>
         </key>

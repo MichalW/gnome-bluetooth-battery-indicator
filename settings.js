@@ -3,6 +3,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 const { SETTINGS_ID } = Me.imports.constants;
 
 const INTERVAL_KEY = 'interval';
+const HIDE_INDICATOR_KEY = 'hide-indicator';
 const DEVICES_KEY = 'devices';
 
 var SettingsController = class SettingsController {
@@ -16,6 +17,14 @@ var SettingsController = class SettingsController {
 
     setInterval(interval) {
         this._settings.set_int(INTERVAL_KEY, interval);
+    }
+
+    getHideIndicator() {
+        return this._settings.get_boolean(HIDE_INDICATOR_KEY);
+    }
+
+    setHideIndicator(value) {
+        this._settings.set_boolean(HIDE_INDICATOR_KEY, value);
     }
 
     getDevices() {

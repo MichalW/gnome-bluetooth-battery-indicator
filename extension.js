@@ -60,6 +60,7 @@ class Extension {
 
     _refresh() {
         const settingsDevices = this._settings.getDevices();
+        const settingsHideIndicator = this._settings.getHideIndicator();
         const pairedDevices = this._controller.getPairedDevices();
         const devices = this._mergeDevices(settingsDevices, pairedDevices);
 
@@ -74,6 +75,10 @@ class Extension {
         });
 
         this._settings.setDevices(devices);
+
+        if (settingsHideIndicator) {
+            Main.panel.statusArea[this._uuid].actor.visible = !!devicesToShow.length;
+        }
     }
 
     _mergeDevices(settingsDevices, pairedDevices) {
