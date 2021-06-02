@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="PrefsWidget" parent="GtkBox">
+    <property name="can-focus">0</property>
+    <property name="margin-start">8</property>
+    <property name="margin-end">8</property>
+    <property name="margin-top">8</property>
+    <property name="margin-bottom">8</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">8</property>
+    <child>
+      <object class="GtkFrame">
+        <property name="can-focus">0</property>
+        <property name="child">
+          <object class="GtkBox">
+            <property name="can-focus">0</property>
+            <property name="margin-start">8</property>
+            <property name="margin-end">8</property>
+            <property name="margin-top">8</property>
+            <property name="margin-bottom">8</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">8</property>
+            <child>
+              <object class="GtkBox">
+                <property name="can-focus">0</property>
+                <property name="spacing">8</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="can-focus">0</property>
+                    <property name="label" translatable="yes">Refresh interval (minutes)</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSpinButton">
+                    <signal name="realize" handler="_initInterval" swapped="no"/>
+                    <signal name="value-changed" handler="_setInterval" swapped="no"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="can-focus">0</property>
+                <property name="spacing">8</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="can-focus">0</property>
+                    <property name="label" translatable="yes">Hide indicator if there are no devices</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSwitch">
+                    <signal name="realize" handler="_initHideIndicator" swapped="no"/>
+                    <signal name="state-set" handler="_setHideIndicator" swapped="no"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+        <child type="label">
+          <object class="GtkLabel">
+            <property name="can-focus">0</property>
+            <property name="label" translatable="yes">Indicator Settings</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkFrame">
+        <property name="can-focus">0</property>
+        <property name="child">
+          <object class="GtkBox">
+            <property name="can-focus">0</property>
+            <property name="margin-start">8</property>
+            <property name="margin-end">8</property>
+            <property name="margin-top">8</property>
+            <property name="margin-bottom">8</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">8</property>
+            <signal name="realize" handler="_initDevices" swapped="no"/>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">0</property>
+                <property name="can-focus">0</property>
+                <property name="spacing">8</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="can-focus">0</property>
+                    <property name="label" translatable="yes">device.name</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSwitch">
+                    <property name="valign">center</property>
+                    <signal name="state-set" handler="_setDeviceActive" swapped="no"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkComboBoxText">
+                    <property name="can-focus">0</property>
+                    <signal name="changed" handler="_setDeviceIcon" swapped="no"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+        <child type="label">
+          <object class="GtkLabel">
+            <property name="can-focus">0</property>
+            <property name="label" translatable="yes">Devices</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
