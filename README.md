@@ -12,8 +12,7 @@ https://extensions.gnome.org/extension/3991/bluetooth-battery/
 * pybluez
 
 ```
-sudo apt install bluez libbluetooth-dev python3-dev pybluez
-bluez libbluetooth-dev python3-dev python3-bluez
+sudo apt install bluez libbluetooth-dev python3-dev python3-bluez
 ```
 
 ## Manual Installation
