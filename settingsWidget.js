@@ -1,6 +1,7 @@
 const GObject = imports.gi.GObject;
 const Gtk = imports.gi.Gtk;
 
+const Config = imports.misc.config;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const { SettingsController } = Me.imports.settings;
@@ -9,16 +10,23 @@ const { GETTEXT_DOMAIN } = Me.imports.constants;
 const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
 
+const [major] = Config.PACKAGE_VERSION.split('.');
+const shellVersion = Number.parseInt(major);
+
 const BOX_PADDING = 8;
 const MARGIN_BOTTOM = 8;
 const WIDGET_PADDING = 16;
 
-const getMarginAll = (value) => ({
-  margin_start: value,
-  margin_top: value,
-  margin_end: value,
-  margin_bottom: value,
-});
+const getMarginAll = (value) => (
+    shellVersion < 40 ? {
+        border_width: value,
+    } : {
+        margin_start: value,
+        margin_top: value,
+        margin_end: value,
+        margin_bottom: value,
+    }
+);
 
 const SettingsWidget = GObject.registerClass(
     class MyPrefsWidget extends Gtk.Box {
@@ -26,10 +34,16 @@ const SettingsWidget = GObject.registerClass(
             super._init(params);
             this._settings = new SettingsController();
 
-            // this.set_border_width(WIDGET_PADDING);
             this.set_orientation(Gtk.Orientation.VERTICAL);
-            this.append(this._getIndicatorSettingsFrame());
-            this.append(this._getDevicesFrame());
+
+            if (shellVersion < 40) {
+                this.set_border_width(WIDGET_PADDING);
+                this.add(this._getIndicatorSettingsFrame());
+                this.add(this._getDevicesFrame());
+            } else {
+                this.append(this._getIndicatorSettingsFrame());
+                this.append(this._getDevicesFrame());
+            }
 
             //this.connect('destroy', Gtk.main_quit);
         }
@@ -37,34 +51,53 @@ const SettingsWidget = GObject.registerClass(
         _getIndicatorSettingsFrame() {
             const hBox1 = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-		...getMarginAll(BOX_PADDING),
+                ...getMarginAll(BOX_PADDING),
             });
 
-            hBox1.append(this._getIntervalLabel(), false, false, 0);
-            hBox1.append(this._getIntervalSpinButton(), false, false, 0);
+            if (shellVersion < 40) {
+                hBox1.pack_start(this._getIntervalLabel(), false, false, 0);
+                hBox1.pack_end(this._getIntervalSpinButton(), false, false, 0);
+            } else {
+                hBox1.append(this._getIntervalLabel(), false, false, 0);
+                hBox1.append(this._getIntervalSpinButton(), false, false, 0);
+            }
 
             const hBox2 = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-		...getMarginAll(BOX_PADDING),
+		        ...getMarginAll(BOX_PADDING),
             });
 
-            hBox2.append(this._getHideIndicatorLabel(), false, false, 0);
-            hBox2.append(this._getHideIndicatorSwitchButton(), false, false, 0);
+            if (shellVersion < 40) {
+                hBox2.pack_start(this._getHideIndicatorLabel(), false, false, 0);
+                hBox2.pack_end(this._getHideIndicatorSwitchButton(), false, false, 0);
+            } else {
+                hBox2.append(this._getHideIndicatorLabel(), false, false, 0);
+                hBox2.append(this._getHideIndicatorSwitchButton(), false, false, 0);
+            }
 
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
-		...getMarginAll(BOX_PADDING),
+		        ...getMarginAll(BOX_PADDING),
             });
 
-            vBox.append(hBox1);
-            vBox.append(hBox2);
+            if (shellVersion < 40) {
+                vBox.add(hBox1);
+                vBox.add(hBox2);
+            } else {
+                vBox.append(hBox1);
+                vBox.append(hBox2);
+            }
 
             const frame = new Gtk.Frame({
                 label: _('Indicator Settings'),
                 margin_bottom: MARGIN_BOTTOM,
             });
 
-            frame.set_child(vBox);
+            if (shellVersion < 40) {
+                frame.add(vBox);
+            } else {
+                frame.set_child(vBox);
+            }
 
             return frame;
         }
@@ -110,19 +143,27 @@ const SettingsWidget = GObject.registerClass(
                 orientation: Gtk.Orientation.VERTICAL,
             });
 
-            vBox.append(switchButton, true, false, 0);
+            if (shellVersion < 40) {
+                vBox.pack_start(switchButton, true, false, 0);
+            } else {
+                vBox.append(switchButton, true, false, 0);
+            }
             return vBox;
         }
 
         _getDevicesFrame() {
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
-		...getMarginAll(BOX_PADDING),
+		        ...getMarginAll(BOX_PADDING),
             });
 
             const devices = this._settings.getPairedDevices();
             devices.forEach((device) => {
-                vBox.append(this._getDeviceBox(device));
+                if (shellVersion < 40) {
+                    vBox.add(this._getDeviceBox(device));
+                } else {
+                    vBox.append(this._getDeviceBox(device));
+                }
             });
 
             const frame = new Gtk.Frame({
@@ -130,19 +171,29 @@ const SettingsWidget = GObject.registerClass(
                 margin_bottom: MARGIN_BOTTOM,
             });
 
-            frame.set_child(vBox);
+            if (shellVersion < 40) {
+                frame.add(vBox);
+            } else {
+                frame.set_child(vBox);
+            }
             return frame;
         }
 
         _getDeviceBox(device) {
             const hBox = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-		...getMarginAll(BOX_PADDING),
+		        ...getMarginAll(BOX_PADDING),
             });
 
-            hBox.append(this._getDeviceLabel(device), false, false, 0);
-            hBox.append(this._getDeviceSwitchButton(device), false, false, 0);
-            hBox.append(this._getDeviceIconComboBox(device), false, false, 16);
+            if (shellVersion < 40) {
+                hBox.pack_start(this._getDeviceLabel(device), false, false, 0);
+                hBox.pack_end(this._getDeviceSwitchButton(device), false, false, 0);
+                hBox.pack_end(this._getDeviceIconComboBox(device), false, false, 16);
+            } else {
+                hBox.append(this._getDeviceLabel(device), false, false, 0);
+                hBox.append(this._getDeviceSwitchButton(device), false, false, 0);
+                hBox.append(this._getDeviceIconComboBox(device), false, false, 16);
+            }
 
             return hBox;
         }
@@ -197,7 +248,11 @@ const SettingsWidget = GObject.registerClass(
                 orientation: Gtk.Orientation.VERTICAL,
             });
 
-            vBox.append(switchButton, true, false, 0);
+            if (shellVersion < 40) {
+                vBox.pack_start(switchButton, true, false, 0);
+            } else {
+                vBox.append(switchButton, true, false, 0);
+            }
             return vBox;
         }
     }
