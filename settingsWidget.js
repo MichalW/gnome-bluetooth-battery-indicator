@@ -57,7 +57,6 @@ const SettingsWidget = GObject.registerClass(
         _getIndicatorSettingsFrame() {
             const hBox1 = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-                hexpand: true,
                 ...getMarginAll(BOX_PADDING),
             });
 
@@ -66,7 +65,7 @@ const SettingsWidget = GObject.registerClass(
 
             const hBox2 = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-		        ...getMarginAll(BOX_PADDING),
+                ...getMarginAll(BOX_PADDING),
             });
 
             addToBox(hBox2, this._getHideIndicatorLabel());
@@ -74,7 +73,7 @@ const SettingsWidget = GObject.registerClass(
 
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
-		        ...getMarginAll(BOX_PADDING),
+                ...getMarginAll(BOX_PADDING),
             });
 
             addToBox(vBox, hBox1);
@@ -147,7 +146,7 @@ const SettingsWidget = GObject.registerClass(
         _getDevicesFrame() {
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
-		        ...getMarginAll(BOX_PADDING),
+                ...getMarginAll(BOX_PADDING),
             });
 
             const devices = this._settings.getPairedDevices();
@@ -171,7 +170,7 @@ const SettingsWidget = GObject.registerClass(
         _getDeviceBox(device) {
             const hBox = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-		        ...getMarginAll(BOX_PADDING),
+                ...getMarginAll(BOX_PADDING),
             });
 
             addToBox(hBox, this._getDeviceLabel(device));
@@ -196,8 +195,8 @@ const SettingsWidget = GObject.registerClass(
                 { key: 'battery-full-symbolic', text: 'Default' },
                 { key: 'audio-headphones-symbolic', text: 'Headphones' },
                 { key: 'input-mouse-symbolic', text: 'Mouse' },
-                { key: 'input-keyboard-symbolic', text: 'Keyboard'},
-                { key: 'audio-headset-symbolic', text: 'Headset'},
+                { key: 'input-keyboard-symbolic', text: 'Keyboard' },
+                { key: 'audio-headset-symbolic', text: 'Headset' },
             ];
 
             icons.forEach((icon) => {
