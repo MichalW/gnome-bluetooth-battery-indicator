@@ -19,11 +19,11 @@ class Extension {
         this._uuid = uuid;
 
         ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
-        this._controller = new BluetoothController();
-        this._settings = new SettingsController();
     }
 
     enable() {
+        this._controller = new BluetoothController();
+        this._settings = new SettingsController();
         this._indicator = new IndicatorController();
         Main.panel.addToStatusArea(this._uuid, this._indicator);
 

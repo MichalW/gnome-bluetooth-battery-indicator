@@ -1,6 +1,7 @@
 const GObject = imports.gi.GObject;
 const Gtk = imports.gi.Gtk;
 
+const Config = imports.misc.config;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const { SettingsController } = Me.imports.settings;
@@ -9,9 +10,31 @@ const { GETTEXT_DOMAIN } = Me.imports.constants;
 const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
 
+const [major] = Config.PACKAGE_VERSION.split('.');
+const shellVersion = Number.parseInt(major);
+
 const BOX_PADDING = 8;
 const MARGIN_BOTTOM = 8;
 const WIDGET_PADDING = 16;
+
+const getMarginAll = (value) => (
+    shellVersion < 40 ? {
+        border_width: value,
+    } : {
+        margin_start: value,
+        margin_top: value,
+        margin_end: value,
+        margin_bottom: value,
+    }
+);
+
+const addToBox = (box, element) => {
+    if (shellVersion < 40) {
+        box.add(element);
+    } else {
+        box.append(element);
+    }
+}
 
 const SettingsWidget = GObject.registerClass(
     class MyPrefsWidget extends Gtk.Box {
@@ -19,45 +42,53 @@ const SettingsWidget = GObject.registerClass(
             super._init(params);
             this._settings = new SettingsController();
 
-            this.set_border_width(WIDGET_PADDING);
             this.set_orientation(Gtk.Orientation.VERTICAL);
-            this.add(this._getIndicatorSettingsFrame());
-            this.add(this._getDevicesFrame());
 
-            this.connect('destroy', Gtk.main_quit);
+            if (shellVersion < 40) {
+                this.set_border_width(WIDGET_PADDING);
+            }
+
+            addToBox(this, this._getIndicatorSettingsFrame());
+            addToBox(this, this._getDevicesFrame());
+
+            //this.connect('destroy', Gtk.main_quit);
         }
 
         _getIndicatorSettingsFrame() {
             const hBox1 = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-                border_width: BOX_PADDING,
+                ...getMarginAll(BOX_PADDING),
             });
 
-            hBox1.pack_start(this._getIntervalLabel(), false, false, 0);
-            hBox1.pack_end(this._getIntervalSpinButton(), false, false, 0);
+            addToBox(hBox1, this._getIntervalLabel());
+            addToBox(hBox1, this._getIntervalSpinButton());
 
             const hBox2 = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-                border_width: BOX_PADDING,
+                ...getMarginAll(BOX_PADDING),
             });
 
-            hBox2.pack_start(this._getHideIndicatorLabel(), false, false, 0);
-            hBox2.pack_end(this._getHideIndicatorSwitchButton(), false, false, 0);
+            addToBox(hBox2, this._getHideIndicatorLabel());
+            addToBox(hBox2, this._getHideIndicatorSwitchButton());
 
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
-                border_width: BOX_PADDING,
+                ...getMarginAll(BOX_PADDING),
             });
 
-            vBox.add(hBox1);
-            vBox.add(hBox2);
+            addToBox(vBox, hBox1);
+            addToBox(vBox, hBox2);
 
             const frame = new Gtk.Frame({
                 label: _('Indicator Settings'),
                 margin_bottom: MARGIN_BOTTOM,
             });
 
-            frame.add(vBox);
+            if (shellVersion < 40) {
+                frame.add(vBox);
+            } else {
+                frame.set_child(vBox);
+            }
 
             return frame;
         }
@@ -65,12 +96,16 @@ const SettingsWidget = GObject.registerClass(
         _getIntervalLabel() {
             return new Gtk.Label({
                 label: _('Refresh interval (minutes)'),
+                xalign: 0,
+                hexpand: true,
             });
         }
 
         _getHideIndicatorLabel() {
             return new Gtk.Label({
                 label: _('Hide indicator if there are no devices'),
+                xalign: 0,
+                hexpand: true,
             });
         }
 
@@ -103,19 +138,20 @@ const SettingsWidget = GObject.registerClass(
                 orientation: Gtk.Orientation.VERTICAL,
             });
 
-            vBox.pack_start(switchButton, true, false, 0);
+            addToBox(vBox, switchButton);
+
             return vBox;
         }
 
         _getDevicesFrame() {
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
-                border_width: BOX_PADDING,
+                ...getMarginAll(BOX_PADDING),
             });
 
             const devices = this._settings.getPairedDevices();
             devices.forEach((device) => {
-                vBox.add(this._getDeviceBox(device));
+                addToBox(vBox, this._getDeviceBox(device));
             });
 
             const frame = new Gtk.Frame({
@@ -123,19 +159,23 @@ const SettingsWidget = GObject.registerClass(
                 margin_bottom: MARGIN_BOTTOM,
             });
 
-            frame.add(vBox);
+            if (shellVersion < 40) {
+                frame.add(vBox);
+            } else {
+                frame.set_child(vBox);
+            }
             return frame;
         }
 
         _getDeviceBox(device) {
             const hBox = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-                border_width: BOX_PADDING,
+                ...getMarginAll(BOX_PADDING),
             });
 
-            hBox.pack_start(this._getDeviceLabel(device), false, false, 0);
-            hBox.pack_end(this._getDeviceSwitchButton(device), false, false, 0);
-            hBox.pack_end(this._getDeviceIconComboBox(device), false, false, 16);
+            addToBox(hBox, this._getDeviceLabel(device));
+            addToBox(hBox, this._getDeviceSwitchButton(device));
+            addToBox(hBox, this._getDeviceIconComboBox(device));
 
             return hBox;
         }
@@ -143,6 +183,8 @@ const SettingsWidget = GObject.registerClass(
         _getDeviceLabel(device) {
             return new Gtk.Label({
                 label: device.name,
+                xalign: 0,
+                hexpand: true,
             });
         }
 
@@ -153,8 +195,8 @@ const SettingsWidget = GObject.registerClass(
                 { key: 'battery-full-symbolic', text: 'Default' },
                 { key: 'audio-headphones-symbolic', text: 'Headphones' },
                 { key: 'input-mouse-symbolic', text: 'Mouse' },
-                { key: 'input-keyboard-symbolic', text: 'Keyboard'},
-                { key: 'audio-headset-symbolic', text: 'Headset'},
+                { key: 'input-keyboard-symbolic', text: 'Keyboard' },
+                { key: 'audio-headset-symbolic', text: 'Headset' },
             ];
 
             icons.forEach((icon) => {
@@ -188,9 +230,11 @@ const SettingsWidget = GObject.registerClass(
 
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
+                ...getMarginAll(BOX_PADDING),
             });
 
-            vBox.pack_start(switchButton, true, false, 0);
+            addToBox(vBox, switchButton);
+
             return vBox;
         }
     }
