@@ -41,11 +41,15 @@ var IndicatorController = GObject.registerClass(
         }
 
         _addBoxes(devices) {
-            devices.forEach((device, index) => {
-                const box = this._getBox(device, index);
-
+            if (!devices.length) {
+                const box = this._getBox({}, 0);
                 this._container.add_child(box);
-            });
+            } else {
+                devices.forEach((device, index) => {
+                    const box = this._getBox(device, index);
+                    this._container.add_child(box);
+                });
+            }
 
             this.add_child(this._container);
         }

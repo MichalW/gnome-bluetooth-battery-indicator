@@ -17,16 +17,12 @@ const BOX_PADDING = 8;
 const MARGIN_BOTTOM = 8;
 const WIDGET_PADDING = 16;
 
-const getMarginAll = (value) => (
-    shellVersion < 40 ? {
-        border_width: value,
-    } : {
-        margin_start: value,
-        margin_top: value,
-        margin_end: value,
-        margin_bottom: value,
-    }
-);
+const getMarginAll = (value) => ({
+    margin_start: value,
+    margin_top: value,
+    margin_end: value,
+    margin_bottom: value,
+});
 
 const addToBox = (box, element) => {
     if (shellVersion < 40) {
@@ -143,11 +139,28 @@ const SettingsWidget = GObject.registerClass(
             return vBox;
         }
 
+        _getDevicesHeaders() {
+            const hBox = new Gtk.Box({
+                orientation: Gtk.Orientation.HORIZONTAL,
+                ...getMarginAll(BOX_PADDING),
+            });
+
+            addToBox(hBox, this._getLabel('Name'));
+            addToBox(hBox, this._getLabel('Enabled', false, 60));
+            addToBox(hBox, this._getLabel('Icon', false, 70));
+            addToBox(hBox, this._getLabel('Port', false, 40));
+
+            return hBox;
+        }
+
         _getDevicesFrame() {
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
                 ...getMarginAll(BOX_PADDING),
             });
+
+            const headers = this._getDevicesHeaders();
+            addToBox(vBox, headers);
 
             const devices = this._settings.getPairedDevices();
             devices.forEach((device) => {
@@ -173,19 +186,28 @@ const SettingsWidget = GObject.registerClass(
                 ...getMarginAll(BOX_PADDING),
             });
 
-            addToBox(hBox, this._getDeviceLabel(device));
+            addToBox(hBox, this._getLabel(device.name));
             addToBox(hBox, this._getDeviceSwitchButton(device));
             addToBox(hBox, this._getDeviceIconComboBox(device));
+            addToBox(hBox, this._getPortComboBox(device));
 
             return hBox;
         }
 
-        _getDeviceLabel(device) {
-            return new Gtk.Label({
-                label: device.name,
+        _getLabel(labelName, hexpand = true, marginEnd = 0) {
+            const box = new Gtk.Box({
+                margin_end: marginEnd,
+            })
+
+            const label = new Gtk.Label({
+                label: labelName,
                 xalign: 0,
-                hexpand: true,
+                hexpand,
             });
+
+            addToBox(box, label);
+
+            return box;
         }
 
         _getDeviceIconComboBox(device) {
@@ -214,6 +236,31 @@ const SettingsWidget = GObject.registerClass(
             });
 
             return comboBox;
+        }
+
+        _getPortComboBox(device) {
+            const box = new Gtk.Box({
+                margin_start: BOX_PADDING,
+            })
+
+            const comboBox = new Gtk.ComboBoxText();
+
+            [...Array(10).keys()].forEach((port) => {
+                comboBox.append_text(port ? String(port) : 'Default');
+            })
+            comboBox.set_active(device.port || 0);
+
+            comboBox.connect('changed', () => {
+                const i = comboBox.get_active();
+                this._settings.setDevice({
+                    mac: device.mac,
+                    port: i,
+                });
+            });
+
+            addToBox(box, comboBox);
+
+            return box;
         }
 
         _getDeviceSwitchButton(device) {

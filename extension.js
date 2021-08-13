@@ -71,7 +71,7 @@ class Extension {
         this._indicator.refresh(devicesToShow);
 
         devicesToShow.forEach((device, index) => {
-            this._getBatteryLevel(device.mac, index);
+            this._getBatteryLevel(device.mac, device.port, index);
         });
 
         this._settings.setDevices(devices);
@@ -96,7 +96,7 @@ class Extension {
         ];
     }
 
-    _getBatteryLevel(btMacAddress, index) {
+    _getBatteryLevel(btMacAddress, port, index) {
         const pyLocation = Me.dir.get_child(SCRIPT_PATH).get_path();
         const pythonExec = Utils.getPythonExec();
 
@@ -105,8 +105,10 @@ class Extension {
             return;
         }
 
+        const address = port ? `${btMacAddress}.${port}` : btMacAddress;
+
         Utils.runPythonScript(
-            [pythonExec, pyLocation, btMacAddress],
+            [pythonExec, pyLocation, address],
             (result) => {
                 const resultArray = result.split(' ');
                 const percent = resultArray[resultArray.length - 1];
