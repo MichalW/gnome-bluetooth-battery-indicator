@@ -2,6 +2,8 @@
   "name": "Bluetooth battery indicator",
   "description": "Bluetooth battery indicator",
   "uuid": "bluetooth-battery@michalw.github.com",
+  "settings-schema": "org.gnome.shell.extensions.bluetooth_battery_indicator",
+  "gettext-domain": "bluetooth_battery_indicator",
   "url": "https://github.com/MichalW/gnome-bluetooth-battery-indicator",
   "shell-version": ["3.38", "40"]
 }
