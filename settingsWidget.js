@@ -5,9 +5,8 @@ const Config = imports.misc.config;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const { SettingsController } = Me.imports.settings;
-const { GETTEXT_DOMAIN } = Me.imports.constants;
 
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
+const Gettext = imports.gettext.domain(Me.metadata['gettext-domain']);
 const _ = Gettext.gettext;
 
 const [major] = Config.PACKAGE_VERSION.split('.');
@@ -145,10 +144,10 @@ const SettingsWidget = GObject.registerClass(
                 ...getMarginAll(BOX_PADDING),
             });
 
-            addToBox(hBox, this._getLabel('Name'));
-            addToBox(hBox, this._getLabel('Enabled', false, 60));
-            addToBox(hBox, this._getLabel('Icon', false, 70));
-            addToBox(hBox, this._getLabel('Port', false, 40));
+            addToBox(hBox, this._getLabel(_('Name')));
+            addToBox(hBox, this._getLabel(_('Status'), false, 60));
+            addToBox(hBox, this._getLabel(_('Icon'), false, 70));
+            addToBox(hBox, this._getLabel(_('Port'), false, 40));
 
             return hBox;
         }
@@ -214,11 +213,11 @@ const SettingsWidget = GObject.registerClass(
             const comboBox = new Gtk.ComboBoxText();
 
             const icons = [
-                { key: 'battery-full-symbolic', text: 'Default' },
-                { key: 'audio-headphones-symbolic', text: 'Headphones' },
-                { key: 'input-mouse-symbolic', text: 'Mouse' },
-                { key: 'input-keyboard-symbolic', text: 'Keyboard' },
-                { key: 'audio-headset-symbolic', text: 'Headset' },
+                { key: 'battery-full-symbolic', text: _('Default') },
+                { key: 'audio-headphones-symbolic', text: _('Headphones') },
+                { key: 'input-mouse-symbolic', text: _('Mouse') },
+                { key: 'input-keyboard-symbolic', text: _('Keyboard') },
+                { key: 'audio-headset-symbolic', text: _('Headset') },
             ];
 
             icons.forEach((icon) => {
@@ -246,7 +245,7 @@ const SettingsWidget = GObject.registerClass(
             const comboBox = new Gtk.ComboBoxText();
 
             [...Array(10).keys()].forEach((port) => {
-                comboBox.append_text(port ? String(port) : 'Default');
+                comboBox.append_text(port ? String(port) : _('Default'));
             })
             comboBox.set_active(device.port || 0);
 

@@ -15,6 +15,8 @@ const shellVersion = Number.parseInt(major);
 
 function init() {
     log(`initializing ${Me.metadata.name} Preferences`);
+
+    ExtensionUtils.initTranslations(Me.metadata['gettext-domain']);
 }
 
 function buildPrefsWidget() {

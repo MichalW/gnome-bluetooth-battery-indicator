@@ -1,6 +1,5 @@
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
-const { SETTINGS_ID } = Me.imports.constants;
 
 const INTERVAL_KEY = 'interval';
 const HIDE_INDICATOR_KEY = 'hide-indicator';
@@ -8,7 +7,7 @@ const DEVICES_KEY = 'devices';
 
 var SettingsController = class SettingsController {
     constructor() {
-        this._settings = ExtensionUtils.getSettings(SETTINGS_ID);
+        this._settings = ExtensionUtils.getSettings(Me.metadata['settings-schema']);
     }
 
     getInterval() {
