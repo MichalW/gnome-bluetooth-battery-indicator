@@ -1,0 +1,83 @@
+# Spanish translation.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Michał Wanat, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-01 10:00+0200\n"
+"PO-Revision-Date: 2021-09-01 10:00+0200\n"
+"Last-Translator: Michał Wanat\n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: extension.js:54
+msgid "Refresh"
+msgstr "Odśwież"
+
+#: indicator.js:11
+msgid "Bluetooth battery Indicator"
+msgstr "Bluetooth battery Indicator"
+
+#: indicator.js:36
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: settingsWidget.js:78
+msgid "Indicator Settings"
+msgstr "Ustawienia"
+
+#: settingsWidget.js:93
+msgid "Refresh interval (minutes)"
+msgstr "Interwał odświeżania (minuty)"
+
+#: settingsWidget.js:101
+msgid "Hide indicator if there are no devices"
+msgstr "Ukryj jeśli nie ma urządzeń"
+
+#: settingsWidget.js:147
+msgid "Name"
+msgstr "Nazwa"
+
+#: settingsWidget.js:148
+msgid "Status"
+msgstr "Status"
+
+#: settingsWidget.js:149
+msgid "Icon"
+msgstr "Ikona"
+
+#: settingsWidget.js:150
+msgid "Port"
+msgstr "Port"
+
+#: settingsWidget.js:170
+msgid "Devices"
+msgstr "Urządzenie"
+
+#: settingsWidget.js:216 settingsWidget.js:248
+msgid "Default"
+msgstr "Domyślnie"
+
+#: settingsWidget.js:217
+msgid "Headphones"
+msgstr "Słuchawki"
+
+#: settingsWidget.js:218
+msgid "Mouse"
+msgstr "Myszka"
+
+#: settingsWidget.js:219
+msgid "Keyboard"
+msgstr "Klawiatura"
+
+#: settingsWidget.js:220
+msgid "Headset"
+msgstr "Zestaw słuchawkowy"
