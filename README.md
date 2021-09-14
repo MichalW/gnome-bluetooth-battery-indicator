@@ -7,12 +7,18 @@ https://extensions.gnome.org/extension/3991/bluetooth-battery/
 ## Requirements
 
 * bluez
-* python3 (on ubuntu: python3-dev)
-* libbluetooth (on ubuntu: libbluetooth-dev)
-* pybluez
+* python3 (ubuntu: `python3-dev`, fedora: `python3-devel`)
+* libbluetooth (ubuntu: `libbluetooth-dev`, fedora: `bluez-libs`)
+* pybluez (ubuntu: `python3-bluez`, fedora: `python3-bluez`
 
+Ubuntu:
 ```
 sudo apt install bluez libbluetooth-dev python3-dev python3-bluez
+```
+
+Fedora:
+```
+sudo dnf install bluez bluez-libs python3-devel python3-bluez
 ```
 
 ## Manual Installation
