@@ -30,9 +30,13 @@ function buildPrefsWidget() {
     // At the time buildPrefsWidget() is called, the window is not yet prepared
     // so if you want to access the headerbar you need to use a small trick
     GLib.timeout_add(GLib.PRIORITY_DEFAULT, 0, () => {
-        const window = prefsWidget.get_toplevel();
-        const headerBar = window.get_titlebar();
-        headerBar.title = `${Me.metadata.name} Preferences`;
+        if (shellVersion < 40) {
+            const window = prefsWidget.get_toplevel();
+            const headerBar = window.get_;
+            headerBar.title = `${Me.metadata.name} Preferences`;
+        } else {
+            const window = prefsWidget.get_root();
+        }
     });
 
     return prefsWidget;
