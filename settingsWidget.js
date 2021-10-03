@@ -181,8 +181,8 @@ var SettingsWidget = GObject.registerClass(
             });
 
             addToBox(hBox, this._getLabel(_('Name')));
-            addToBox(hBox, this._getLabel(_('Status'), false, 60));
-            addToBox(hBox, this._getLabel(_('Icon'), false, 70));
+            addToBox(hBox, this._getLabel(_('Status'), false, 70));
+            addToBox(hBox, this._getLabel(_('Icon'), false, 90));
             addToBox(hBox, this._getLabel(_('Port'), false, 40));
 
             return hBox;
