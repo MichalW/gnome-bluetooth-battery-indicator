@@ -7,7 +7,7 @@ const PopupMenu = imports.ui.popupMenu;
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 const { BluetoothController } = Me.imports.bluetooth;
-const { SCRIPT_PATH, SHELL_SCRIPT_PATH } = Me.imports.constants;
+const { PYTHON_SCRIPT_PATH, SHELL_SCRIPT_PATH } = Me.imports.constants;
 const { IndicatorController } = Me.imports.indicator;
 const { SettingsController } = Me.imports.settings;
 
@@ -101,7 +101,7 @@ class Extension {
     }
 
     _getBatteryLevel(btMacAddress, port, index) {
-        const pyLocation = Me.dir.get_child(SCRIPT_PATH).get_path();
+        const pyLocation = Me.dir.get_child(PYTHON_SCRIPT_PATH).get_path();
         const pythonExec = Utils.getPythonExec();
 
         if (!pythonExec) {
