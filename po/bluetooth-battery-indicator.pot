@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-25 17:37+0200\n"
+"POT-Creation-Date: 2021-11-03 14:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,54 +29,62 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: settingsWidget.js:78
+#: settingsWidget.js:88
 msgid "Indicator Settings"
 msgstr ""
 
-#: settingsWidget.js:93
+#: settingsWidget.js:103
 msgid "Refresh interval (minutes)"
 msgstr ""
 
-#: settingsWidget.js:101
+#: settingsWidget.js:111
 msgid "Hide indicator if there are no devices"
 msgstr ""
 
-#: settingsWidget.js:147
+#: settingsWidget.js:119
+msgid "Get Battery levels using bluetoothctl"
+msgstr ""
+
+#: settingsWidget.js:183
 msgid "Name"
 msgstr ""
 
-#: settingsWidget.js:148
+#: settingsWidget.js:184
 msgid "Status"
 msgstr ""
 
-#: settingsWidget.js:149
+#: settingsWidget.js:185
 msgid "Icon"
 msgstr ""
 
-#: settingsWidget.js:150
+#: settingsWidget.js:186
 msgid "Port"
 msgstr ""
 
-#: settingsWidget.js:170
+#: settingsWidget.js:206
 msgid "Devices"
 msgstr ""
 
-#: settingsWidget.js:216 settingsWidget.js:248
+#: settingsWidget.js:252 settingsWidget.js:285
 msgid "Default"
 msgstr ""
 
-#: settingsWidget.js:217
+#: settingsWidget.js:253
 msgid "Headphones"
 msgstr ""
 
-#: settingsWidget.js:218
+#: settingsWidget.js:254
 msgid "Mouse"
 msgstr ""
 
-#: settingsWidget.js:219
+#: settingsWidget.js:255
 msgid "Keyboard"
 msgstr ""
 
-#: settingsWidget.js:220
+#: settingsWidget.js:256
 msgid "Headset"
+msgstr ""
+
+#: settingsWidget.js:257
+msgid "Game Controller"
 msgstr ""

@@ -30,54 +30,62 @@ msgstr "Indicador de batería Bluetooth"
 msgid "Settings"
 msgstr "Configuración"
 
-#: settingsWidget.js:78
+#: settingsWidget.js:88
 msgid "Indicator Settings"
 msgstr "Ajustes del indicador"
 
-#: settingsWidget.js:93
+#: settingsWidget.js:103
 msgid "Refresh interval (minutes)"
 msgstr "Intervalo de actualización (minutos)"
 
-#: settingsWidget.js:101
+#: settingsWidget.js:111
 msgid "Hide indicator if there are no devices"
 msgstr "Ocultar el indicador si no hay dispositivos"
+
+#: settingsWidget.js:119
+msgid "Get Battery levels using bluetoothctl"
+msgstr "Obtenga niveles de batería usando bluetoothctl"
 
 #: settingsWidget.js:147
 msgid "Name"
 msgstr "Nombre"
 
-#: settingsWidget.js:148
+#: settingsWidget.js:184
 msgid "Status"
 msgstr "Estado"
 
-#: settingsWidget.js:149
+#: settingsWidget.js:185
 msgid "Icon"
 msgstr "Icono"
 
-#: settingsWidget.js:150
+#: settingsWidget.js:186
 msgid "Port"
 msgstr "Puerto"
 
-#: settingsWidget.js:170
+#: settingsWidget.js:206
 msgid "Devices"
 msgstr "Dispositivos"
 
-#: settingsWidget.js:216 settingsWidget.js:248
+#: settingsWidget.js:252 settingsWidget.js:285
 msgid "Default"
 msgstr "Por defecto"
 
-#: settingsWidget.js:217
+#: settingsWidget.js:253
 msgid "Headphones"
 msgstr "Auriculares"
 
-#: settingsWidget.js:218
+#: settingsWidget.js:254
 msgid "Mouse"
 msgstr "Ratón"
 
-#: settingsWidget.js:219
+#: settingsWidget.js:255
 msgid "Keyboard"
 msgstr "Teclado"
 
-#: settingsWidget.js:220
+#: settingsWidget.js:256
 msgid "Headset"
 msgstr "Cascos"
+
+#: settingsWidget.js:257
+msgid "Game Controller"
+msgstr "Control de juego"
