@@ -31,7 +31,7 @@ const addToBox = (box, element) => {
     }
 }
 
-const SettingsWidget = GObject.registerClass(
+var SettingsWidget = GObject.registerClass(
     class MyPrefsWidget extends Gtk.Box {
         _init(params) {
             super._init(params);
@@ -66,6 +66,15 @@ const SettingsWidget = GObject.registerClass(
             addToBox(hBox2, this._getHideIndicatorLabel());
             addToBox(hBox2, this._getHideIndicatorSwitchButton());
 
+            const hBox3 = new Gtk.Box({
+                orientation: Gtk.Orientation.HORIZONTAL,
+                ...getMarginAll(BOX_PADDING),
+            });
+
+            addToBox(hBox3, this._getUseBluetoothctl());
+            addToBox(hBox3, this._getUseBluetoothctlSwitchButton());
+
+
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
                 ...getMarginAll(BOX_PADDING),
@@ -73,6 +82,7 @@ const SettingsWidget = GObject.registerClass(
 
             addToBox(vBox, hBox1);
             addToBox(vBox, hBox2);
+            addToBox(vBox, hBox3);
 
             const frame = new Gtk.Frame({
                 label: _('Indicator Settings'),
@@ -99,6 +109,14 @@ const SettingsWidget = GObject.registerClass(
         _getHideIndicatorLabel() {
             return new Gtk.Label({
                 label: _('Hide indicator if there are no devices'),
+                xalign: 0,
+                hexpand: true,
+            });
+        }
+
+        _getUseBluetoothctl() {
+            return new Gtk.Label({
+                label: _('Get Battery levels using bluetoothctl'),
                 xalign: 0,
                 hexpand: true,
             });
@@ -138,6 +156,24 @@ const SettingsWidget = GObject.registerClass(
             return vBox;
         }
 
+        _getUseBluetoothctlSwitchButton() {
+            const switchButton = new Gtk.Switch({
+                active: this._settings.getUseBluetoothctl()
+            });
+
+            switchButton.connect('notify::active', ({ active }) => {
+                this._settings.setUseBluetoothctl(active)
+            });
+
+            const vBox = new Gtk.Box({
+                orientation: Gtk.Orientation.VERTICAL,
+            });
+
+            addToBox(vBox, switchButton);
+
+            return vBox;
+        }
+
         _getDevicesHeaders() {
             const hBox = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
@@ -145,8 +181,8 @@ const SettingsWidget = GObject.registerClass(
             });
 
             addToBox(hBox, this._getLabel(_('Name')));
-            addToBox(hBox, this._getLabel(_('Status'), false, 60));
-            addToBox(hBox, this._getLabel(_('Icon'), false, 70));
+            addToBox(hBox, this._getLabel(_('Status'), false, 70));
+            addToBox(hBox, this._getLabel(_('Icon'), false, 90));
             addToBox(hBox, this._getLabel(_('Port'), false, 40));
 
             return hBox;
@@ -218,6 +254,7 @@ const SettingsWidget = GObject.registerClass(
                 { key: 'input-mouse-symbolic', text: _('Mouse') },
                 { key: 'input-keyboard-symbolic', text: _('Keyboard') },
                 { key: 'audio-headset-symbolic', text: _('Headset') },
+                { key: 'input-gaming-symbolic', text: _('Game Controller') },
             ];
 
             icons.forEach((icon) => {

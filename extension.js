@@ -7,7 +7,7 @@ const PopupMenu = imports.ui.popupMenu;
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 const { BluetoothController } = Me.imports.bluetooth;
-const { SCRIPT_PATH } = Me.imports.constants;
+const { PYTHON_SCRIPT_PATH, SHELL_SCRIPT_PATH } = Me.imports.constants;
 const { IndicatorController } = Me.imports.indicator;
 const { SettingsController } = Me.imports.settings;
 
@@ -71,7 +71,11 @@ class Extension {
         this._indicator.refresh(devicesToShow);
 
         devicesToShow.forEach((device, index) => {
-            this._getBatteryLevel(device.mac, device.port, index);
+            if (this._settings.getUseBluetoothctl()) {
+                this._getBatteryLevelBluetoothctl(device.mac, index)
+            } else {
+                this._getBatteryLevel(device.mac, device.port, index);
+            }
         });
 
         this._settings.setDevices(devices);
@@ -97,7 +101,7 @@ class Extension {
     }
 
     _getBatteryLevel(btMacAddress, port, index) {
-        const pyLocation = Me.dir.get_child(SCRIPT_PATH).get_path();
+        const pyLocation = Me.dir.get_child(PYTHON_SCRIPT_PATH).get_path();
         const pythonExec = Utils.getPythonExec();
 
         if (!pythonExec) {
@@ -109,6 +113,20 @@ class Extension {
 
         Utils.runPythonScript(
             [pythonExec, pyLocation, address],
+            (result) => {
+                const resultArray = result.split(' ');
+                const percent = resultArray[resultArray.length - 1];
+                this._indicator.setPercentLabel(percent, index);
+            }
+        )
+    }
+
+    _getBatteryLevelBluetoothctl(btMacAddress, index) {
+        const shellLocation = Me.dir.get_child(SHELL_SCRIPT_PATH).get_path();
+
+        // Utils.runPythonScript can run any arbitrary script
+        Utils.runPythonScript(
+            [shellLocation, btMacAddress],
             (result) => {
                 const resultArray = result.split(' ');
                 const percent = resultArray[resultArray.length - 1];

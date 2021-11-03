@@ -1,1 +1,2 @@
-var SCRIPT_PATH = 'Bluetooth_Headset_Battery_Level/bluetooth_battery.py';
+var PYTHON_SCRIPT_PATH = 'Bluetooth_Headset_Battery_Level/bluetooth_battery.py';
+var SHELL_SCRIPT_PATH = 'scripts/bluetoothctl_battery.sh'
