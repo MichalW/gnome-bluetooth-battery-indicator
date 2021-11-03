@@ -1,0 +1,83 @@
+# Italian translation.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Marco <marcxosm@gmail.com>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-25 17:37+0200\n"
+"PO-Revision-Date: 2021-11-03 10:41+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+"Last-Translator: Marco <marcxosm@gmail.com>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: it\n"
+
+#: extension.js:54
+msgid "Refresh"
+msgstr "Aggiorna"
+
+#: indicator.js:11
+msgid "Bluetooth battery Indicator"
+msgstr "Indicatore batteria bluetooth"
+
+#: indicator.js:36
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: settingsWidget.js:78
+msgid "Indicator Settings"
+msgstr "Impostazioni indicatore"
+
+#: settingsWidget.js:93
+msgid "Refresh interval (minutes)"
+msgstr "Intervallo di aggiornamento (minuti)"
+
+#: settingsWidget.js:101
+msgid "Hide indicator if there are no devices"
+msgstr "Nascondi indicatore se non ci sono dispositivi"
+
+#: settingsWidget.js:147
+msgid "Name"
+msgstr "Nome"
+
+#: settingsWidget.js:148
+msgid "Status"
+msgstr "Stato"
+
+#: settingsWidget.js:149
+msgid "Icon"
+msgstr "Icona"
+
+#: settingsWidget.js:150
+msgid "Port"
+msgstr "Porta"
+
+#: settingsWidget.js:170
+msgid "Devices"
+msgstr "Dispositivi"
+
+#: settingsWidget.js:216 settingsWidget.js:248
+msgid "Default"
+msgstr "Predefinito"
+
+#: settingsWidget.js:217
+msgid "Headphones"
+msgstr "Cuffie"
+
+#: settingsWidget.js:218
+msgid "Mouse"
+msgstr "Mouse"
+
+#: settingsWidget.js:219
+msgid "Keyboard"
+msgstr "Tastiera"
+
+#: settingsWidget.js:220
+msgid "Headset"
+msgstr "Cuffie con microfono"
