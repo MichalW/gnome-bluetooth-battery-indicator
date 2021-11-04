@@ -5,7 +5,7 @@ translation:
 
 build:
 	glib-compile-schemas ./schemas
-	gnome-extensions pack -f --extra-source=Bluetooth_Headset_Battery_Level/ --extra-source=bluetooth.js --extra-source=constants.js --extra-source=indicator.js --extra-source=LICENSE --extra-source=README.md --extra-source=settings.js --extra-source=settingsWidget.js --extra-source=utils.js . --out-dir=./
+	gnome-extensions pack -f --extra-source=Bluetooth_Headset_Battery_Level/ --extra-source=scripts/ --extra-source=bluetooth.js --extra-source=constants.js --extra-source=indicator.js --extra-source=LICENSE --extra-source=README.md --extra-source=settings.js --extra-source=settingsWidget.js --extra-source=utils.js . --out-dir=./
 
 install:
 	gnome-extensions install -f bluetooth-battery@michalw.github.com.shell-extension.zip
