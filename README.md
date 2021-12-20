@@ -46,7 +46,7 @@ Show debug log of this plugin: `journalctl -f -o cat /usr/bin/gnome-shell`
 
 if `Get battery levels using bluetoothctl` is enabled, run this script to see the error message: <https://github.com/MichalW/gnome-bluetooth-battery-indicator/blob/master/scripts/bluetoothctl_battery.sh>
 
-if `Get battery levels using bluetoothctl` is disabled, run this script to see the error message: <https://github.com/TheWeirdDev/Bluetooth_Headset_Battery_Level/blob/81cd8fd02242e35a30fe9fd99b17b96ecd63c05b/bluetooth_battery.py>
+if `Get battery levels using bluetoothctl` is disabled, run this script to see the error message: <https://github.com/TheWeirdDev/Bluetooth_Headset_Battery_Level/blob/master/bluetooth_battery.py>
 
 
 ## Sources
