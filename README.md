@@ -38,8 +38,15 @@ git submodule update --init
 cp -R gnome-bluetooth-battery-indicator ~/.local/share/gnome-shell/extensions/bluetooth-battery@michalw.github.com
 ```
 
-## Debug
-journalctl -f -o cat /usr/bin/gnome-shell
+## Troubleshoot
+
+Show debug log of this plugin: `journalctl -f -o cat /usr/bin/gnome-shell`
+
+### If it failed to show battery percentage
+
+if `Get battery levels using bluetoothctl` is enabled, run this script to see the error message: <https://github.com/MichalW/gnome-bluetooth-battery-indicator/blob/master/scripts/bluetoothctl_battery.sh>
+
+if `Get battery levels using bluetoothctl` is disabled, run this script to see the error message: <https://github.com/TheWeirdDev/Bluetooth_Headset_Battery_Level/blob/master/bluetooth_battery.py>
 
 
 ## Sources
