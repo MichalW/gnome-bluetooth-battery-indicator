@@ -71,9 +71,16 @@ var SettingsWidget = GObject.registerClass(
                 ...getMarginAll(BOX_PADDING),
             });
 
-            addToBox(hBox3, this._getUseBluetoothctl());
+            addToBox(hBox3, this._getUseBluetoothctlLabel());
             addToBox(hBox3, this._getUseBluetoothctlSwitchButton());
 
+            const hBox4 = new Gtk.Box({
+                orientation: Gtk.Orientation.HORIZONTAL,
+                ...getMarginAll(BOX_PADDING),
+            });
+
+            addToBox(hBox4, this._getUseToggleBluetoothLabel());
+            addToBox(hBox4, this._getUseToggleBluetoothSwitchButton());
 
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
@@ -83,6 +90,7 @@ var SettingsWidget = GObject.registerClass(
             addToBox(vBox, hBox1);
             addToBox(vBox, hBox2);
             addToBox(vBox, hBox3);
+            addToBox(vBox, hBox4);
 
             const frame = new Gtk.Frame({
                 label: _('Indicator Settings'),
@@ -114,9 +122,17 @@ var SettingsWidget = GObject.registerClass(
             });
         }
 
-        _getUseBluetoothctl() {
+        _getUseBluetoothctlLabel() {
             return new Gtk.Label({
                 label: _('Get Battery levels using bluetoothctl'),
+                xalign: 0,
+                hexpand: true,
+            });
+        }
+
+        _getUseToggleBluetoothLabel() {
+            return new Gtk.Label({
+                label: _('Disconnect the device before get battery level'),
                 xalign: 0,
                 hexpand: true,
             });
@@ -139,30 +155,33 @@ var SettingsWidget = GObject.registerClass(
         }
 
         _getHideIndicatorSwitchButton() {
-            const switchButton = new Gtk.Switch({
-                active: this._settings.getHideIndicator()
-            });
-
-            switchButton.connect('notify::active', ({ active }) => {
-                this._settings.setHideIndicator(active);
-            });
-
-            const vBox = new Gtk.Box({
-                orientation: Gtk.Orientation.VERTICAL,
-            });
-
-            addToBox(vBox, switchButton);
-
-            return vBox;
+            return this._getSwitchButton(
+              () => this._settings.getHideIndicator(),
+              (value) => this._settings.setHideIndicator(value)
+            );
         }
 
         _getUseBluetoothctlSwitchButton() {
+            return this._getSwitchButton(
+              () => this._settings.getUseBluetoothctl(),
+              (value) => this._settings.setUseBluetoothctl(value)
+            );
+        }
+
+        _getUseToggleBluetoothSwitchButton() {
+            return this._getSwitchButton(
+              () => this._settings.getUseToggleBluetooth(),
+              (value) => this._settings.setUseToggleBluetooth(value),
+            );
+        }
+
+        _getSwitchButton(getValue, setValue) {
             const switchButton = new Gtk.Switch({
-                active: this._settings.getUseBluetoothctl()
+                active: getValue()
             });
 
             switchButton.connect('notify::active', ({ active }) => {
-                this._settings.setUseBluetoothctl(active)
+                setValue(active)
             });
 
             const vBox = new Gtk.Box({

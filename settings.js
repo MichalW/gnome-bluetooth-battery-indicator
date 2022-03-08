@@ -4,6 +4,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 const INTERVAL_KEY = 'interval';
 const HIDE_INDICATOR_KEY = 'hide-indicator';
 const USE_BLUETOOTHCTL_KEY = 'use-bluetoothctl';
+const USE_TOGGLE_BLUETOOTH = 'use-toggle-bluetooth';
 const DEVICES_KEY = 'devices';
 
 var SettingsController = class SettingsController {
@@ -33,6 +34,14 @@ var SettingsController = class SettingsController {
 
     setUseBluetoothctl(value) {
         this._settings.set_boolean(USE_BLUETOOTHCTL_KEY, value);
+    }
+
+    getUseToggleBluetooth() {
+        return this._settings.get_boolean(USE_TOGGLE_BLUETOOTH);
+    }
+
+    setUseToggleBluetooth(value) {
+        this._settings.set_boolean(USE_TOGGLE_BLUETOOTH, value);
     }
 
     getDevices() {

@@ -7,7 +7,7 @@ const PopupMenu = imports.ui.popupMenu;
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 const { BluetoothController } = Me.imports.bluetooth;
-const { PYTHON_SCRIPT_PATH, SHELL_SCRIPT_PATH } = Me.imports.constants;
+const { PYTHON_SCRIPT_PATH, SHELL_SCRIPT_PATH, TOGGLE_SCRIPT_PATH } = Me.imports.constants;
 const { IndicatorController } = Me.imports.indicator;
 const { SettingsController } = Me.imports.settings;
 
@@ -39,7 +39,9 @@ class Extension {
 
     _enableSignals() {
         this._connectSignal(this._controller, 'device-changed', () => {
-            this._refresh();
+            if (!this._settings.getUseToggleBluetooth()) {
+                this._refresh();
+            }
         });
     }
 
@@ -73,6 +75,11 @@ class Extension {
         devicesToShow.forEach((device, index) => {
             if (this._settings.getUseBluetoothctl()) {
                 this._getBatteryLevelBluetoothctl(device.mac, index)
+            } else if (this._settings.getUseToggleBluetooth()) {
+                this._toggleBluetoothDevice(device.mac, false, () => {
+                    this._getBatteryLevel(device.mac, device.port, index);
+                    this._toggleBluetoothDevice(device.mac, true);
+                });
             } else {
                 this._getBatteryLevel(device.mac, device.port, index);
             }
@@ -126,12 +133,22 @@ class Extension {
 
         // Utils.runPythonScript can run any arbitrary script
         Utils.runPythonScript(
-            [shellLocation, btMacAddress],
-            (result) => {
-                const resultArray = result.split(' ');
-                const percent = resultArray[resultArray.length - 1];
-                this._indicator.setPercentLabel(percent, index);
-            }
+          [shellLocation, btMacAddress],
+          (result) => {
+              const resultArray = result.split(' ');
+              const percent = resultArray[resultArray.length - 1];
+              this._indicator.setPercentLabel(percent, index);
+          }
+        )
+    }
+
+    _toggleBluetoothDevice(btMacAddress, value, callback) {
+        const shellLocation = Me.dir.get_child(TOGGLE_SCRIPT_PATH).get_path();
+
+        // Utils.runPythonScript can run any arbitrary script
+        Utils.runPythonScript(
+          [shellLocation, btMacAddress, value ? 'connect' : 'disconnect'],
+          callback
         )
     }
 
