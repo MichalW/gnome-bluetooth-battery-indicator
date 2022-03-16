@@ -48,7 +48,7 @@ function runPythonScript(argv, onSuccess) {
             const [, stdout] = proc.communicate_utf8_finish(res);
 
             if (proc.get_successful() && stdout) {
-                log('Bluetooth battery indicator: ' + stdout);
+                log('[bluetooth-battery-indicator] Percentage from script: ' + stdout);
 
                 onSuccess(stdout);
             }
