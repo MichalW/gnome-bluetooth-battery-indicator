@@ -73,15 +73,33 @@ class Extension {
         this._indicator.refresh(devicesToShow);
 
         devicesToShow.forEach((device, index) => {
-            if (this._settings.getUseBluetoothctl()) {
-                this._getBatteryLevelBluetoothctl(device.mac, index)
-            } else if (this._settings.getUseToggleBluetooth()) {
-                this._toggleBluetoothDevice(device.mac, false, () => {
-                    this._getBatteryLevel(device.mac, device.port, index);
-                    this._toggleBluetoothDevice(device.mac, true);
-                });
-            } else {
-                this._getBatteryLevel(device.mac, device.port, index);
+            log("[bluetooth-battery-indicator] Using percentage source '" + device.percentageSource
+                + "' for device '" + device.name + "' (" + device.mac + ").");
+
+            switch (device.percentageSource) {
+                case 'python-script':
+                    if (this._settings.getUseToggleBluetooth()) {
+                        this._toggleBluetoothDevice(device.mac, false, () => {
+                            this._getBatteryLevel(device.mac, device.port, index);
+                            this._toggleBluetoothDevice(device.mac, true);
+                        });
+                    } else {
+                        this._getBatteryLevel(device.mac, device.port, index);
+                    }
+                    break;
+
+                case 'bluetoothctl':
+                    this._getBatteryLevelBluetoothctl(device.mac, index)
+                    break;
+
+                case 'upower':
+                    this._getBatteryLevelUpower(device.mac, index);
+                    break;
+
+                default:
+                    log("[bluetooth-battery-indicator] Unknown percentage source '" + device.percentageSource + "'");
+                    throw new TypeError("Unknown percentage source '" + device.percentageSource + "'");
+                    break;
             }
         });
 
