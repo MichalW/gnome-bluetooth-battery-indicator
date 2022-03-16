@@ -7,7 +7,7 @@ const PopupMenu = imports.ui.popupMenu;
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 const { BluetoothController } = Me.imports.bluetooth;
-const { PYTHON_SCRIPT_PATH, SHELL_SCRIPT_PATH, TOGGLE_SCRIPT_PATH } = Me.imports.constants;
+const { PYTHON_SCRIPT_PATH, BTCTL_SCRIPT_PATH, UPOWER_SCRIPT_PATH, TOGGLE_SCRIPT_PATH } = Me.imports.constants;
 const { IndicatorController } = Me.imports.indicator;
 const { SettingsController } = Me.imports.settings;
 
@@ -129,7 +129,7 @@ class Extension {
     }
 
     _getBatteryLevelBluetoothctl(btMacAddress, index) {
-        const shellLocation = Me.dir.get_child(SHELL_SCRIPT_PATH).get_path();
+        const shellLocation = Me.dir.get_child(BTCTL_SCRIPT_PATH).get_path();
 
         // Utils.runPythonScript can run any arbitrary script
         Utils.runPythonScript(
@@ -139,6 +139,20 @@ class Extension {
               const percent = resultArray[resultArray.length - 1];
               this._indicator.setPercentLabel(percent, index);
           }
+        )
+    }
+
+    _getBatteryLevelUpower(btMacAddress, index) {
+        const shellLocation = Me.dir.get_child(UPOWER_SCRIPT_PATH).get_path();
+
+        // Utils.runPythonScript can run any arbitrary script
+        Utils.runPythonScript(
+            [shellLocation, btMacAddress],
+            (result) => {
+                const resultArray = result.split(' ');
+                const percent = resultArray[resultArray.length - 1];
+                this._indicator.setPercentLabel(percent, index);
+            }
         )
     }
 
