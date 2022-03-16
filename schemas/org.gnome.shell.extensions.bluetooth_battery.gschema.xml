@@ -14,11 +14,6 @@
             <summary>Refresh interval (minutes)</summary>
         </key>
 
-        <key name="use-bluetoothctl" type="b">
-            <default>false</default>
-            <summary>Use bluetoothctl for batter level</summary>
-        </key>
-
         <key name="use-toggle-bluetooth" type="b">
             <default>false</default>
             <summary>Disconnect the device before get battery level</summary>
