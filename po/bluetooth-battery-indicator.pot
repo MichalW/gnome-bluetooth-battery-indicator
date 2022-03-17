@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-08 14:27+0100\n"
+"POT-Creation-Date: 2022-03-17 12:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:56
+#: extension.js:55
 msgid "Refresh"
+msgstr ""
+
+#: extension.js:63
+msgid "Force refresh bluetooth"
 msgstr ""
 
 #: indicator.js:11
@@ -29,66 +33,78 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: settingsWidget.js:96
+#: settingsWidget.js:78
 msgid "Indicator Settings"
 msgstr ""
 
-#: settingsWidget.js:111
+#: settingsWidget.js:93
 msgid "Refresh interval (minutes)"
 msgstr ""
 
-#: settingsWidget.js:119
+#: settingsWidget.js:101
 msgid "Hide indicator if there are no devices"
 msgstr ""
 
-#: settingsWidget.js:127
-msgid "Get Battery levels using bluetoothctl"
-msgstr ""
-
-#: settingsWidget.js:135
-msgid "Disconnect the device before get battery level"
-msgstr ""
-
-#: settingsWidget.js:202
+#: settingsWidget.js:154
 msgid "Name"
 msgstr ""
 
-#: settingsWidget.js:203
+#: settingsWidget.js:155
 msgid "Status"
 msgstr ""
 
-#: settingsWidget.js:204
+#: settingsWidget.js:156
 msgid "Icon"
 msgstr ""
 
-#: settingsWidget.js:205
+#: settingsWidget.js:157
 msgid "Port"
 msgstr ""
 
-#: settingsWidget.js:225
+#: settingsWidget.js:158
+msgid "% Source"
+msgstr ""
+
+#: settingsWidget.js:178
 msgid "Devices"
 msgstr ""
 
-#: settingsWidget.js:271 settingsWidget.js:304
+#: settingsWidget.js:226 settingsWidget.js:260
 msgid "Default"
 msgstr ""
 
-#: settingsWidget.js:272
+#: settingsWidget.js:227
 msgid "Headphones"
 msgstr ""
 
-#: settingsWidget.js:273
+#: settingsWidget.js:228
 msgid "Mouse"
 msgstr ""
 
-#: settingsWidget.js:274
+#: settingsWidget.js:229
 msgid "Keyboard"
 msgstr ""
 
-#: settingsWidget.js:275
+#: settingsWidget.js:230
 msgid "Headset"
 msgstr ""
 
-#: settingsWidget.js:276
+#: settingsWidget.js:231
 msgid "Game Controller"
+msgstr ""
+
+#: settingsWidget.js:232
+msgid "Battery"
+msgstr ""
+
+#: settingsWidget.js:307
+msgid "Python script"
+msgstr ""
+
+#: settingsWidget.js:308
+msgid "Bluetoothctl"
+msgstr ""
+
+#: settingsWidget.js:309
+msgid "UPower"
 msgstr ""

@@ -27,14 +27,6 @@ var SettingsController = class SettingsController {
         this._settings.set_boolean(HIDE_INDICATOR_KEY, value);
     }
 
-    getUseToggleBluetooth() {
-        return this._settings.get_boolean(USE_TOGGLE_BLUETOOTH);
-    }
-
-    setUseToggleBluetooth(value) {
-        this._settings.set_boolean(USE_TOGGLE_BLUETOOTH, value);
-    }
-
     getDevices() {
         return this._settings.get_strv(DEVICES_KEY).map(JSON.parse);
     }

@@ -18,9 +18,13 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: extension.js:56
+#: extension.js:55
 msgid "Refresh"
 msgstr "Odśwież"
+
+#: extension.js:63
+msgid "Force refresh bluetooth"
+msgstr "Wymuś odświeżenie bluetooth"
 
 #: indicator.js:11
 msgid "Bluetooth battery Indicator"
@@ -30,66 +34,78 @@ msgstr "Bluetooth battery Indicator"
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: settingsWidget.js:96
+#: settingsWidget.js:78
 msgid "Indicator Settings"
 msgstr "Ustawienia"
 
-#: settingsWidget.js:111
+#: settingsWidget.js:93
 msgid "Refresh interval (minutes)"
 msgstr "Interwał odświeżania (minuty)"
 
-#: settingsWidget.js:119
+#: settingsWidget.js:101
 msgid "Hide indicator if there are no devices"
 msgstr "Ukryj jeśli nie ma urządzeń"
 
-#: settingsWidget.js:119
-msgid "Get Battery levels using bluetoothctl"
-msgstr "Pobierz poziom baterii za pomocą bluetoothctl"
-
-#: settingsWidget.js:135
-msgid "Disconnect the device before get battery level"
-msgstr "Odłącz urządzenie przed pobraniem informacji poziomie baterii"
-
-#: settingsWidget.js:202
+#: settingsWidget.js:154
 msgid "Name"
 msgstr "Nazwa"
 
-#: settingsWidget.js:203
+#: settingsWidget.js:155
 msgid "Status"
 msgstr "Status"
 
-#: settingsWidget.js:204
+#: settingsWidget.js:156
 msgid "Icon"
 msgstr "Ikona"
 
-#: settingsWidget.js:205
+#: settingsWidget.js:157
 msgid "Port"
 msgstr "Port"
 
-#: settingsWidget.js:225
+#: settingsWidget.js:158
+msgid "% Source"
+msgstr ""
+
+#: settingsWidget.js:178
 msgid "Devices"
 msgstr "Urządzenie"
 
-#: settingsWidget.js:271 settingsWidget.js:304
+#: settingsWidget.js:226 settingsWidget.js:260
 msgid "Default"
 msgstr "Domyślnie"
 
-#: settingsWidget.js:272
+#: settingsWidget.js:227
 msgid "Headphones"
 msgstr "Słuchawki"
 
-#: settingsWidget.js:273
+#: settingsWidget.js:228
 msgid "Mouse"
 msgstr "Myszka"
 
-#: settingsWidget.js:274
+#: settingsWidget.js:229
 msgid "Keyboard"
 msgstr "Klawiatura"
 
-#: settingsWidget.js:275
+#: settingsWidget.js:230
 msgid "Headset"
 msgstr "Zestaw słuchawkowy"
 
-#: settingsWidget.js:276
+#: settingsWidget.js:231
 msgid "Game Controller"
 msgstr "Kontroler gry"
+
+#: settingsWidget.js:232
+msgid "Battery"
+msgstr "Bateria"
+
+#: settingsWidget.js:307
+msgid "Python script"
+msgstr ""
+
+#: settingsWidget.js:308
+msgid "Bluetoothctl"
+msgstr ""
+
+#: settingsWidget.js:309
+msgid "UPower"
+msgstr ""

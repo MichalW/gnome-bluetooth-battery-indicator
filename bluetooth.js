@@ -84,5 +84,6 @@ var BluetoothDevice = class {
         this.isPaired = this._model.get_value(iter, GnomeBluetooth.Column.PAIRED);
         this.mac = this._model.get_value(iter, GnomeBluetooth.Column.ADDRESS);
         this.isDefault = this._model.get_value(iter, GnomeBluetooth.Column.DEFAULT);
+        this.defaultIcon = this._model.get_value(iter, GnomeBluetooth.Column.ICON);
     }
 }

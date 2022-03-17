@@ -66,14 +66,6 @@ var SettingsWidget = GObject.registerClass(
             addToBox(hBox2, this._getHideIndicatorLabel());
             addToBox(hBox2, this._getHideIndicatorSwitchButton());
 
-            const hBox4 = new Gtk.Box({
-                orientation: Gtk.Orientation.HORIZONTAL,
-                ...getMarginAll(BOX_PADDING),
-            });
-
-            addToBox(hBox4, this._getUseToggleBluetoothLabel());
-            addToBox(hBox4, this._getUseToggleBluetoothSwitchButton());
-
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
                 ...getMarginAll(BOX_PADDING),
@@ -81,7 +73,6 @@ var SettingsWidget = GObject.registerClass(
 
             addToBox(vBox, hBox1);
             addToBox(vBox, hBox2);
-            addToBox(vBox, hBox4);
 
             const frame = new Gtk.Frame({
                 label: _('Indicator Settings'),
@@ -113,14 +104,6 @@ var SettingsWidget = GObject.registerClass(
             });
         }
 
-        _getUseToggleBluetoothLabel() {
-            return new Gtk.Label({
-                label: _('Disconnect the device before get battery level'),
-                xalign: 0,
-                hexpand: true,
-            });
-        }
-
         _getIntervalSpinButton() {
             const spinButton = new Gtk.SpinButton();
             const interval = this._settings.getInterval();
@@ -141,13 +124,6 @@ var SettingsWidget = GObject.registerClass(
             return this._getSwitchButton(
               () => this._settings.getHideIndicator(),
               (value) => this._settings.setHideIndicator(value)
-            );
-        }
-
-        _getUseToggleBluetoothSwitchButton() {
-            return this._getSwitchButton(
-              () => this._settings.getUseToggleBluetooth(),
-              (value) => this._settings.setUseToggleBluetooth(value),
             );
         }
 
@@ -244,14 +220,16 @@ var SettingsWidget = GObject.registerClass(
 
         _getDeviceIconComboBox(device) {
             const comboBox = new Gtk.ComboBoxText();
+            const defaultIcon = device.defaultIcon || 'battery-full-symbolic';
 
             const icons = [
-                { key: 'battery-full-symbolic', text: _('Default') },
+                { key: defaultIcon, text: _('Default') },
                 { key: 'audio-headphones-symbolic', text: _('Headphones') },
                 { key: 'input-mouse-symbolic', text: _('Mouse') },
                 { key: 'input-keyboard-symbolic', text: _('Keyboard') },
                 { key: 'audio-headset-symbolic', text: _('Headset') },
                 { key: 'input-gaming-symbolic', text: _('Game Controller') },
+                { key: 'battery-full-symbolic', text: _('Battery') },
             ];
 
             icons.forEach((icon) => {

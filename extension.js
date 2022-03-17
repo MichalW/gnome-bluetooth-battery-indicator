@@ -29,6 +29,7 @@ class Extension {
 
         this._controller.enable();
         this._getRefreshButton();
+        this._getForceRefreshButton();
 
         this._loop = MainLoop.idle_add(this._runLoop.bind(this));
 
@@ -39,9 +40,7 @@ class Extension {
 
     _enableSignals() {
         this._connectSignal(this._controller, 'device-changed', () => {
-            if (!this._settings.getUseToggleBluetooth()) {
-                this._refresh();
-            }
+            this._refresh();
         });
     }
 
@@ -60,7 +59,15 @@ class Extension {
         this._indicator._addMenuItem(refreshItem);
     }
 
-    _refresh() {
+    _getForceRefreshButton() {
+        const forceRefreshItem = new PopupMenu.PopupMenuItem(_('Force refresh bluetooth'));
+        forceRefreshItem.connect('activate', () => {
+            this._forceRefresh();
+        });
+        this._indicator._addMenuItem(forceRefreshItem);
+    }
+
+    _refresh(force = false) {
         const settingsDevices = this._settings.getDevices();
         const settingsHideIndicator = this._settings.getHideIndicator();
         const pairedDevices = this._controller.getPairedDevices();
@@ -78,7 +85,7 @@ class Extension {
 
             switch (device.percentageSource) {
                 case 'python-script':
-                    if (this._settings.getUseToggleBluetooth()) {
+                    if (force) {
                         this._toggleBluetoothDevice(device.mac, false, () => {
                             this._getBatteryLevel(device.mac, device.port, index);
                             this._toggleBluetoothDevice(device.mac, true);
@@ -110,6 +117,10 @@ class Extension {
         }
     }
 
+    _forceRefresh() {
+        this._refresh(true);
+    }
+
     _mergeDevices(settingsDevices, pairedDevices) {
         const filterByMac = (mac) => (device) => device.mac === mac;
         const newDevices = pairedDevices.filter((device) => !settingsDevices.some(filterByMac(device.mac)));
@@ -125,6 +136,12 @@ class Extension {
         ];
     }
 
+    _setPercentFromScript = (index) => (result) => {
+        const resultArray = result.split(' ');
+        const percent = resultArray[resultArray.length - 1];
+        this._indicator.setPercentLabel(percent, index);
+    };
+
     _getBatteryLevel(btMacAddress, port, index) {
         const pyLocation = Me.dir.get_child(PYTHON_SCRIPT_PATH).get_path();
         const pythonExec = Utils.getPythonExec();
@@ -137,12 +154,8 @@ class Extension {
         const address = port ? `${btMacAddress}.${port}` : btMacAddress;
 
         Utils.runPythonScript(
-            [pythonExec, pyLocation, address],
-            (result) => {
-                const resultArray = result.split(' ');
-                const percent = resultArray[resultArray.length - 1];
-                this._indicator.setPercentLabel(percent, index);
-            }
+          [pythonExec, pyLocation, address],
+          this._setPercentFromScript(index)
         )
     }
 
@@ -152,11 +165,7 @@ class Extension {
         // Utils.runPythonScript can run any arbitrary script
         Utils.runPythonScript(
           [shellLocation, btMacAddress],
-          (result) => {
-              const resultArray = result.split(' ');
-              const percent = resultArray[resultArray.length - 1];
-              this._indicator.setPercentLabel(percent, index);
-          }
+          this._setPercentFromScript(index)
         )
     }
 
@@ -165,12 +174,8 @@ class Extension {
 
         // Utils.runPythonScript can run any arbitrary script
         Utils.runPythonScript(
-            [shellLocation, btMacAddress],
-            (result) => {
-                const resultArray = result.split(' ');
-                const percent = resultArray[resultArray.length - 1];
-                this._indicator.setPercentLabel(percent, index);
-            }
+          [shellLocation, btMacAddress],
+          this._setPercentFromScript(index)
         )
     }
 
