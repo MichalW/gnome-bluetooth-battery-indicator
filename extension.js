@@ -7,7 +7,7 @@ const PopupMenu = imports.ui.popupMenu;
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 const { BluetoothController } = Me.imports.bluetooth;
-const { PYTHON_SCRIPT_PATH, SHELL_SCRIPT_PATH, TOGGLE_SCRIPT_PATH } = Me.imports.constants;
+const { PYTHON_SCRIPT_PATH, BTCTL_SCRIPT_PATH, UPOWER_SCRIPT_PATH, TOGGLE_SCRIPT_PATH } = Me.imports.constants;
 const { IndicatorController } = Me.imports.indicator;
 const { SettingsController } = Me.imports.settings;
 
@@ -73,15 +73,33 @@ class Extension {
         this._indicator.refresh(devicesToShow);
 
         devicesToShow.forEach((device, index) => {
-            if (this._settings.getUseBluetoothctl()) {
-                this._getBatteryLevelBluetoothctl(device.mac, index)
-            } else if (this._settings.getUseToggleBluetooth()) {
-                this._toggleBluetoothDevice(device.mac, false, () => {
-                    this._getBatteryLevel(device.mac, device.port, index);
-                    this._toggleBluetoothDevice(device.mac, true);
-                });
-            } else {
-                this._getBatteryLevel(device.mac, device.port, index);
+            log("[bluetooth-battery-indicator] Using percentage source '" + device.percentageSource
+                + "' for device '" + device.name + "' (" + device.mac + ").");
+
+            switch (device.percentageSource) {
+                case 'python-script':
+                    if (this._settings.getUseToggleBluetooth()) {
+                        this._toggleBluetoothDevice(device.mac, false, () => {
+                            this._getBatteryLevel(device.mac, device.port, index);
+                            this._toggleBluetoothDevice(device.mac, true);
+                        });
+                    } else {
+                        this._getBatteryLevel(device.mac, device.port, index);
+                    }
+                    break;
+
+                case 'bluetoothctl':
+                    this._getBatteryLevelBluetoothctl(device.mac, index)
+                    break;
+
+                case 'upower':
+                    this._getBatteryLevelUpower(device.mac, index);
+                    break;
+
+                default:
+                    log("[bluetooth-battery-indicator] Unknown percentage source '" + device.percentageSource + "'");
+                    throw new TypeError("Unknown percentage source '" + device.percentageSource + "'");
+                    break;
             }
         });
 
@@ -129,7 +147,7 @@ class Extension {
     }
 
     _getBatteryLevelBluetoothctl(btMacAddress, index) {
-        const shellLocation = Me.dir.get_child(SHELL_SCRIPT_PATH).get_path();
+        const shellLocation = Me.dir.get_child(BTCTL_SCRIPT_PATH).get_path();
 
         // Utils.runPythonScript can run any arbitrary script
         Utils.runPythonScript(
@@ -139,6 +157,20 @@ class Extension {
               const percent = resultArray[resultArray.length - 1];
               this._indicator.setPercentLabel(percent, index);
           }
+        )
+    }
+
+    _getBatteryLevelUpower(btMacAddress, index) {
+        const shellLocation = Me.dir.get_child(UPOWER_SCRIPT_PATH).get_path();
+
+        // Utils.runPythonScript can run any arbitrary script
+        Utils.runPythonScript(
+            [shellLocation, btMacAddress],
+            (result) => {
+                const resultArray = result.split(' ');
+                const percent = resultArray[resultArray.length - 1];
+                this._indicator.setPercentLabel(percent, index);
+            }
         )
     }
 

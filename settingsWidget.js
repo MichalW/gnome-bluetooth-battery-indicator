@@ -66,14 +66,6 @@ var SettingsWidget = GObject.registerClass(
             addToBox(hBox2, this._getHideIndicatorLabel());
             addToBox(hBox2, this._getHideIndicatorSwitchButton());
 
-            const hBox3 = new Gtk.Box({
-                orientation: Gtk.Orientation.HORIZONTAL,
-                ...getMarginAll(BOX_PADDING),
-            });
-
-            addToBox(hBox3, this._getUseBluetoothctlLabel());
-            addToBox(hBox3, this._getUseBluetoothctlSwitchButton());
-
             const hBox4 = new Gtk.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
                 ...getMarginAll(BOX_PADDING),
@@ -89,7 +81,6 @@ var SettingsWidget = GObject.registerClass(
 
             addToBox(vBox, hBox1);
             addToBox(vBox, hBox2);
-            addToBox(vBox, hBox3);
             addToBox(vBox, hBox4);
 
             const frame = new Gtk.Frame({
@@ -117,14 +108,6 @@ var SettingsWidget = GObject.registerClass(
         _getHideIndicatorLabel() {
             return new Gtk.Label({
                 label: _('Hide indicator if there are no devices'),
-                xalign: 0,
-                hexpand: true,
-            });
-        }
-
-        _getUseBluetoothctlLabel() {
-            return new Gtk.Label({
-                label: _('Get Battery levels using bluetoothctl'),
                 xalign: 0,
                 hexpand: true,
             });
@@ -161,13 +144,6 @@ var SettingsWidget = GObject.registerClass(
             );
         }
 
-        _getUseBluetoothctlSwitchButton() {
-            return this._getSwitchButton(
-              () => this._settings.getUseBluetoothctl(),
-              (value) => this._settings.setUseBluetoothctl(value)
-            );
-        }
-
         _getUseToggleBluetoothSwitchButton() {
             return this._getSwitchButton(
               () => this._settings.getUseToggleBluetooth(),
@@ -200,9 +176,10 @@ var SettingsWidget = GObject.registerClass(
             });
 
             addToBox(hBox, this._getLabel(_('Name')));
-            addToBox(hBox, this._getLabel(_('Status'), false, 70));
+            addToBox(hBox, this._getLabel(_('Status'), false, 80));
             addToBox(hBox, this._getLabel(_('Icon'), false, 90));
-            addToBox(hBox, this._getLabel(_('Port'), false, 40));
+            addToBox(hBox, this._getLabel(_('Port'), false, 70));
+            addToBox(hBox, this._getLabel(_('% Source'), false, 40));
 
             return hBox;
         }
@@ -244,6 +221,7 @@ var SettingsWidget = GObject.registerClass(
             addToBox(hBox, this._getDeviceSwitchButton(device));
             addToBox(hBox, this._getDeviceIconComboBox(device));
             addToBox(hBox, this._getPortComboBox(device));
+            addToBox(hBox, this._getPercentageSourceComboBox(device));
 
             return hBox;
         }
@@ -338,6 +316,38 @@ var SettingsWidget = GObject.registerClass(
             addToBox(vBox, switchButton);
 
             return vBox;
+        }
+
+        _getPercentageSourceComboBox(device) {
+            const box = new Gtk.Box({
+                margin_start: BOX_PADDING,
+            })
+
+            const comboBox = new Gtk.ComboBoxText();
+
+            const sources = [
+                { key: 'python-script', text: _('Python script') },
+                { key: 'bluetoothctl', text: _('Bluetoothctl') },
+                { key: 'upower', text: _('UPower') }
+            ];
+
+            sources.forEach((src) => {
+                comboBox.append_text(src.text);
+            })
+            const activeIndex = sources.findIndex(({ key }) => device.percentageSource === key);
+            comboBox.set_active(activeIndex !== -1 ? activeIndex : 0);
+
+            comboBox.connect('changed', () => {
+                const i = comboBox.get_active();
+                this._settings.setDevice({
+                    mac: device.mac,
+                    percentageSource: sources[i].key,
+                });
+            });
+
+            addToBox(box, comboBox);
+
+            return box;
         }
     }
 );
