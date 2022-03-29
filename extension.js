@@ -136,11 +136,13 @@ class Extension {
         ];
     }
 
-    _setPercentFromScript = (index) => (result) => {
-        const resultArray = result.split(' ');
-        const percent = resultArray[resultArray.length - 1];
-        this._indicator.setPercentLabel(percent, index);
-    };
+    _setPercentFromScript(index) {
+        return (result) => {
+            const resultArray = result.split(' ');
+            const percent = resultArray[resultArray.length - 1];
+            this._indicator.setPercentLabel(percent, index);
+        };
+    }
 
     _getBatteryLevel(btMacAddress, port, index) {
         const pyLocation = Me.dir.get_child(PYTHON_SCRIPT_PATH).get_path();
