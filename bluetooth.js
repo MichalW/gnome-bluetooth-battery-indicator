@@ -11,9 +11,9 @@ var BluetoothController = class {
     }
 
     enable() {
-        this._connectSignal(this._model, 'items-changed', () => {
-            this.emit('device-changed');
-        });
+        this._connectSignal(this._client, 'device-added', () => this.emit('device-changed'));
+        this._connectSignal(this._client, 'device-removed', () => this.emit('device-changed'));
+        this._connectSignal(this._model, 'items-changed', () => this.emit('device-changed'));
     }
 
     getDevices() {
