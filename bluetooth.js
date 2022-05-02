@@ -7,36 +7,42 @@ const Utils = Me.imports.utils;
 var BluetoothController = class {
     constructor() {
         this._client = new GnomeBluetooth.Client();
-        this._model = this._client.get_model();
+        this._deviceNotifyConnected = new Set();
     }
 
     enable() {
-        this._connectSignal(this._model, 'row-changed', () => {
+        
+        this._connectSignal(this._client, 'device-added', (c,device) => {
+            this.emit('device-changed');
+            this._connectDeviceNotify(device);
+        });
+        this._connectSignal(this._client, 'device-removed', () => {
             this.emit('device-changed');
         });
-        this._connectSignal(this._model, 'row-deleted', () => {
+        this._connectSignal(this._client, 'notify', () => {
             this.emit('device-changed');
         });
-        this._connectSignal(this._model, 'row-inserted', () => {
+    }
+
+    _connectDeviceNotify(device) {
+        const path = device.get_object_path();
+
+        if (this._deviceNotifyConnected.has(path))
+            return;
+
+        device.connect('notify', (device) => {
             this.emit('device-changed');
         });
     }
 
     getDevices() {
         const devices = [];
-        const adapter = this._getDefaultAdapter();
-
-        if (!adapter) {
-            return [];
+        let items = this._client.get_devices()
+        for (let i = 0; i < items.get_n_items(); i++) {
+            const device = items.get_item(i);
+            devices.push(this._buildDevice(device))
+            
         }
-
-        let [ret, iter] = this._model.iter_children(adapter);
-        while (ret) {
-            let device = this._buildDevice(iter);
-            devices.push(device);
-            ret = this._model.iter_next(iter);
-        }
-
         return devices;
     }
 
@@ -51,21 +57,8 @@ var BluetoothController = class {
     destroy() {
         this._disconnectSignals();
     }
-
-    _getDefaultAdapter() {
-        let [ret, iter] = this._model.get_iter_first();
-        while (ret) {
-            let isDefault = this._model.get_value(iter, GnomeBluetooth.Column.DEFAULT);
-            let isPowered = this._model.get_value(iter, GnomeBluetooth.Column.POWERED);
-            if (isDefault && isPowered)
-                return iter;
-            ret = this._model.iter_next(iter);
-        }
-        return null;
-    }
-
-    _buildDevice(iter) {
-        return new BluetoothDevice(this._model, iter);
+    _buildDevice(gdev) {
+        return new BluetoothDevice(gdev);
     }
 }
 
@@ -73,17 +66,15 @@ Signals.addSignalMethods(BluetoothController.prototype);
 Utils.addSignalsHelperMethods(BluetoothController.prototype);
 
 var BluetoothDevice = class {
-    constructor(model, iter) {
-        this._model = model;
-        this.update(iter);
+    constructor(gdevice, iter) {
+        this.update(gdevice);
     }
 
-    update(iter) {
-        this.name = this._model.get_value(iter, GnomeBluetooth.Column.NAME);
-        this.isConnected = this._model.get_value(iter, GnomeBluetooth.Column.CONNECTED);
-        this.isPaired = this._model.get_value(iter, GnomeBluetooth.Column.PAIRED);
-        this.mac = this._model.get_value(iter, GnomeBluetooth.Column.ADDRESS);
-        this.isDefault = this._model.get_value(iter, GnomeBluetooth.Column.DEFAULT);
-        this.defaultIcon = this._model.get_value(iter, GnomeBluetooth.Column.ICON);
+    update(gdev) {
+        this.name = gdev.name;
+        this.isConnected = gdev.connected;
+        this.isPaired = gdev.paired;
+        this.mac = gdev.address;
+        this.defaultIcon = gdev.icon;
     }
 }
