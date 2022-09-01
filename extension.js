@@ -7,7 +7,13 @@ const PopupMenu = imports.ui.popupMenu;
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 const { BluetoothController } = Me.imports.bluetooth;
-const { PYTHON_SCRIPT_PATH, BTCTL_SCRIPT_PATH, UPOWER_SCRIPT_PATH, TOGGLE_SCRIPT_PATH } = Me.imports.constants;
+const {
+    PYTHON_SCRIPT_PATH,
+    BTCTL_SCRIPT_PATH,
+    UPOWER_SCRIPT_PATH,
+    TOGGLE_SCRIPT_PATH,
+    AIRPODS_PYTHON_SCRIPT_PATH
+} = Me.imports.constants;
 const { IndicatorController } = Me.imports.indicator;
 const { SettingsController } = Me.imports.settings;
 
@@ -103,6 +109,13 @@ class Extension {
                     this._getBatteryLevelUpower(device.mac, index);
                     break;
 
+                case 'AirPods':
+                    // No support for filtering by MAC.
+                    // It seems that the AirPods transmit that data from a different MAC (not the paired one.)
+                    // It's really weird, but assuming that there's only one AirPod nearby... should be good enough.
+                    this._getBatteryLevelAirpods(index)
+                    break;
+
                 default:
                     log("[bluetooth-battery-indicator] Unknown percentage source '" + device.percentageSource + "'");
                     throw new TypeError("Unknown percentage source '" + device.percentageSource + "'");
@@ -158,6 +171,25 @@ class Extension {
         Utils.runPythonScript(
           [pythonExec, pyLocation, address],
           this._setPercentFromScript(index)
+        )
+    }
+
+    _getBatteryLevelAirpods(index) {
+        const pyLocation = Me.dir.get_child(AIRPODS_PYTHON_SCRIPT_PATH).get_path();
+        const pythonExec = Utils.getPythonExec();
+
+        if (!pythonExec) {
+            log('ERROR: Python not found.');
+            return;
+        }
+
+        Utils.runPythonScript(
+            [pythonExec, pyLocation],
+            (result) => {
+                const data = JSON.parse(result)
+                const label = `${data.levels.left ?? '?'}/${data.levels.right ?? '?'}`
+                this._indicator.setPercentLabel(label, index);
+            }
         )
     }
 

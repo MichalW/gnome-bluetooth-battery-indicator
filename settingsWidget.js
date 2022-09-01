@@ -306,7 +306,8 @@ var SettingsWidget = GObject.registerClass(
             const sources = [
                 { key: 'python-script', text: _('Python script') },
                 { key: 'bluetoothctl', text: _('Bluetoothctl') },
-                { key: 'upower', text: _('UPower') }
+                { key: 'upower', text: _('UPower') },
+                { key: 'AirPods', text: _('AirPods') }
             ];
 
             sources.forEach((src) => {

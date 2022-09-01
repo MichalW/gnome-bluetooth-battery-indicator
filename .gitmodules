@@ -1,3 +1,6 @@
 [submodule "Bluetooth_Headset_Battery_Level"]
 	path = Bluetooth_Headset_Battery_Level
 	url = git@github.com:TheWeirdDev/Bluetooth_Headset_Battery_Level.git
+[submodule "AirStatus"]
+	path = AirStatus
+	url = git@github.com:matan129/AirStatus.git
