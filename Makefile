@@ -30,9 +30,14 @@ build:
 	rm -Rf Bluetooth_Headset_Battery_Level AirStatus
 	mv .Bluetooth_Headset_Battery_Level Bluetooth_Headset_Battery_Level
 	mv .AirStatus AirStatus
-install:
+
+install: build
 	gnome-extensions install -f bluetooth-battery@michalw.github.com.shell-extension.zip
 
 clean:
 	rm -f schemas/gschemas.compiled
 	rm -f bluetooth-battery@michalw.github.com.shell-extension.zip
+
+restart-gnome-shell:
+	# Sometimes, gnome-shell needs a kick to recognize plugin installs/updates
+	killall -SIGQUIT gnome-shell
