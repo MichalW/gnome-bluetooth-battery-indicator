@@ -6,8 +6,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const { SettingsController } = Me.imports.settings;
 
-const Gettext = imports.gettext.domain(Me.metadata['gettext-domain']);
-const _ = Gettext.gettext;
+const _ = ExtensionUtils.gettext;
 
 const BOX_PADDING = 8;
 const MARGIN_BOTTOM = 8;

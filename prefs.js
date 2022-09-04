@@ -13,7 +13,7 @@ const { SettingsWidget } = Me.imports.settingsWidget;
 function init() {
     log(`initializing ${Me.metadata.name} Preferences`);
 
-    ExtensionUtils.initTranslations(Me.metadata['gettext-domain']);
+    ExtensionUtils.initTranslations();
 }
 
 function buildPrefsWidget() {
