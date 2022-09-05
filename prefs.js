@@ -16,15 +16,6 @@ function init() {
     ExtensionUtils.initTranslations();
 }
 
-function buildPrefsWidget() {
-    const prefsWidget = new SettingsWidget();
-    prefsWidget.show();
-
-    // At the time buildPrefsWidget() is called, the window is not yet prepared
-    // so if you want to access the headerbar you need to use a small trick
-    GLib.timeout_add(GLib.PRIORITY_DEFAULT, 0, () => {
-        const window = prefsWidget.get_root();
-    });
-
-    return prefsWidget;
+function fillPreferencesWindow(window) {
+    window.add(new SettingsWidget());
 }
