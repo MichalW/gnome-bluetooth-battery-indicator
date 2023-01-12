@@ -10,33 +10,20 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const { SettingsWidget } = Me.imports.settingsWidget;
 
-const [major] = Config.PACKAGE_VERSION.split('.');
-const shellVersion = Number.parseInt(major);
-
 function init() {
     log(`initializing ${Me.metadata.name} Preferences`);
 
-    ExtensionUtils.initTranslations(Me.metadata['gettext-domain']);
+    ExtensionUtils.initTranslations();
 }
 
 function buildPrefsWidget() {
     const prefsWidget = new SettingsWidget();
-    if (shellVersion < 40) {
-        prefsWidget.show_all();
-    } else {
-        prefsWidget.show();
-    }
+    prefsWidget.show();
 
     // At the time buildPrefsWidget() is called, the window is not yet prepared
     // so if you want to access the headerbar you need to use a small trick
     GLib.timeout_add(GLib.PRIORITY_DEFAULT, 0, () => {
-        if (shellVersion < 40) {
-            const window = prefsWidget.get_toplevel();
-            const headerBar = window.get_;
-            headerBar.title = `${Me.metadata.name} Preferences`;
-        } else {
-            const window = prefsWidget.get_root();
-        }
+        const window = prefsWidget.get_root();
     });
 
     return prefsWidget;

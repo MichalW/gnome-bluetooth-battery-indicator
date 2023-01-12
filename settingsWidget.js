@@ -6,11 +6,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const { SettingsController } = Me.imports.settings;
 
-const Gettext = imports.gettext.domain(Me.metadata['gettext-domain']);
-const _ = Gettext.gettext;
-
-const [major] = Config.PACKAGE_VERSION.split('.');
-const shellVersion = Number.parseInt(major);
+const _ = ExtensionUtils.gettext;
 
 const BOX_PADDING = 8;
 const MARGIN_BOTTOM = 8;
@@ -24,11 +20,7 @@ const getMarginAll = (value) => ({
 });
 
 const addToBox = (box, element) => {
-    if (shellVersion < 40) {
-        box.add(element);
-    } else {
-        box.append(element);
-    }
+    box.append(element);
 }
 
 var SettingsWidget = GObject.registerClass(
@@ -38,10 +30,6 @@ var SettingsWidget = GObject.registerClass(
             this._settings = new SettingsController();
 
             this.set_orientation(Gtk.Orientation.VERTICAL);
-
-            if (shellVersion < 40) {
-                this.set_border_width(WIDGET_PADDING);
-            }
 
             addToBox(this, this._getIndicatorSettingsFrame());
             addToBox(this, this._getDevicesFrame());
@@ -79,11 +67,7 @@ var SettingsWidget = GObject.registerClass(
                 margin_bottom: MARGIN_BOTTOM,
             });
 
-            if (shellVersion < 40) {
-                frame.add(vBox);
-            } else {
-                frame.set_child(vBox);
-            }
+            frame.set_child(vBox);
 
             return frame;
         }
@@ -179,11 +163,8 @@ var SettingsWidget = GObject.registerClass(
                 margin_bottom: MARGIN_BOTTOM,
             });
 
-            if (shellVersion < 40) {
-                frame.add(vBox);
-            } else {
-                frame.set_child(vBox);
-            }
+            frame.set_child(vBox);
+
             return frame;
         }
 
