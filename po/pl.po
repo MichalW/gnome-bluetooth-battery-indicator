@@ -34,78 +34,78 @@ msgstr "Bluetooth battery Indicator"
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: settingsWidget.js:78
+#: settingsWidget.js:66
 msgid "Indicator Settings"
 msgstr "Ustawienia"
 
-#: settingsWidget.js:93
+#: settingsWidget.js:77
 msgid "Refresh interval (minutes)"
 msgstr "Interwał odświeżania (minuty)"
 
-#: settingsWidget.js:101
+#: settingsWidget.js:85
 msgid "Hide indicator if there are no devices"
 msgstr "Ukryj jeśli nie ma urządzeń"
 
-#: settingsWidget.js:154
+#: settingsWidget.js:138
 msgid "Name"
 msgstr "Nazwa"
 
-#: settingsWidget.js:155
+#: settingsWidget.js:139
 msgid "Status"
 msgstr "Status"
 
-#: settingsWidget.js:156
+#: settingsWidget.js:140
 msgid "Icon"
 msgstr "Ikona"
 
-#: settingsWidget.js:157
+#: settingsWidget.js:141
 msgid "Port"
 msgstr "Port"
 
-#: settingsWidget.js:158
+#: settingsWidget.js:142
 msgid "% Source"
 msgstr ""
 
-#: settingsWidget.js:178
+#: settingsWidget.js:162
 msgid "Devices"
 msgstr "Urządzenie"
 
-#: settingsWidget.js:226 settingsWidget.js:260
+#: settingsWidget.js:207 settingsWidget.js:241
 msgid "Default"
 msgstr "Domyślnie"
 
-#: settingsWidget.js:227
+#: settingsWidget.js:208
 msgid "Headphones"
 msgstr "Słuchawki"
 
-#: settingsWidget.js:228
+#: settingsWidget.js:209
 msgid "Mouse"
 msgstr "Myszka"
 
-#: settingsWidget.js:229
+#: settingsWidget.js:210
 msgid "Keyboard"
 msgstr "Klawiatura"
 
-#: settingsWidget.js:230
+#: settingsWidget.js:211
 msgid "Headset"
 msgstr "Zestaw słuchawkowy"
 
-#: settingsWidget.js:231
+#: settingsWidget.js:212
 msgid "Game Controller"
 msgstr "Kontroler gry"
 
-#: settingsWidget.js:232
+#: settingsWidget.js:213
 msgid "Battery"
 msgstr "Bateria"
 
-#: settingsWidget.js:307
+#: settingsWidget.js:288
 msgid "Python script"
 msgstr ""
 
-#: settingsWidget.js:308
+#: settingsWidget.js:289
 msgid "Bluetoothctl"
 msgstr ""
 
-#: settingsWidget.js:309
+#: settingsWidget.js:290
 msgid "UPower"
 msgstr ""
