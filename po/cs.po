@@ -107,4 +107,4 @@ msgstr "Bluetoothctl"
 
 #: settingsWidget.js:309
 msgid "UPower"
-msgstr "UPower"
+msgstr "UPower "
