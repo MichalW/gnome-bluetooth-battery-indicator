@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-12 19:49+0100\n"
-"PO-Revision-Date: 2023-01-15 09:13+1000\n"
+"PO-Revision-Date: 2023-01-15 20:40+1000\n"
 "Last-Translator: Ser82-png <asvmail.as@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -48,7 +48,7 @@ msgstr "Скрывать индикатор при отсутствии устр
 
 #: settingsWidget.js:138
 msgid "Name"
-msgstr "Название "
+msgstr "Название"
 
 #: settingsWidget.js:139
 msgid "Status"
@@ -100,7 +100,7 @@ msgstr "Аккумулятор"
 
 #: settingsWidget.js:288
 msgid "Python script"
-msgstr "Сценарий Python"
+msgstr "Скрипт Python"
 
 #: settingsWidget.js:289
 msgid "Bluetoothctl"
