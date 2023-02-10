@@ -44,6 +44,23 @@ Show debug log of this plugin: `journalctl -f -o cat /usr/bin/gnome-shell`
 
 ### If it failed to show battery percentage
 
+The bluez package has experimental support for querying bluetooth headset battery data. Simply enable experimental features by editing
+
+```bash
+sudo nano /etc/bluetooth/main.conf
+```
+and adding `Experimental=true` under `[General]`
+
+```
+[General]
+Experimental=true
+```
+Then, you just need to restart the bluetooth service using
+
+```bash
+systemctl restart bluetooth
+```
+
 if `Get battery levels using bluetoothctl` is enabled, run this script to see the error message: <https://github.com/MichalW/gnome-bluetooth-battery-indicator/blob/master/scripts/bluetoothctl_battery.sh>
 
 if `Get battery levels using bluetoothctl` is disabled, run this script to see the error message: <https://github.com/TheWeirdDev/Bluetooth_Headset_Battery_Level/blob/master/bluetooth_battery.py>
