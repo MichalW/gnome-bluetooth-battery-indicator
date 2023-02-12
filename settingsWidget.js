@@ -1,3 +1,4 @@
+const Adw = imports.gi.Adw;
 const GObject = imports.gi.GObject;
 const Gtk = imports.gi.Gtk;
 
@@ -8,88 +9,43 @@ const { SettingsController } = Me.imports.settings;
 
 const _ = ExtensionUtils.gettext;
 
-const BOX_PADDING = 8;
-const MARGIN_BOTTOM = 8;
-const WIDGET_PADDING = 16;
-
-const getMarginAll = (value) => ({
-    margin_start: value,
-    margin_top: value,
-    margin_end: value,
-    margin_bottom: value,
-});
-
-const addToBox = (box, element) => {
-    box.append(element);
-}
-
 var SettingsWidget = GObject.registerClass(
-    class MyPrefsWidget extends Gtk.Box {
+    class MyPrefsWidget extends Adw.PreferencesPage {
         _init(params) {
             super._init(params);
             this._settings = new SettingsController();
 
-            this.set_orientation(Gtk.Orientation.VERTICAL);
-
-            addToBox(this, this._getIndicatorSettingsFrame());
-            addToBox(this, this._getDevicesFrame());
-
-            //this.connect('destroy', Gtk.main_quit);
+            this.add(this._getIndicatorSettingsGroup());
+            this.add(this._getDevicesGroup());
         }
 
-        _getIndicatorSettingsFrame() {
-            const hBox1 = new Gtk.Box({
-                orientation: Gtk.Orientation.HORIZONTAL,
-                ...getMarginAll(BOX_PADDING),
+        _getIndicatorSettingsGroup() {
+            const group = new Adw.PreferencesGroup({
+                title: _('Indicator Settings'),
             });
 
-            addToBox(hBox1, this._getIntervalLabel());
-            addToBox(hBox1, this._getIntervalSpinButton());
-
-            const hBox2 = new Gtk.Box({
-                orientation: Gtk.Orientation.HORIZONTAL,
-                ...getMarginAll(BOX_PADDING),
+            const row1 = new Adw.ActionRow({
+                title: _('Refresh interval (minutes)')
             });
 
-            addToBox(hBox2, this._getHideIndicatorLabel());
-            addToBox(hBox2, this._getHideIndicatorSwitchButton());
+            row1.add_suffix(this._getIntervalSpinButton());
 
-            const vBox = new Gtk.Box({
-                orientation: Gtk.Orientation.VERTICAL,
-                ...getMarginAll(BOX_PADDING),
+            const row2 = new Adw.ActionRow({
+                title: _('Hide indicator if there are no devices')
             });
 
-            addToBox(vBox, hBox1);
-            addToBox(vBox, hBox2);
+            row2.add_suffix(this._getHideIndicatorSwitchButton());
 
-            const frame = new Gtk.Frame({
-                label: _('Indicator Settings'),
-                margin_bottom: MARGIN_BOTTOM,
-            });
+            group.add(row1);
+            group.add(row2);
 
-            frame.set_child(vBox);
-
-            return frame;
-        }
-
-        _getIntervalLabel() {
-            return new Gtk.Label({
-                label: _('Refresh interval (minutes)'),
-                xalign: 0,
-                hexpand: true,
-            });
-        }
-
-        _getHideIndicatorLabel() {
-            return new Gtk.Label({
-                label: _('Hide indicator if there are no devices'),
-                xalign: 0,
-                hexpand: true,
-            });
+            return group;
         }
 
         _getIntervalSpinButton() {
-            const spinButton = new Gtk.SpinButton();
+            const spinButton = new Gtk.SpinButton({
+                valign: 3
+            });
             const interval = this._settings.getInterval();
 
             spinButton.set_sensitive(true);
@@ -113,94 +69,42 @@ var SettingsWidget = GObject.registerClass(
 
         _getSwitchButton(getValue, setValue) {
             const switchButton = new Gtk.Switch({
-                active: getValue()
+                active: getValue(),
+                valign: 3
             });
 
             switchButton.connect('notify::active', ({ active }) => {
                 setValue(active)
             });
 
-            const vBox = new Gtk.Box({
-                orientation: Gtk.Orientation.VERTICAL,
-            });
-
-            addToBox(vBox, switchButton);
-
-            return vBox;
+            return switchButton;
         }
 
-        _getDevicesHeaders() {
-            const hBox = new Gtk.Box({
-                orientation: Gtk.Orientation.HORIZONTAL,
-                ...getMarginAll(BOX_PADDING),
+        _getDevicesGroup() {
+            const group = new Adw.PreferencesGroup({
+                title: _('Devices'),
             });
-
-            addToBox(hBox, this._getLabel(_('Name')));
-            addToBox(hBox, this._getLabel(_('Status'), false, 80));
-            addToBox(hBox, this._getLabel(_('Icon'), false, 90));
-            addToBox(hBox, this._getLabel(_('Port'), false, 70));
-            addToBox(hBox, this._getLabel(_('% Source'), false, 40));
-
-            return hBox;
-        }
-
-        _getDevicesFrame() {
-            const vBox = new Gtk.Box({
-                orientation: Gtk.Orientation.VERTICAL,
-                ...getMarginAll(BOX_PADDING),
-            });
-
-            const headers = this._getDevicesHeaders();
-            addToBox(vBox, headers);
 
             const devices = this._settings.getPairedDevices();
             devices.forEach((device) => {
-                addToBox(vBox, this._getDeviceBox(device));
+                const dev = new Adw.ExpanderRow({
+                    title: device.name
+                });
+                dev.add_action(this._getDeviceSwitchButton(device));
+                dev.add_row(this._getDeviceIconComboRow(device));
+                dev.add_row(this._getPortComboRow(device));
+                dev.add_row(this._getPercentageSourceComboRow(device));
+
+                group.add(dev);
             });
 
-            const frame = new Gtk.Frame({
-                label: _('Devices'),
-                margin_bottom: MARGIN_BOTTOM,
-            });
-
-            frame.set_child(vBox);
-
-            return frame;
+            return group;
         }
 
-        _getDeviceBox(device) {
-            const hBox = new Gtk.Box({
-                orientation: Gtk.Orientation.HORIZONTAL,
-                ...getMarginAll(BOX_PADDING),
+        _getDeviceIconComboRow(device) {
+            const comboRow = new Adw.ComboRow({
+                title: _('Icon')
             });
-
-            addToBox(hBox, this._getLabel(device.name));
-            addToBox(hBox, this._getDeviceSwitchButton(device));
-            addToBox(hBox, this._getDeviceIconComboBox(device));
-            addToBox(hBox, this._getPortComboBox(device));
-            addToBox(hBox, this._getPercentageSourceComboBox(device));
-
-            return hBox;
-        }
-
-        _getLabel(labelName, hexpand = true, marginEnd = 0) {
-            const box = new Gtk.Box({
-                margin_end: marginEnd,
-            })
-
-            const label = new Gtk.Label({
-                label: labelName,
-                xalign: 0,
-                hexpand,
-            });
-
-            addToBox(box, label);
-
-            return box;
-        }
-
-        _getDeviceIconComboBox(device) {
-            const comboBox = new Gtk.ComboBoxText();
             const defaultIcon = device.defaultIcon || 'battery-full-symbolic';
 
             const icons = [
@@ -213,51 +117,55 @@ var SettingsWidget = GObject.registerClass(
                 { key: 'battery-full-symbolic', text: _('Battery') },
             ];
 
-            icons.forEach((icon) => {
-                comboBox.append_text(icon.text);
-            })
-            const activeIndex = icons.findIndex(({ key }) => device.icon === key);
-            comboBox.set_active(activeIndex !== -1 ? activeIndex : 0);
+            const model = new Gtk.StringList();
 
-            comboBox.connect('changed', () => {
-                const i = comboBox.get_active();
+            icons.forEach((icon) => {
+                model.append(icon.text);
+            })
+            comboRow.set_model(model);
+
+            const activeIndex = icons.findIndex(({ key }) => device.icon === key);
+            comboRow.set_selected(activeIndex !== -1 ? activeIndex : 0);
+
+            comboRow.connect('notify::selected', () => {
+                const i = comboRow.get_selected();
                 this._settings.setDevice({
                     mac: device.mac,
                     icon: icons[i].key,
                 });
             });
 
-            return comboBox;
+            return comboRow;
         }
 
-        _getPortComboBox(device) {
-            const box = new Gtk.Box({
-                margin_start: BOX_PADDING,
-            })
+        _getPortComboRow(device) {
+            const comboRow = new Adw.ComboRow({
+                title: _('Port')
+            });
 
-            const comboBox = new Gtk.ComboBoxText();
+            const model = new Gtk.StringList();
 
             [...Array(10).keys()].forEach((port) => {
-                comboBox.append_text(port ? String(port) : _('Default'));
+                model.append(port ? String(port) : _('Default'));
             })
-            comboBox.set_active(device.port || 0);
+            comboRow.set_model(model);
+            comboRow.set_selected(device.port || 0);
 
-            comboBox.connect('changed', () => {
-                const i = comboBox.get_active();
+            comboRow.connect('notify::selected', () => {
+                const i = comboRow.get_selected();
                 this._settings.setDevice({
                     mac: device.mac,
                     port: i,
                 });
             });
 
-            addToBox(box, comboBox);
-
-            return box;
+            return comboRow;
         }
 
         _getDeviceSwitchButton(device) {
             const switchButton = new Gtk.Switch({
                 active: device.active || false,
+                valign: 3
             });
 
             switchButton.connect('notify::active', ({ active }) => {
@@ -267,22 +175,13 @@ var SettingsWidget = GObject.registerClass(
                 });
             });
 
-            const vBox = new Gtk.Box({
-                orientation: Gtk.Orientation.VERTICAL,
-                ...getMarginAll(BOX_PADDING),
-            });
-
-            addToBox(vBox, switchButton);
-
-            return vBox;
+            return switchButton;
         }
 
-        _getPercentageSourceComboBox(device) {
-            const box = new Gtk.Box({
-                margin_start: BOX_PADDING,
-            })
-
-            const comboBox = new Gtk.ComboBoxText();
+        _getPercentageSourceComboRow(device) {
+            const comboRow = new Adw.ComboRow({
+                title: _('% Source')
+            });
 
             const sources = [
                 { key: 'python-script', text: _('Python script') },
@@ -290,23 +189,25 @@ var SettingsWidget = GObject.registerClass(
                 { key: 'upower', text: _('UPower') }
             ];
 
-            sources.forEach((src) => {
-                comboBox.append_text(src.text);
-            })
-            const activeIndex = sources.findIndex(({ key }) => device.percentageSource === key);
-            comboBox.set_active(activeIndex !== -1 ? activeIndex : 0);
+            const model = new Gtk.StringList();
 
-            comboBox.connect('changed', () => {
-                const i = comboBox.get_active();
+            sources.forEach((src) => {
+                model.append(src.text);
+            })
+            comboRow.set_model(model);
+
+            const activeIndex = sources.findIndex(({ key }) => device.percentageSource === key);
+            comboRow.set_selected(activeIndex !== -1 ? activeIndex : 0);
+
+            comboRow.connect('notify::selected', () => {
+                const i = comboRow.get_selected();
                 this._settings.setDevice({
                     mac: device.mac,
                     percentageSource: sources[i].key,
                 });
             });
 
-            addToBox(box, comboBox);
-
-            return box;
+            return comboRow;
         }
     }
 );
