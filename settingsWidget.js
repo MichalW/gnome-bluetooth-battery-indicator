@@ -174,7 +174,9 @@ var SettingsWidget = GObject.registerClass(
                 ...getMarginAll(BOX_PADDING),
             });
 
-            addToBox(hBox, this._getLabel(device.name));
+            const isEmptyAlias = !device.alias || device.alias.trim().length === 0;
+
+            addToBox(hBox, this._getLabel(isEmptyAlias ? device.name : device.alias));
             addToBox(hBox, this._getDeviceSwitchButton(device));
             addToBox(hBox, this._getDeviceIconComboBox(device));
             addToBox(hBox, this._getPortComboBox(device));
