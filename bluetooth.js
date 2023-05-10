@@ -25,6 +25,7 @@ var BluetoothController = class {
             if(device == null) continue
             devices.push({
                 name:        device.name,
+                alias:       device.alias,
                 isConnected: device.connected,
                 isPaired:    device.paired,
                 mac:         device.address,
