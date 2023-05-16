@@ -113,7 +113,7 @@ class Extension {
         this._settings.setDevices(devices);
 
         if (settingsHideIndicator) {
-            Main.panel.statusArea[this._uuid].actor.visible = !!devicesToShow.length;
+            Main.panel.statusArea[this._uuid].visible = !!devicesToShow.length;
         }
     }
 
