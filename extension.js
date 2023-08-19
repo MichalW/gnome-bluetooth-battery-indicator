@@ -24,7 +24,7 @@ class Extension {
     enable() {
         this._controller = new BluetoothController();
         this._settings = new SettingsController();
-        this._indicator = new IndicatorController();
+        this._indicator = new IndicatorController(this._settings.getDeviceNameIndicator());
         Main.panel.addToStatusArea(this._uuid, this._indicator);
 
         this._controller.enable();
@@ -156,8 +156,8 @@ class Extension {
         const address = port ? `${btMacAddress}.${port}` : btMacAddress;
 
         Utils.runPythonScript(
-          [pythonExec, pyLocation, address],
-          this._setPercentFromScript(index)
+            [pythonExec, pyLocation, address],
+            this._setPercentFromScript(index)
         )
     }
 
@@ -166,8 +166,8 @@ class Extension {
 
         // Utils.runPythonScript can run any arbitrary script
         Utils.runPythonScript(
-          [shellLocation, btMacAddress],
-          this._setPercentFromScript(index)
+            [shellLocation, btMacAddress],
+            this._setPercentFromScript(index)
         )
     }
 
@@ -176,8 +176,8 @@ class Extension {
 
         // Utils.runPythonScript can run any arbitrary script
         Utils.runPythonScript(
-          [shellLocation, btMacAddress],
-          this._setPercentFromScript(index)
+            [shellLocation, btMacAddress],
+            this._setPercentFromScript(index)
         )
     }
 
@@ -186,8 +186,8 @@ class Extension {
 
         // Utils.runPythonScript can run any arbitrary script
         Utils.runPythonScript(
-          [shellLocation, btMacAddress, value ? 'connect' : 'disconnect'],
-          callback
+            [shellLocation, btMacAddress, value ? 'connect' : 'disconnect'],
+            callback
         )
     }
 

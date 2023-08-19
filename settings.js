@@ -5,6 +5,7 @@ const INTERVAL_KEY = 'interval';
 const HIDE_INDICATOR_KEY = 'hide-indicator';
 const USE_TOGGLE_BLUETOOTH = 'use-toggle-bluetooth';
 const DEVICES_KEY = 'devices';
+const DEVICE_NAME_INDICATOR_KEY = 'display-device-name';
 
 var SettingsController = class SettingsController {
     constructor() {
@@ -25,6 +26,14 @@ var SettingsController = class SettingsController {
 
     setHideIndicator(value) {
         this._settings.set_boolean(HIDE_INDICATOR_KEY, value);
+    }
+
+    getDeviceNameIndicator() {
+        return this._settings.get_boolean(DEVICE_NAME_INDICATOR_KEY);
+    }
+
+    setDeviceNameIndicator(value) {
+        this._settings.set_boolean(DEVICE_NAME_INDICATOR_KEY, value);
     }
 
     getDevices() {

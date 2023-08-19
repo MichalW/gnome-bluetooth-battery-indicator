@@ -54,6 +54,15 @@ var SettingsWidget = GObject.registerClass(
             addToBox(hBox2, this._getHideIndicatorLabel());
             addToBox(hBox2, this._getHideIndicatorSwitchButton());
 
+            const hBox3 = new Gtk.Box({
+                orientation: Gtk.Orientation.HORIZONTAL,
+                ...getMarginAll(BOX_PADDING),
+            });
+
+            addToBox(hBox3, this._getDeviceNameIndicatorLabel());
+            addToBox(hBox3, this._getDeviceNameIndicatorSwitchButton());
+
+
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
                 ...getMarginAll(BOX_PADDING),
@@ -61,6 +70,7 @@ var SettingsWidget = GObject.registerClass(
 
             addToBox(vBox, hBox1);
             addToBox(vBox, hBox2);
+            addToBox(vBox, hBox3);
 
             const frame = new Gtk.Frame({
                 label: _('Indicator Settings'),
@@ -106,8 +116,23 @@ var SettingsWidget = GObject.registerClass(
 
         _getHideIndicatorSwitchButton() {
             return this._getSwitchButton(
-              () => this._settings.getHideIndicator(),
-              (value) => this._settings.setHideIndicator(value)
+                () => this._settings.getHideIndicator(),
+                (value) => this._settings.setHideIndicator(value)
+            );
+        }
+
+        _getDeviceNameIndicatorLabel() {
+            return new Gtk.Label({
+                label: _('Display device name'),
+                xalign: 0,
+                hexpand: true,
+            });
+        }
+
+        _getDeviceNameIndicatorSwitchButton() {
+            return this._getSwitchButton(
+                () => this._settings.getDeviceNameIndicator(),
+                (value) => this._settings.setDeviceNameIndicator(value)
             );
         }
 
@@ -213,6 +238,7 @@ var SettingsWidget = GObject.registerClass(
                 { key: 'audio-headset-symbolic', text: _('Headset') },
                 { key: 'input-gaming-symbolic', text: _('Game Controller') },
                 { key: 'audio-speakers-symbolic', text: _('Speaker') },
+                { key: 'bluetooth-active-symbol', text: _('Bluetooth') },
                 { key: 'battery-full-symbolic', text: _('Battery') },
             ];
 

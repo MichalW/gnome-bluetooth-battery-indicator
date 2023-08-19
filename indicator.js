@@ -7,18 +7,19 @@ const UUID = "bluetooth-battery@michalw.github.com";
 
 var IndicatorController = GObject.registerClass(
     class Indicator extends PanelMenu.Button {
-        _init() {
+        _init(displayDeviceName) {
             super._init(0.0, _('Bluetooth battery Indicator'));
             this._container = new St.BoxLayout();
             this._labels = [];
             this._icons = [];
             this._prevDevicesSettings = [];
+            this._displayDeviceName = displayDeviceName;
 
             this._addSettingsButton();
         }
 
         refresh(devices) {
-            const devicesSettings = devices.map(({ mac, icon }) => ({ mac, icon }));
+            const devicesSettings = devices.map(({ mac, icon, name }) => ({ mac, icon, name }));
 
             if (JSON.stringify(devicesSettings) !== JSON.stringify(this._prevDevicesSettings)) {
                 this._container.remove_all_children();
@@ -61,6 +62,9 @@ var IndicatorController = GObject.registerClass(
             this._labels[index] = this._getBoxLabel();
 
             box.add_child(this._icons[index]);
+            if (this._displayDeviceName) {
+                box.add_child(this._getBoxDeviceName(device))
+            }
             box.add_child(this._labels[index]);
 
             return box;
@@ -68,7 +72,14 @@ var IndicatorController = GObject.registerClass(
 
         _getBoxLabel() {
             return new St.Label({
-                y_align: Clutter.ActorAlign.CENTER
+                y_align: Clutter.ActorAlign.CENTER,
+            });
+        }
+
+        _getBoxDeviceName(device) {
+            return new St.Label({
+                y_align: Clutter.ActorAlign.CENTER,
+                text: device.name + ': '
             });
         }
 

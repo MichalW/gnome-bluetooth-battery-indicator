@@ -11,7 +11,12 @@
 
         <key name="hide-indicator" type="b">
             <default>false</default>
-            <summary>Refresh interval (minutes)</summary>
+            <summary>Hide indicator</summary>
+        </key>
+
+        <key name="display-device-name" type="b">
+            <default>true</default>
+            <summary>Display device name</summary>
         </key>
 
         <key name="devices" type="as">
