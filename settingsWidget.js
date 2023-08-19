@@ -212,6 +212,7 @@ var SettingsWidget = GObject.registerClass(
                 { key: 'input-keyboard-symbolic', text: _('Keyboard') },
                 { key: 'audio-headset-symbolic', text: _('Headset') },
                 { key: 'input-gaming-symbolic', text: _('Game Controller') },
+                { key: 'audio-speakers-symbolic', text: _('Speaker') },
                 { key: 'battery-full-symbolic', text: _('Battery') },
             ];
 
