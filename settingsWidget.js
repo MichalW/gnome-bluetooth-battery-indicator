@@ -1,16 +1,13 @@
-const GObject = imports.gi.GObject;
-const Gtk = imports.gi.Gtk;
+import GObject from 'gi://GObject';
+import Gtk from 'gi://Gtk';
 
-const Config = imports.misc.config;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const { SettingsController } = Me.imports.settings;
+import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
-const _ = ExtensionUtils.gettext;
+import * as Constants from './constants.js';
+import {SettingsController} from './settings.js';
 
 const BOX_PADDING = 8;
 const MARGIN_BOTTOM = 8;
-const WIDGET_PADDING = 16;
 
 const getMarginAll = (value) => ({
     margin_start: value,
@@ -23,18 +20,18 @@ const addToBox = (box, element) => {
     box.append(element);
 }
 
-var SettingsWidget = GObject.registerClass(
-    class MyPrefsWidget extends Gtk.Box {
+export default GObject.registerClass(
+    class SettingsWidget extends Gtk.Box {
         _init(params) {
             super._init(params);
-            this._settings = new SettingsController();
+            this._settings = new SettingsController(
+                ExtensionPreferences.lookupByUUID(Constants.UUID).getSettings()
+            );
 
             this.set_orientation(Gtk.Orientation.VERTICAL);
 
             addToBox(this, this._getIndicatorSettingsFrame());
             addToBox(this, this._getDevicesFrame());
-
-            //this.connect('destroy', Gtk.main_quit);
         }
 
         _getIndicatorSettingsFrame() {

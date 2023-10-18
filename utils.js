@@ -1,7 +1,7 @@
-const GLib = imports.gi.GLib;
-const Gio = imports.gi.Gio;
+import GLib from 'gi://GLib';
+import Gio from 'gi://Gio';
 
-function spawn(command, callback) {
+export function spawn(command, callback) {
     let [status, pid] = GLib.spawn_async(
         null,
         ['/usr/bin/env', 'bash', '-c', command],
@@ -14,12 +14,12 @@ function spawn(command, callback) {
         GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, callback);
 }
 
-function getPythonExec() {
+export function getPythonExec() {
 	//return ['python', 'python3', 'python2'].find(cmd => GLib.find_program_in_path(cmd));
 	return ['python3'].find(cmd => GLib.find_program_in_path(cmd)); //Hotfix for no percentage shown
 }
 
-function runPythonScript(argv, onSuccess) {
+export function runPythonScript(argv, onSuccess) {
     try {
         const proc = Gio.Subprocess.new(argv, Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
 

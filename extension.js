@@ -1,36 +1,26 @@
-const ExtensionUtils = imports.misc.extensionUtils;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const MainLoop = imports.mainloop;
-const PopupMenu = imports.ui.popupMenu;
+import GLib from 'gi://GLib';
 
-const Me = ExtensionUtils.getCurrentExtension();
-const Utils = Me.imports.utils;
-const { BluetoothController } = Me.imports.bluetooth;
-const { PYTHON_SCRIPT_PATH, BTCTL_SCRIPT_PATH, UPOWER_SCRIPT_PATH, TOGGLE_SCRIPT_PATH } = Me.imports.constants;
-const { IndicatorController } = Me.imports.indicator;
-const { SettingsController } = Me.imports.settings;
+import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 
-const Gettext = imports.gettext.domain(Me.metadata['gettext-domain']);
-const _ = Gettext.gettext;
+import * as Utils from './utils.js';
+import {BluetoothController} from './bluetooth.js';
+import {PYTHON_SCRIPT_PATH, BTCTL_SCRIPT_PATH, UPOWER_SCRIPT_PATH, TOGGLE_SCRIPT_PATH} from './constants.js';
+import {IndicatorController} from './indicator.js';
+import {SettingsController} from './settings.js';
 
-class Extension {
-    constructor(uuid) {
-        this._uuid = uuid;
-
-        ExtensionUtils.initTranslations(Me.metadata['gettext-domain']);
-    }
-
+export default class BluetoothBatteryIndicatorExtension extends Extension {
     enable() {
         this._controller = new BluetoothController();
-        this._settings = new SettingsController();
+        this._settings = new SettingsController(this.getSettings());
         this._indicator = new IndicatorController();
-        Main.panel.addToStatusArea(this._uuid, this._indicator);
+        Main.panel.addToStatusArea(this.uuid, this._indicator);
 
         this._getRefreshButton();
         this._getForceRefreshButton();
 
-        this._loop = MainLoop.idle_add(this._runLoop.bind(this));
+        this._loop = GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, this._runLoop.bind(this));
 
         GLib.timeout_add(GLib.PRIORITY_DEFAULT, 10, () => {
             this._connectSignals();
@@ -49,7 +39,7 @@ class Extension {
         this._refresh();
 
         const interval = this._settings.getInterval();
-        this._loop = MainLoop.timeout_add_seconds(interval * 60, this._runLoop.bind(this));
+        this._loop = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, interval * 60, this._runLoop.bind(this));
     }
 
     _getRefreshButton() {
@@ -114,7 +104,7 @@ class Extension {
         this._settings.setDevices(devices);
 
         if (settingsHideIndicator) {
-            Main.panel.statusArea[this._uuid].visible = !!devicesToShow.length;
+            Main.panel.statusArea[this.uuid].visible = !!devicesToShow.length;
         }
     }
 
@@ -146,7 +136,7 @@ class Extension {
     }
 
     _getBatteryLevel(btMacAddress, port, index) {
-        const pyLocation = Me.dir.get_child(PYTHON_SCRIPT_PATH).get_path();
+        const pyLocation = this.dir.get_child(PYTHON_SCRIPT_PATH).get_path();
         const pythonExec = Utils.getPythonExec();
 
         if (!pythonExec) {
@@ -163,7 +153,7 @@ class Extension {
     }
 
     _getBatteryLevelBluetoothctl(btMacAddress, index) {
-        const shellLocation = Me.dir.get_child(BTCTL_SCRIPT_PATH).get_path();
+        const shellLocation = this.dir.get_child(BTCTL_SCRIPT_PATH).get_path();
 
         // Utils.runPythonScript can run any arbitrary script
         Utils.runPythonScript(
@@ -173,7 +163,7 @@ class Extension {
     }
 
     _getBatteryLevelUpower(btMacAddress, index) {
-        const shellLocation = Me.dir.get_child(UPOWER_SCRIPT_PATH).get_path();
+        const shellLocation = this.dir.get_child(UPOWER_SCRIPT_PATH).get_path();
 
         // Utils.runPythonScript can run any arbitrary script
         Utils.runPythonScript(
@@ -183,7 +173,7 @@ class Extension {
     }
 
     _toggleBluetoothDevice(btMacAddress, value, callback) {
-        const shellLocation = Me.dir.get_child(TOGGLE_SCRIPT_PATH).get_path();
+        const shellLocation = this.dir.get_child(TOGGLE_SCRIPT_PATH).get_path();
 
         // Utils.runPythonScript can run any arbitrary script
         Utils.runPythonScript(
@@ -193,13 +183,11 @@ class Extension {
     }
 
     disable() {
-        MainLoop.source_remove(this._loop);
+        GLib.Source.remove(this._loop);
         this._disconnectSignals();
+        this._controller.destroy();
+        this._controller = null;
         this._indicator.destroy();
         this._indicator = null;
     }
-}
-
-function init(meta) {
-    return new Extension(meta.uuid);
 }

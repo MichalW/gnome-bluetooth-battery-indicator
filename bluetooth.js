@@ -1,7 +1,8 @@
-const GnomeBluetooth = imports.gi.GnomeBluetooth;
-const Signals = imports.misc.signals;
+import GnomeBluetooth from 'gi://GnomeBluetooth';
 
-var BluetoothController = class extends Signals.EventEmitter {
+import * as Signals from 'resource:///org/gnome/shell/misc/signals.js';
+
+export class BluetoothController extends Signals.EventEmitter {
     constructor() {
         super();
 

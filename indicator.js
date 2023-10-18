@@ -1,11 +1,14 @@
-const PanelMenu = imports.ui.panelMenu;
-const PopupMenu = imports.ui.popupMenu;
-const Util = imports.misc.util;
-const { GObject, St, Clutter } = imports.gi;
+import GObject from 'gi://GObject';
+import St from 'gi://St';
+import Clutter from 'gi://Clutter';
 
-const UUID = "bluetooth-battery@michalw.github.com";
+import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
+import * as Util from 'resource:///org/gnome/shell/misc/util.js';
 
-var IndicatorController = GObject.registerClass(
+import * as Constants from './constants.js';
+
+export const IndicatorController = GObject.registerClass(
     class Indicator extends PanelMenu.Button {
         _init() {
             super._init(0.0, _('Bluetooth battery Indicator'));
@@ -35,7 +38,7 @@ var IndicatorController = GObject.registerClass(
         _addSettingsButton() {
             const settings = new PopupMenu.PopupMenuItem(_('Settings'));
             settings.connect('activate', () => {
-                Util.spawn(['gnome-extensions', 'prefs', UUID]);
+                Util.spawn(['gnome-extensions', 'prefs', Constants.UUID]);
             });
             this._addMenuItem(settings);
         }
