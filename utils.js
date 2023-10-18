@@ -14,27 +14,6 @@ function spawn(command, callback) {
         GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, callback);
 }
 
-function addSignalsHelperMethods(prototype) {
-    prototype._connectSignal = function (subject, signal_name, method) {
-        if (!this._signals) this._signals = [];
-
-        let signal_id = subject.connect(signal_name, method);
-        this._signals.push({
-            subject: subject,
-            signal_id: signal_id
-        });
-    }
-
-    prototype._disconnectSignals = function () {
-        if (!this._signals) return;
-
-        this._signals.forEach((signal) => {
-            signal.subject.disconnect(signal.signal_id);
-        });
-        this._signals = [];
-    };
-}
-
 function getPythonExec() {
 	//return ['python', 'python3', 'python2'].find(cmd => GLib.find_program_in_path(cmd));
 	return ['python3'].find(cmd => GLib.find_program_in_path(cmd)); //Hotfix for no percentage shown

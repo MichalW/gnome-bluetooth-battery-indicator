@@ -27,21 +27,22 @@ class Extension {
         this._indicator = new IndicatorController();
         Main.panel.addToStatusArea(this._uuid, this._indicator);
 
-        this._controller.enable();
         this._getRefreshButton();
         this._getForceRefreshButton();
 
         this._loop = MainLoop.idle_add(this._runLoop.bind(this));
 
         GLib.timeout_add(GLib.PRIORITY_DEFAULT, 10, () => {
-            this._enableSignals();
+            this._connectSignals();
         });
     }
 
-    _enableSignals() {
-        this._connectSignal(this._controller, 'device-changed', () => {
-            this._refresh();
-        });
+    _connectSignals() {
+        this._controller.connectObject('device-changed', () => this._refresh(), this);
+    }
+
+    _disconnectSignals() {
+        this._controller.disconnectObject(this);
     }
 
     _runLoop() {
@@ -198,8 +199,6 @@ class Extension {
         this._indicator = null;
     }
 }
-
-Utils.addSignalsHelperMethods(Extension.prototype);
 
 function init(meta) {
     return new Extension(meta.uuid);
