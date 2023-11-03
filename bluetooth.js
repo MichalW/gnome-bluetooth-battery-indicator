@@ -1,24 +1,28 @@
-const GnomeBluetooth = imports.gi.GnomeBluetooth;
-const Signals = imports.signals;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const Utils = Me.imports.utils;
+import GnomeBluetooth from 'gi://GnomeBluetooth';
 
-var BluetoothController = class {
+import * as Signals from 'resource:///org/gnome/shell/misc/signals.js';
+
+export class BluetoothController extends Signals.EventEmitter {
     constructor() {
+        super();
+
         this._client = new GnomeBluetooth.Client();
         this._model = this._client.get_devices();
-    }
 
-    enable() {
-        this._connectSignal(this._client, 'device-added', () => this.emit('device-changed'));
-        this._connectSignal(this._client, 'device-removed', () => this.emit('device-changed'));
-        this._connectSignal(this._model, 'items-changed', () => this.emit('device-changed'));
+        this._client.connectObject(
+            'device-added', () => this.emit('device-changed'),
+            'device-removed', () => this.emit('device-changed'),
+            this
+        );
+        this._model.connectObject(
+            'items-changed', () => this.emit('device-changed'),
+            this
+        );
     }
 
     getDevices() {
         const devices = [];
-       
+
         const count = this._model.get_n_items()
         for(let i = 0; i < count; ++i){
             const device = this._model.get_item(i)
@@ -50,9 +54,7 @@ var BluetoothController = class {
     }
 
     destroy() {
-        this._disconnectSignals();
+        this._client.disconnectObject(this);
+        this._model.disconnectObject(this);
     }
 }
-
-Signals.addSignalMethods(BluetoothController.prototype);
-Utils.addSignalsHelperMethods(BluetoothController.prototype);
