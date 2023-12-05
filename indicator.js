@@ -38,7 +38,7 @@ export const IndicatorController = GObject.registerClass(
         _addSettingsButton() {
             const settings = new PopupMenu.PopupMenuItem(_('Settings'));
             settings.connect('activate', () => {
-                Util.spawn(['gnome-extensions', 'prefs', Constants.UUID]);
+                this.openPreferences();
             });
             this._addMenuItem(settings);
         }

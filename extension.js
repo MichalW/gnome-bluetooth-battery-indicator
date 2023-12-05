@@ -22,9 +22,11 @@ export default class BluetoothBatteryIndicatorExtension extends Extension {
 
         this._loop = GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, this._runLoop.bind(this));
 
-        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 10, () => {
+        this._timeOut = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 10, () => {
             this._connectSignals();
         });
+
+        this._pythonRunner = new Utils.PythonRunner();
     }
 
     _connectSignals() {
@@ -137,7 +139,7 @@ export default class BluetoothBatteryIndicatorExtension extends Extension {
 
     _getBatteryLevel(btMacAddress, port, index) {
         const pyLocation = this.dir.get_child(PYTHON_SCRIPT_PATH).get_path();
-        const pythonExec = Utils.getPythonExec();
+        const pythonExec = Utils.PythonRunner.getPythonExec();
 
         if (!pythonExec) {
             log('ERROR: Python not found.');
@@ -146,7 +148,7 @@ export default class BluetoothBatteryIndicatorExtension extends Extension {
 
         const address = port ? `${btMacAddress}.${port}` : btMacAddress;
 
-        Utils.runPythonScript(
+        this._pythonRunner.runPythonScript(
           [pythonExec, pyLocation, address],
           this._setPercentFromScript(index)
         )
@@ -156,7 +158,7 @@ export default class BluetoothBatteryIndicatorExtension extends Extension {
         const shellLocation = this.dir.get_child(BTCTL_SCRIPT_PATH).get_path();
 
         // Utils.runPythonScript can run any arbitrary script
-        Utils.runPythonScript(
+        this._pythonRunner.runPythonScript(
           [shellLocation, btMacAddress],
           this._setPercentFromScript(index)
         )
@@ -166,7 +168,7 @@ export default class BluetoothBatteryIndicatorExtension extends Extension {
         const shellLocation = this.dir.get_child(UPOWER_SCRIPT_PATH).get_path();
 
         // Utils.runPythonScript can run any arbitrary script
-        Utils.runPythonScript(
+        this._pythonRunner.runPythonScript(
           [shellLocation, btMacAddress],
           this._setPercentFromScript(index)
         )
@@ -176,7 +178,7 @@ export default class BluetoothBatteryIndicatorExtension extends Extension {
         const shellLocation = this.dir.get_child(TOGGLE_SCRIPT_PATH).get_path();
 
         // Utils.runPythonScript can run any arbitrary script
-        Utils.runPythonScript(
+        this._pythonRunner.runPythonScript(
           [shellLocation, btMacAddress, value ? 'connect' : 'disconnect'],
           callback
         )
@@ -184,6 +186,9 @@ export default class BluetoothBatteryIndicatorExtension extends Extension {
 
     disable() {
         GLib.Source.remove(this._loop);
+        GLib.Source.remove(this._timeOut);
+
+        this._pythonRunner.cancel();
         this._disconnectSignals();
         this._controller.destroy();
         this._controller = null;

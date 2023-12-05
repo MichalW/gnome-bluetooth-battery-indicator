@@ -1,10 +1,7 @@
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 
-import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
-
-import * as Constants from './constants.js';
-import {SettingsController} from './settings.js';
+import {gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 const BOX_PADDING = 8;
 const MARGIN_BOTTOM = 8;
@@ -22,12 +19,10 @@ const addToBox = (box, element) => {
 
 export default GObject.registerClass(
     class SettingsWidget extends Gtk.Box {
-        _init(params) {
-            super._init(params);
-            this._settings = new SettingsController(
-                ExtensionPreferences.lookupByUUID(Constants.UUID).getSettings()
-            );
+        _init(settings) {
+            super._init();
 
+            this._settings = settings;
             this.set_orientation(Gtk.Orientation.VERTICAL);
 
             addToBox(this, this._getIndicatorSettingsFrame());

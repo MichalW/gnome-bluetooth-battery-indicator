@@ -1,38 +1,43 @@
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 
-export function spawn(command, callback) {
-    let [status, pid] = GLib.spawn_async(
-        null,
-        ['/usr/bin/env', 'bash', '-c', command],
-        null,
-        GLib.SpawnFlags.SEARCH_PATH | GLib.SpawnFlags.DO_NOT_REAP_CHILD,
-        null
-    );
+export class PythonRunner {
+    constructor() {
+        this._cancellable = null;
+    }
 
-    if (callback)
-        GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, callback);
-}
+    static getPythonExec() {
+        return ['python3'].find(cmd => GLib.find_program_in_path(cmd));
+    }
 
-export function getPythonExec() {
-	//return ['python', 'python3', 'python2'].find(cmd => GLib.find_program_in_path(cmd));
-	return ['python3'].find(cmd => GLib.find_program_in_path(cmd)); //Hotfix for no percentage shown
-}
+    runPythonScript(argv, onSuccess) {
+        this.cancel();
+        this._cancellable = new Gio.Cancellable();
 
-export function runPythonScript(argv, onSuccess) {
-    try {
-        const proc = Gio.Subprocess.new(argv, Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
+        try {
+            const proc = Gio.Subprocess.new(argv, Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
 
-        proc.communicate_utf8_async(null, null, (proc, res) => {
-            const [, stdout] = proc.communicate_utf8_finish(res);
+            proc.init(this._cancellable);
+            proc.communicate_utf8_async(null, null, (proc, res) => {
+                const [, stdout] = proc.communicate_utf8_finish(res);
 
-            if (proc.get_successful() && stdout) {
-                log('[bluetooth-battery-indicator] Percentage from script: ' + stdout);
+                if (proc.get_successful() && stdout) {
+                    log('[bluetooth-battery-indicator] Percentage from script: ' + stdout);
 
-                onSuccess(stdout);
-            }
-        });
-    } catch (e) {
-        log('ERROR: Python execution failed: ' + e);
+                    onSuccess(stdout);
+                }
+            });
+
+            this._cancellable.connect(() => proc.force_exit());
+        } catch (e) {
+            log('ERROR: Python execution failed: ' + e);
+        }
+    }
+
+    cancel() {
+        if (this._cancellable) {
+            this._cancellable.cancel();
+            this._cancellable = null;
+        }
     }
 }
