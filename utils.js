@@ -12,12 +12,16 @@ export class PythonRunner {
 
     runPythonScript(argv, onSuccess) {
         this.cancel();
-        this._cancellable = new Gio.Cancellable();
 
         try {
-            const proc = Gio.Subprocess.new(argv, Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
+            const proc = new Gio.Subprocess({
+                argv,
+                flags: Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE
+            });
 
+            this._cancellable = new Gio.Cancellable();
             proc.init(this._cancellable);
+
             proc.communicate_utf8_async(null, null, (proc, res) => {
                 const [, stdout] = proc.communicate_utf8_finish(res);
 
@@ -35,7 +39,7 @@ export class PythonRunner {
     }
 
     cancel() {
-        if (this._cancellable) {
+        if (this._cancellable instanceof Gio.Cancellable) {
             this._cancellable.cancel();
             this._cancellable = null;
         }
