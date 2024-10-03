@@ -44,7 +44,7 @@ msgstr "Intervalle de rafraîchissement (minutes)"
 
 #: settingsWidget.js:85
 msgid "Hide indicator if there are no devices"
-msgstr "Caché l'indicateur s'il n'y a aucun appareil"
+msgstr "Cacher l'indicateur s'il n'y a aucun appareil"
 
 #: settingsWidget.js:138
 msgid "Name"
