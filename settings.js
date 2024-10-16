@@ -27,12 +27,13 @@ export class SettingsController {
         return this._settings.get_strv(DEVICES_KEY).map(JSON.parse);
     }
 
-    getPairedDevices() {
-        return this.getDevices().filter(({ isPaired }) => isPaired);
-    }
-
     setDevices(devices) {
-        this._settings.set_strv(DEVICES_KEY, devices.map(JSON.stringify));
+        this._settings.set_strv(DEVICES_KEY, devices.map((device) => JSON.stringify({
+            name: device.name,
+            mac: device.mac,
+            icon: device.icon,
+            isActive: device.isActive,
+        })));
     }
 
     setDevice(device) {

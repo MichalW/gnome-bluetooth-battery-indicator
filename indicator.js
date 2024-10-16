@@ -21,12 +21,16 @@ export const IndicatorController = GObject.registerClass(
         }
 
         refresh(devices) {
-            const devicesSettings = devices.map(({ mac, icon }) => ({ mac, icon }));
+            const devicesSettings = devices.map(({mac, icon}) => ({mac, icon}));
 
             if (JSON.stringify(devicesSettings) !== JSON.stringify(this._prevDevicesSettings)) {
                 this._container.remove_all_children();
                 this._addBoxes(devices);
             }
+
+            devices.forEach((device, index) => {
+                this.setPercentLabel(device.batteryPercentage, index);
+            });
 
             this._prevDevicesSettings = devicesSettings;
         }
@@ -38,7 +42,7 @@ export const IndicatorController = GObject.registerClass(
         _addSettingsButton() {
             const settings = new PopupMenu.PopupMenuItem(_('Settings'));
             settings.connect('activate', () => {
-                this.openPreferences();
+                Util.spawn(['gnome-extensions', 'prefs', Constants.UUID]);
             });
             this._addMenuItem(settings);
         }
@@ -58,7 +62,7 @@ export const IndicatorController = GObject.registerClass(
         }
 
         _getBox(device, index) {
-            const box = new St.BoxLayout({ style_class: 'panel-status-menu-box' });
+            const box = new St.BoxLayout({style_class: 'panel-status-menu-box'});
 
             this._icons[index] = this._getBoxIcon(device);
             this._labels[index] = this._getBoxLabel();
@@ -70,16 +74,22 @@ export const IndicatorController = GObject.registerClass(
         }
 
         _getBoxLabel() {
-            return new St.Label({
+            const label = new St.Label({
                 y_align: Clutter.ActorAlign.CENTER
             });
+            label.set_style('margin-right: 5px;');
+
+            return label;
         }
 
         _getBoxIcon(device) {
-            return new St.Icon({
+            const icon = new St.Icon({
                 icon_name: device.icon || 'battery-full-symbolic',
                 style_class: 'system-status-icon',
             });
+            icon.set_style('margin-right: 0px;');
+
+            return icon;
         }
 
         setPercentLabel(percent, index) {

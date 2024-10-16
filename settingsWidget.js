@@ -26,7 +26,9 @@ export default GObject.registerClass(
             this.set_orientation(Gtk.Orientation.VERTICAL);
 
             addToBox(this, this._getIndicatorSettingsFrame());
-            addToBox(this, this._getDevicesFrame());
+            this._getDevicesFrame().then((element) => {
+                addToBox(this, element);
+            });
         }
 
         _getIndicatorSettingsFrame() {
@@ -128,15 +130,13 @@ export default GObject.registerClass(
             });
 
             addToBox(hBox, this._getLabel(_('Name')));
-            addToBox(hBox, this._getLabel(_('Status'), false, 80));
-            addToBox(hBox, this._getLabel(_('Icon'), false, 90));
-            addToBox(hBox, this._getLabel(_('Port'), false, 70));
-            addToBox(hBox, this._getLabel(_('% Source'), false, 40));
+            addToBox(hBox, this._getLabel(_('Status'), false, 60));
+            addToBox(hBox, this._getLabel(_('Icon'), false, 80));
 
             return hBox;
         }
 
-        _getDevicesFrame() {
+        async _getDevicesFrame() {
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
                 ...getMarginAll(BOX_PADDING),
@@ -145,7 +145,7 @@ export default GObject.registerClass(
             const headers = this._getDevicesHeaders();
             addToBox(vBox, headers);
 
-            const devices = this._settings.getPairedDevices();
+            const devices = await this._settings.getDevices();
             devices.forEach((device) => {
                 addToBox(vBox, this._getDeviceBox(device));
             });
@@ -166,13 +166,9 @@ export default GObject.registerClass(
                 ...getMarginAll(BOX_PADDING),
             });
 
-            const isEmptyAlias = !device.alias || device.alias.trim().length === 0;
-
-            addToBox(hBox, this._getLabel(isEmptyAlias ? device.name : device.alias));
+            addToBox(hBox, this._getLabel(device.name));
             addToBox(hBox, this._getDeviceSwitchButton(device));
             addToBox(hBox, this._getDeviceIconComboBox(device));
-            addToBox(hBox, this._getPortComboBox(device));
-            addToBox(hBox, this._getPercentageSourceComboBox(device));
 
             return hBox;
         }
@@ -225,40 +221,15 @@ export default GObject.registerClass(
             return comboBox;
         }
 
-        _getPortComboBox(device) {
-            const box = new Gtk.Box({
-                margin_start: BOX_PADDING,
-            })
-
-            const comboBox = new Gtk.ComboBoxText();
-
-            [...Array(10).keys()].forEach((port) => {
-                comboBox.append_text(port ? String(port) : _('Default'));
-            })
-            comboBox.set_active(device.port || 0);
-
-            comboBox.connect('changed', () => {
-                const i = comboBox.get_active();
-                this._settings.setDevice({
-                    mac: device.mac,
-                    port: i,
-                });
-            });
-
-            addToBox(box, comboBox);
-
-            return box;
-        }
-
         _getDeviceSwitchButton(device) {
             const switchButton = new Gtk.Switch({
-                active: device.active || false,
+                active: device.isActive || false,
             });
 
             switchButton.connect('notify::active', ({ active }) => {
                 this._settings.setDevice({
                     mac: device.mac,
-                    active,
+                    isActive: active
                 });
             });
 
@@ -270,38 +241,6 @@ export default GObject.registerClass(
             addToBox(vBox, switchButton);
 
             return vBox;
-        }
-
-        _getPercentageSourceComboBox(device) {
-            const box = new Gtk.Box({
-                margin_start: BOX_PADDING,
-            })
-
-            const comboBox = new Gtk.ComboBoxText();
-
-            const sources = [
-                { key: 'python-script', text: _('Python script') },
-                { key: 'bluetoothctl', text: _('Bluetoothctl') },
-                { key: 'upower', text: _('UPower') }
-            ];
-
-            sources.forEach((src) => {
-                comboBox.append_text(src.text);
-            })
-            const activeIndex = sources.findIndex(({ key }) => device.percentageSource === key);
-            comboBox.set_active(activeIndex !== -1 ? activeIndex : 0);
-
-            comboBox.connect('changed', () => {
-                const i = comboBox.get_active();
-                this._settings.setDevice({
-                    mac: device.mac,
-                    percentageSource: sources[i].key,
-                });
-            });
-
-            addToBox(box, comboBox);
-
-            return box;
         }
     }
 );
