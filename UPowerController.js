@@ -33,4 +33,8 @@ export class UPowerController {
         const match = text.match(/\d+%/);
         return match ? match[0] : '';
     }
+
+    destroy() {
+        this._pythonRunner.cancel();
+    }
 }
