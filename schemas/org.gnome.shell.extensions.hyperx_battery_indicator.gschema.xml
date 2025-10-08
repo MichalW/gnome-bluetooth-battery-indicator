@@ -11,7 +11,17 @@
 
         <key name="hide-indicator" type="b">
             <default>false</default>
-            <summary>Refresh interval (minutes)</summary>
+            <summary>Hide indicator if there are no devices</summary>
+        </key>
+
+        <key name="show-notification" type="b">
+            <default>false</default>
+            <summary>Notify me when battery is below 15%</summary>
+        </key>
+
+        <key name="battery-fill-effect" type="b">
+            <default>true</default>
+            <summary>Enable Battery Fill Effect</summary>
         </key>
 
         <key name="devices" type="as">

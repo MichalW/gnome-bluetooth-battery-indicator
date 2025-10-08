@@ -1,7 +1,7 @@
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 
-import {gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+import { gettext as _ } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 const BOX_PADDING = 8;
 const MARGIN_BOTTOM = 8;
@@ -48,6 +48,24 @@ export default GObject.registerClass(
             addToBox(hBox2, this._getHideIndicatorLabel());
             addToBox(hBox2, this._getHideIndicatorSwitchButton());
 
+
+            const hBox3 = new Gtk.Box({
+                orientation: Gtk.Orientation.HORIZONTAL,
+                ...getMarginAll(BOX_PADDING),
+            });
+
+            addToBox(hBox3, this._getShowNotificationLabel());
+            addToBox(hBox3, this._getShowNotificationSwitchButton());
+
+
+            const hBox4 = new Gtk.Box({
+                orientation: Gtk.Orientation.HORIZONTAL,
+                ...getMarginAll(BOX_PADDING),
+            });
+
+            addToBox(hBox4, this._getBatteryFillEffectLabel());
+            addToBox(hBox4, this._getBatteryFillEffectSwitchButton());
+
             const vBox = new Gtk.Box({
                 orientation: Gtk.Orientation.VERTICAL,
                 ...getMarginAll(BOX_PADDING),
@@ -55,6 +73,8 @@ export default GObject.registerClass(
 
             addToBox(vBox, hBox1);
             addToBox(vBox, hBox2);
+            addToBox(vBox, hBox3);
+            addToBox(vBox, hBox4);
 
             const frame = new Gtk.Frame({
                 label: _('Indicator Settings'),
@@ -69,6 +89,22 @@ export default GObject.registerClass(
         _getIntervalLabel() {
             return new Gtk.Label({
                 label: _('Refresh interval (minutes)'),
+                xalign: 0,
+                hexpand: true,
+            });
+        }
+
+        _getShowNotificationLabel() {
+            return new Gtk.Label({
+                label: _('Notify me when battery is below 15%'),
+                xalign: 0,
+                hexpand: true,
+            });
+        }
+
+        _getBatteryFillEffectLabel() {
+            return new Gtk.Label({
+                label: _('Enable Battery Fill Effect'),
                 xalign: 0,
                 hexpand: true,
             });
@@ -100,8 +136,22 @@ export default GObject.registerClass(
 
         _getHideIndicatorSwitchButton() {
             return this._getSwitchButton(
-              () => this._settings.getHideIndicator(),
-              (value) => this._settings.setHideIndicator(value)
+                () => this._settings.getHideIndicator(),
+                (value) => this._settings.setHideIndicator(value)
+            );
+        }
+
+        _getShowNotificationSwitchButton() {
+            return this._getSwitchButton(
+                () => this._settings.getShowNotification(),
+                (value) => this._settings.setShowNotification(value)
+            );
+        }
+
+        _getBatteryFillEffectSwitchButton() {
+            return this._getSwitchButton(
+                () => this._settings.getBatteryFillEffect(),
+                (value) => this._settings.setBatteryFillEffect(value)
             );
         }
 

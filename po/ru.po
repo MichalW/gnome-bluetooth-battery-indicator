@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-12 19:49+0100\n"
+"POT-Creation-Date: 2025-10-08 12:29-0300\n"
 "PO-Revision-Date: 2023-01-15 20:40+1000\n"
 "Last-Translator: Ser82-png <asvmail.as@gmail.com>\n"
 "Language-Team: \n"
@@ -15,97 +15,106 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: extension.js:55
+#: extension.js:40
 msgid "Refresh"
 msgstr "Обновить"
 
-#: extension.js:63
-msgid "Force refresh"
-msgstr "Принудительно обновить"
-
-#: indicator.js:11
+#: extension.js:76 indicator.js:15
 msgid "Hyperx battery Indicator"
 msgstr "Индикатор батареи Bluetooth-устройств"
 
-#: indicator.js:36
+#: extension.js:83
+#, fuzzy
+msgid "Low Battery"
+msgstr "Аккумулятор"
+
+#: extension.js:84
+msgid "You might want to Maybe charge your headset."
+msgstr "Возможно, вам захочется зарядить гарнитуру."
+
+#: indicator.js:47
 msgid "Settings"
 msgstr "Настройки"
 
-#: settingsWidget.js:66
+#: settingsWidget.js:80
 msgid "Indicator Settings"
 msgstr "Настройки индикатора"
 
-#: settingsWidget.js:77
+#: settingsWidget.js:91
 msgid "Refresh interval (minutes)"
 msgstr "Интервал обновления (минуты)"
 
-#: settingsWidget.js:85
+#: settingsWidget.js:99
+msgid "Notify me when battery is below 15%"
+msgstr "Уведомить меня, когда уровень заряда батареи опустится ниже 15%"
+
+#: settingsWidget.js:107
+msgid "Enable Battery Fill Effect"
+msgstr "Включить эффект заполнения батареи"
+
+#: settingsWidget.js:115
 msgid "Hide indicator if there are no devices"
 msgstr "Скрывать индикатор при отсутствии устройств"
 
-#: settingsWidget.js:138
+#: settingsWidget.js:182
 msgid "Name"
 msgstr "Название"
 
-#: settingsWidget.js:139
+#: settingsWidget.js:183
 msgid "Status"
 msgstr "Состояние"
 
-#: settingsWidget.js:140
+#: settingsWidget.js:184
 msgid "Icon"
 msgstr "Значок"
 
-#: settingsWidget.js:141
-msgid "Port"
-msgstr "Порт"
-
-#: settingsWidget.js:142
-msgid "% Source"
-msgstr "% Источник"
-
-#: settingsWidget.js:162
+#: settingsWidget.js:204
 msgid "Devices"
 msgstr "Устройства"
 
-#: settingsWidget.js:207 settingsWidget.js:241
+#: settingsWidget.js:247
 msgid "Default"
 msgstr "По умолчанию"
 
-#: settingsWidget.js:208
+#: settingsWidget.js:248
 msgid "Headphones"
 msgstr "Наушники"
 
-#: settingsWidget.js:209
-msgid "Mouse"
-msgstr "Мышь"
-
-#: settingsWidget.js:210
-msgid "Keyboard"
-msgstr "Клавиатура"
-
-#: settingsWidget.js:211
+#: settingsWidget.js:249
 msgid "Headset"
 msgstr "Гарнитура"
 
-#: settingsWidget.js:212
-msgid "Game Controller"
-msgstr "Игровой контроллер"
-
-#: settingsWidget.js:213
+#: settingsWidget.js:250
 msgid "Battery"
 msgstr "Аккумулятор"
 
-#: settingsWidget.js:288
-msgid "Python script"
-msgstr "Скрипт Python"
+#~ msgid "Force refresh"
+#~ msgstr "Принудительно обновить"
 
-#: settingsWidget.js:289
-msgid "Bluetoothctl"
-msgstr "Bluetoothctl"
+#~ msgid "Port"
+#~ msgstr "Порт"
 
-#: settingsWidget.js:290
-msgid "UPower"
-msgstr "UPower"
+#~ msgid "% Source"
+#~ msgstr "% Источник"
+
+#~ msgid "Mouse"
+#~ msgstr "Мышь"
+
+#~ msgid "Keyboard"
+#~ msgstr "Клавиатура"
+
+#~ msgid "Game Controller"
+#~ msgstr "Игровой контроллер"
+
+#~ msgid "Python script"
+#~ msgstr "Скрипт Python"
+
+#~ msgid "Bluetoothctl"
+#~ msgstr "Bluetoothctl"
+
+#~ msgid "UPower"
+#~ msgstr "UPower"

@@ -3,7 +3,7 @@ import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/ex
 import SettingsWidget from './settingsWidget.js';
 import {SettingsController} from './settings.js';
 
-export default class BluetoothBatteryIndicatorExtensionPreferences extends ExtensionPreferences {
+export default class HyperxBatteryIndicatorExtensionPreferences extends ExtensionPreferences {
     getPreferencesWidget() {
         const settingsController = new SettingsController(this.getSettings());
 

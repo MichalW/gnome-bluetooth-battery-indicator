@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-12 19:49+0100\n"
+"POT-Creation-Date: 2025-10-08 12:29-0300\n"
 "PO-Revision-Date: 2024-08-28 15:24+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: \n"
@@ -18,94 +18,102 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.3\n"
 
-#: extension.js:55
+#: extension.js:40
 msgid "Refresh"
 msgstr "Refrescar"
 
-#: extension.js:63
-msgid "Force refresh"
-msgstr "Forçar l’actualizacion"
-
-#: indicator.js:11
+#: extension.js:76 indicator.js:15
 msgid "Hyperx battery Indicator"
 msgstr "Indicator de batariá"
 
-#: indicator.js:36
+#: extension.js:83
+#, fuzzy
+msgid "Low Battery"
+msgstr "Batariá"
+
+#: extension.js:84
+msgid "You might want to Maybe charge your headset."
+msgstr "Benlèu volètz cargar vòstre auriòl."
+
+#: indicator.js:47
 msgid "Settings"
 msgstr "Paramètres"
 
-#: settingsWidget.js:66
+#: settingsWidget.js:80
 msgid "Indicator Settings"
 msgstr "Paramètres de l'indicator"
 
-#: settingsWidget.js:77
+#: settingsWidget.js:91
 msgid "Refresh interval (minutes)"
 msgstr "Interval d’actualizacion (en minutas)"
 
-#: settingsWidget.js:85
+#: settingsWidget.js:99
+msgid "Notify me when battery is below 15%"
+msgstr "Avisatz-me quand la batariá es en dejós de 15%"
+
+#: settingsWidget.js:107
+msgid "Enable Battery Fill Effect"
+msgstr "Activar l'efièch de rempliment de la batariá"
+
+#: settingsWidget.js:115
 msgid "Hide indicator if there are no devices"
 msgstr "Rescondre l’indicator s’i a pas de periferic"
 
-#: settingsWidget.js:138
+#: settingsWidget.js:182
 msgid "Name"
 msgstr "Nom"
 
-#: settingsWidget.js:139
+#: settingsWidget.js:183
 msgid "Status"
 msgstr "Estat"
 
-#: settingsWidget.js:140
+#: settingsWidget.js:184
 msgid "Icon"
 msgstr "Icòna"
 
-#: settingsWidget.js:141
-msgid "Port"
-msgstr "Pòrt"
-
-#: settingsWidget.js:142
-msgid "% Source"
-msgstr "Font %"
-
-#: settingsWidget.js:162
+#: settingsWidget.js:204
 msgid "Devices"
 msgstr "Periferics"
 
-#: settingsWidget.js:207 settingsWidget.js:241
+#: settingsWidget.js:247
 msgid "Default"
 msgstr "Per defaut"
 
-#: settingsWidget.js:208
+#: settingsWidget.js:248
 msgid "Headphones"
 msgstr "Escotadors"
 
-#: settingsWidget.js:209
-msgid "Mouse"
-msgstr "Mirga"
-
-#: settingsWidget.js:210
-msgid "Keyboard"
-msgstr "Clavièr"
-
-#: settingsWidget.js:211
+#: settingsWidget.js:249
 msgid "Headset"
 msgstr "Microcasc"
 
-#: settingsWidget.js:212
-msgid "Game Controller"
-msgstr "Maneta"
-
-#: settingsWidget.js:213
+#: settingsWidget.js:250
 msgid "Battery"
 msgstr "Batariá"
 
-#: settingsWidget.js:288
-msgid "Python script"
-msgstr "Script Python"
+#~ msgid "Force refresh"
+#~ msgstr "Forçar l’actualizacion"
 
-#: settingsWidget.js:289
-msgid "Bluetoothctl"
-msgstr "Bluetoothctl"
+#~ msgid "Port"
+#~ msgstr "Pòrt"
 
-#: settingsWidget.js:290
-msgid "UPower"
-msgstr "UPower"
+#~ msgid "% Source"
+#~ msgstr "Font %"
+
+#~ msgid "Mouse"
+#~ msgstr "Mirga"
+
+#~ msgid "Keyboard"
+#~ msgstr "Clavièr"
+
+#~ msgid "Game Controller"
+#~ msgstr "Maneta"
+
+#~ msgid "Python script"
+#~ msgstr "Script Python"
+
+#~ msgid "Bluetoothctl"
+#~ msgstr "Bluetoothctl"
+
+#~ msgid "UPower"
+#~ msgstr "UPower"

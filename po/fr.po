@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-12 19:49+0100\n"
+"POT-Creation-Date: 2025-10-08 12:29-0300\n"
 "PO-Revision-Date: 2023-07-11 10:39+0200\n"
 "Last-Translator: Benjamin Renard <brenard@easter-eggs.com>\n"
 "Language-Team: \n"
@@ -18,94 +18,102 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: extension.js:55
+#: extension.js:40
 msgid "Refresh"
 msgstr "Rafraîchir"
 
-#: extension.js:63
-msgid "Force refresh"
-msgstr "Rafraîchissement forcé du"
-
-#: indicator.js:11
+#: extension.js:76 indicator.js:15
 msgid "Hyperx battery Indicator"
 msgstr "Indicateur de batterie"
 
-#: indicator.js:36
+#: extension.js:83
+#, fuzzy
+msgid "Low Battery"
+msgstr "Batterie"
+
+#: extension.js:84
+msgid "You might want to Maybe charge your headset."
+msgstr "Vous voudrez peut-être peut-être charger votre casque."
+
+#: indicator.js:47
 msgid "Settings"
 msgstr "Paramètres"
 
-#: settingsWidget.js:66
+#: settingsWidget.js:80
 msgid "Indicator Settings"
 msgstr "Paramètres de l'indicateur"
 
-#: settingsWidget.js:77
+#: settingsWidget.js:91
 msgid "Refresh interval (minutes)"
 msgstr "Intervalle de rafraîchissement (minutes)"
 
-#: settingsWidget.js:85
+#: settingsWidget.js:99
+msgid "Notify me when battery is below 15%"
+msgstr "Prévenez-moi lorsque la batterie est inférieure à 15 %"
+
+#: settingsWidget.js:107
+msgid "Enable Battery Fill Effect"
+msgstr "Activer l'effet de remplissage de la batterie"
+
+#: settingsWidget.js:115
 msgid "Hide indicator if there are no devices"
 msgstr "Cacher l'indicateur s'il n'y a aucun appareil"
 
-#: settingsWidget.js:138
+#: settingsWidget.js:182
 msgid "Name"
 msgstr "Nom"
 
-#: settingsWidget.js:139
+#: settingsWidget.js:183
 msgid "Status"
 msgstr "État"
 
-#: settingsWidget.js:140
+#: settingsWidget.js:184
 msgid "Icon"
 msgstr "Icône"
 
-#: settingsWidget.js:141
-msgid "Port"
-msgstr "Port"
-
-#: settingsWidget.js:142
-msgid "% Source"
-msgstr "Source %"
-
-#: settingsWidget.js:162
+#: settingsWidget.js:204
 msgid "Devices"
 msgstr "Appareils"
 
-#: settingsWidget.js:207 settingsWidget.js:241
+#: settingsWidget.js:247
 msgid "Default"
 msgstr "Par défaut"
 
-#: settingsWidget.js:208
+#: settingsWidget.js:248
 msgid "Headphones"
 msgstr "Casque"
 
-#: settingsWidget.js:209
-msgid "Mouse"
-msgstr "Souris"
-
-#: settingsWidget.js:210
-msgid "Keyboard"
-msgstr "Clavier"
-
-#: settingsWidget.js:211
+#: settingsWidget.js:249
 msgid "Headset"
 msgstr "Casque avec micro"
 
-#: settingsWidget.js:212
-msgid "Game Controller"
-msgstr "Manette de jeu"
-
-#: settingsWidget.js:213
+#: settingsWidget.js:250
 msgid "Battery"
 msgstr "Batterie"
 
-#: settingsWidget.js:288
-msgid "Python script"
-msgstr "Script python"
+#~ msgid "Force refresh"
+#~ msgstr "Rafraîchissement forcé du"
 
-#: settingsWidget.js:289
-msgid "Bluetoothctl"
-msgstr "Bluetoothctl"
+#~ msgid "Port"
+#~ msgstr "Port"
 
-#: settingsWidget.js:290
-msgid "UPower"
-msgstr "UPower"
+#~ msgid "% Source"
+#~ msgstr "Source %"
+
+#~ msgid "Mouse"
+#~ msgstr "Souris"
+
+#~ msgid "Keyboard"
+#~ msgstr "Clavier"
+
+#~ msgid "Game Controller"
+#~ msgstr "Manette de jeu"
+
+#~ msgid "Python script"
+#~ msgstr "Script python"
+
+#~ msgid "Bluetoothctl"
+#~ msgstr "Bluetoothctl"
+
+#~ msgid "UPower"
+#~ msgstr "UPower"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-12 19:49+0100\n"
+"POT-Creation-Date: 2025-10-08 12:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,94 +17,74 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:55
+#: extension.js:40
 msgid "Refresh"
 msgstr ""
 
-#: extension.js:63
-msgid "Force refresh"
-msgstr ""
-
-#: indicator.js:11
+#: extension.js:76 indicator.js:15
 msgid "Hyperx battery Indicator"
 msgstr ""
 
-#: indicator.js:36
+#: extension.js:83
+msgid "Low Battery"
+msgstr ""
+
+#: extension.js:84
+msgid "You might want to Maybe charge your headset."
+msgstr ""
+
+#: indicator.js:47
 msgid "Settings"
 msgstr ""
 
-#: settingsWidget.js:66
+#: settingsWidget.js:80
 msgid "Indicator Settings"
 msgstr ""
 
-#: settingsWidget.js:77
+#: settingsWidget.js:91
 msgid "Refresh interval (minutes)"
 msgstr ""
 
-#: settingsWidget.js:85
+#: settingsWidget.js:99
+msgid "Notify me when battery is below 15%"
+msgstr ""
+
+#: settingsWidget.js:107
+msgid "Enable Battery Fill Effect"
+msgstr ""
+
+#: settingsWidget.js:115
 msgid "Hide indicator if there are no devices"
 msgstr ""
 
-#: settingsWidget.js:138
+#: settingsWidget.js:182
 msgid "Name"
 msgstr ""
 
-#: settingsWidget.js:139
+#: settingsWidget.js:183
 msgid "Status"
 msgstr ""
 
-#: settingsWidget.js:140
+#: settingsWidget.js:184
 msgid "Icon"
 msgstr ""
 
-#: settingsWidget.js:141
-msgid "Port"
-msgstr ""
-
-#: settingsWidget.js:142
-msgid "% Source"
-msgstr ""
-
-#: settingsWidget.js:162
+#: settingsWidget.js:204
 msgid "Devices"
 msgstr ""
 
-#: settingsWidget.js:207 settingsWidget.js:241
+#: settingsWidget.js:247
 msgid "Default"
 msgstr ""
 
-#: settingsWidget.js:208
+#: settingsWidget.js:248
 msgid "Headphones"
 msgstr ""
 
-#: settingsWidget.js:209
-msgid "Mouse"
-msgstr ""
-
-#: settingsWidget.js:210
-msgid "Keyboard"
-msgstr ""
-
-#: settingsWidget.js:211
+#: settingsWidget.js:249
 msgid "Headset"
 msgstr ""
 
-#: settingsWidget.js:212
-msgid "Game Controller"
-msgstr ""
-
-#: settingsWidget.js:213
+#: settingsWidget.js:250
 msgid "Battery"
-msgstr ""
-
-#: settingsWidget.js:288
-msgid "Python script"
-msgstr ""
-
-#: settingsWidget.js:289
-msgid "Bluetoothctl"
-msgstr ""
-
-#: settingsWidget.js:290
-msgid "UPower"
 msgstr ""

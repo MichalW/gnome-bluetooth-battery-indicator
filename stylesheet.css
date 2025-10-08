@@ -1,0 +1,20 @@
+/* Battery color ranges for panel icon */
+#panel .battery-critical {
+    color: #ff0000 !important; /* bright red */
+}
+
+#panel .battery-low {
+    color: #ff6600 !important; /* orange */
+}
+
+#panel .battery-medium {
+    color: #ffcc00 !important; /* yellow */
+}
+
+#panel .battery-high {
+    color: #66cc33 !important; /* light green */
+}
+
+#panel .battery-full {
+    color: #00aa00 !important; /* strong green */
+}

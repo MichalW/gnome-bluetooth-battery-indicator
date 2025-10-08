@@ -23,6 +23,7 @@ export class UPowerController {
             .map((device) => ({
                 name: device.model,
                 mac: device.serial,
+                percentage: parseInt(device.percentage),
                 batteryPercentage: this._getPercentage(device.percentage),
                 defaultIcon: device.icon,
                 isConnected: true,

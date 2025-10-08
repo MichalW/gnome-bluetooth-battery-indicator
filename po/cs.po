@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-17 12:24+0100\n"
+"POT-Creation-Date: 2025-10-08 12:29-0300\n"
 "PO-Revision-Date: 2023-01-12 12:24+0100\n"
 "Last-Translator: Amerey.eu <info@amerey.eu>\n"
 "Language-Team: Gnome.CZE\n"
@@ -17,94 +17,102 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:55
+#: extension.js:40
 msgid "Refresh"
 msgstr "Obnovit"
 
-#: extension.js:63
-msgid "Force refresh"
-msgstr "Vynutit obnovení"
-
-#: indicator.js:11
+#: extension.js:76 indicator.js:15
 msgid "Hyperx battery Indicator"
 msgstr "Indikátor baterie"
 
-#: indicator.js:36
+#: extension.js:83
+#, fuzzy
+msgid "Low Battery"
+msgstr "Baterie"
+
+#: extension.js:84
+msgid "You might want to Maybe charge your headset."
+msgstr "Možná byste si měli nabít sluchátka."
+
+#: indicator.js:47
 msgid "Settings"
 msgstr "Nastavení"
 
-#: settingsWidget.js:66
+#: settingsWidget.js:80
 msgid "Indicator Settings"
 msgstr "Nastavení indikátoru"
 
-#: settingsWidget.js:77
+#: settingsWidget.js:91
 msgid "Refresh interval (minutes)"
 msgstr "Interval obnovování (minuty)"
 
-#: settingsWidget.js:85
+#: settingsWidget.js:99
+msgid "Notify me when battery is below 15%"
+msgstr "Upozornit mě, když je baterie pod 15 %"
+
+#: settingsWidget.js:107
+msgid "Enable Battery Fill Effect"
+msgstr "Povolit efekt nabíjení baterie"
+
+#: settingsWidget.js:115
 msgid "Hide indicator if there are no devices"
 msgstr "Skrýt indikátor, pokud nejsou k dispozici žádná zařízení"
 
-#: settingsWidget.js:138
+#: settingsWidget.js:182
 msgid "Name"
 msgstr "Jméno"
 
-#: settingsWidget.js:139
+#: settingsWidget.js:183
 msgid "Status"
 msgstr "Status"
 
-#: settingsWidget.js:140
+#: settingsWidget.js:184
 msgid "Icon"
 msgstr "Ikona"
 
-#: settingsWidget.js:141
-msgid "Port"
-msgstr "Port"
-
-#: settingsWidget.js:142
-msgid "% Source"
-msgstr "% Zdroj"
-
-#: settingsWidget.js:162
+#: settingsWidget.js:204
 msgid "Devices"
 msgstr "Zařízení"
 
-#: settingsWidget.js:207 settingsWidget.js:241
+#: settingsWidget.js:247
 msgid "Default"
 msgstr "Výchozí"
 
-#: settingsWidget.js:208
+#: settingsWidget.js:248
 msgid "Headphones"
 msgstr "Sluchátka"
 
-#: settingsWidget.js:209
-msgid "Mouse"
-msgstr "Myš"
-
-#: settingsWidget.js:210
-msgid "Keyboard"
-msgstr "Klávesnice"
-
-#: settingsWidget.js:211
+#: settingsWidget.js:249
 msgid "Headset"
 msgstr "Sluchátka"
 
-#: settingsWidget.js:212
-msgid "Game Controller"
-msgstr "Herní ovladač"
-
-#: settingsWidget.js:213
+#: settingsWidget.js:250
 msgid "Battery"
 msgstr "Baterie"
 
-#: settingsWidget.js:288
-msgid "Python script"
-msgstr "Python skript"
+#~ msgid "Force refresh"
+#~ msgstr "Vynutit obnovení"
 
-#: settingsWidget.js:289
-msgid "Bluetoothctl"
-msgstr "Bluetoothctl"
+#~ msgid "Port"
+#~ msgstr "Port"
 
-#: settingsWidget.js:290
-msgid "UPower"
-msgstr "UPower "
+#~ msgid "% Source"
+#~ msgstr "% Zdroj"
+
+#~ msgid "Mouse"
+#~ msgstr "Myš"
+
+#~ msgid "Keyboard"
+#~ msgstr "Klávesnice"
+
+#~ msgid "Game Controller"
+#~ msgstr "Herní ovladač"
+
+#~ msgid "Python script"
+#~ msgstr "Python skript"
+
+#~ msgid "Bluetoothctl"
+#~ msgstr "Bluetoothctl"
+
+#~ msgid "UPower"
+#~ msgstr "UPower "
