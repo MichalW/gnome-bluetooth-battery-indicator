@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-07 08:56+0200\n"
+"POT-Creation-Date: 2022-03-17 12:24+0100\n"
 "PO-Revision-Date: 2023-01-12 12:24+0100\n"
 "Last-Translator: Amerey.eu <info@amerey.eu>\n"
 "Language-Team: Gnome.CZE\n"
@@ -17,100 +17,94 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:31
+#: extension.js:55
 msgid "Refresh"
 msgstr "Obnovit"
 
-#: indicator.js:14
+#: extension.js:63
+msgid "Force refresh bluetooth"
+msgstr "Vynutit obnovení bluetooth"
+
+#: indicator.js:11
 msgid "Bluetooth battery Indicator"
 msgstr "Indikátor baterie Bluetooth"
 
-#: indicator.js:50
-msgid "No connected devices"
-msgstr "Žádná připojená zařízení"
-
-#: indicator.js:59
-msgid "Device"
-msgstr "Zařízení"
-
-#: indicator.js:74
+#: indicator.js:36
 msgid "Settings"
 msgstr "Nastavení"
 
-#: settingsWidget.js:60
+#: settingsWidget.js:66
 msgid "Indicator Settings"
 msgstr "Nastavení indikátoru"
 
-#: settingsWidget.js:71
+#: settingsWidget.js:77
 msgid "Refresh interval (minutes)"
 msgstr "Interval obnovování (minuty)"
 
-#: settingsWidget.js:79
+#: settingsWidget.js:85
 msgid "Hide indicator if there are no devices"
 msgstr "Skrýt indikátor, pokud nejsou k dispozici žádná zařízení"
 
-#: settingsWidget.js:132
+#: settingsWidget.js:138
 msgid "Name"
 msgstr "Jméno"
 
-#: settingsWidget.js:133
+#: settingsWidget.js:139
 msgid "Status"
 msgstr "Status"
 
-#: settingsWidget.js:134
+#: settingsWidget.js:140
 msgid "Icon"
 msgstr "Ikona"
 
-#: settingsWidget.js:154
+#: settingsWidget.js:141
+msgid "Port"
+msgstr "Port"
+
+#: settingsWidget.js:142
+msgid "% Source"
+msgstr "% Zdroj"
+
+#: settingsWidget.js:162
 msgid "Devices"
 msgstr "Zařízení"
 
-#: settingsWidget.js:197
+#: settingsWidget.js:207 settingsWidget.js:241
 msgid "Default"
 msgstr "Výchozí"
 
-#: settingsWidget.js:198
+#: settingsWidget.js:208
 msgid "Headphones"
 msgstr "Sluchátka"
 
-#: settingsWidget.js:199
+#: settingsWidget.js:209
 msgid "Mouse"
 msgstr "Myš"
 
-#: settingsWidget.js:200
+#: settingsWidget.js:210
 msgid "Keyboard"
 msgstr "Klávesnice"
 
-#: settingsWidget.js:201
+#: settingsWidget.js:211
 msgid "Headset"
 msgstr "Sluchátka"
 
-#: settingsWidget.js:202
+#: settingsWidget.js:212
 msgid "Game Controller"
 msgstr "Herní ovladač"
 
-#: settingsWidget.js:203
-msgid "Speaker"
-msgstr "Reproduktor"
-
-#: settingsWidget.js:204
+#: settingsWidget.js:213
 msgid "Battery"
 msgstr "Baterie"
 
-#~ msgid "Force refresh bluetooth"
-#~ msgstr "Vynutit obnovení bluetooth"
+#: settingsWidget.js:288
+msgid "Python script"
+msgstr "Python skript"
 
-#~ msgid "Port"
-#~ msgstr "Port"
+#: settingsWidget.js:289
+msgid "Bluetoothctl"
+msgstr "Bluetoothctl"
 
-#~ msgid "% Source"
-#~ msgstr "% Zdroj"
-
-#~ msgid "Python script"
-#~ msgstr "Python skript"
-
-#~ msgid "Bluetoothctl"
-#~ msgstr "Bluetoothctl"
-
-#~ msgid "UPower"
-#~ msgstr "UPower "
+#: settingsWidget.js:290
+msgid "UPower"
+msgstr "UPower "

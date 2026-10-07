@@ -17,10 +17,14 @@ export const IndicatorController = GObject.registerClass(
             this._icons = [];
             this._prevDevicesSettings = null;
 
+            this._devicesSection = new PopupMenu.PopupMenuSection();
+            this.menu.addMenuItem(this._devicesSection);
+            this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
             this._addSettingsButton();
         }
 
-        refresh(devices) {
+        refresh(devices, menuDevices = devices) {
             const devicesSettings = devices.map(({mac, icon}) => ({mac, icon}));
 
             if (JSON.stringify(devicesSettings) !== JSON.stringify(this._prevDevicesSettings)) {
@@ -33,6 +37,38 @@ export const IndicatorController = GObject.registerClass(
             });
 
             this._prevDevicesSettings = devicesSettings;
+
+            this._updateMenuDevices(menuDevices);
+        }
+
+        _updateMenuDevices(devices) {
+            this._devicesSection.removeAll();
+
+            const devicesWithBattery = devices.filter((device) => device.isConnected && device.batteryPercentage);
+
+            if (!devicesWithBattery.length) {
+                const item = new PopupMenu.PopupMenuItem(_('No connected devices'), {
+                    reactive: false,
+                    can_focus: false,
+                });
+                this._devicesSection.addMenuItem(item);
+                return;
+            }
+
+            devicesWithBattery.forEach((device) => {
+                const name = device.name || _('Device');
+                const text = `${name}: ${device.batteryPercentage}`;
+                const item = new PopupMenu.PopupMenuItem(text, {
+                    reactive: false,
+                    can_focus: false,
+                });
+                const icon = new St.Icon({
+                    icon_name: device.icon || device.defaultIcon || 'battery-full-symbolic',
+                    style_class: 'popup-menu-icon',
+                });
+                item.insert_child_at_index(icon, 0);
+                this._devicesSection.addMenuItem(item);
+            });
         }
 
         _addMenuItem(item) {

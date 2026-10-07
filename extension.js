@@ -44,7 +44,7 @@ export default class BluetoothBatteryIndicatorExtension extends Extension {
         const devices = this._mergeDevices(settingsDevices, uPowerDevices);
         const devicesToShow = devices.filter((device) => device.isConnected && device.isActive);
 
-        this._indicator.refresh(devicesToShow);
+        this._indicator.refresh(devicesToShow, devices);
 
         this._settings.setDevices(devices);
 

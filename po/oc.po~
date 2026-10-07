@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-07 08:56+0200\n"
+"POT-Creation-Date: 2023-01-12 19:49+0100\n"
 "PO-Revision-Date: 2024-08-28 15:24+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: \n"
@@ -18,100 +18,94 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.3\n"
 
-#: extension.js:31
+#: extension.js:55
 msgid "Refresh"
 msgstr "Refrescar"
 
-#: indicator.js:14
+#: extension.js:63
+msgid "Force refresh bluetooth"
+msgstr "Forçar l’actualizacion bluetooth"
+
+#: indicator.js:11
 msgid "Bluetooth battery Indicator"
 msgstr "Indicator de batariá bluetooth"
 
-#: indicator.js:50
-msgid "No connected devices"
-msgstr "Cap de periferic connectat"
-
-#: indicator.js:59
-msgid "Device"
-msgstr "Periferic"
-
-#: indicator.js:74
+#: indicator.js:36
 msgid "Settings"
 msgstr "Paramètres"
 
-#: settingsWidget.js:60
+#: settingsWidget.js:66
 msgid "Indicator Settings"
 msgstr "Paramètres de l'indicator"
 
-#: settingsWidget.js:71
+#: settingsWidget.js:77
 msgid "Refresh interval (minutes)"
 msgstr "Interval d’actualizacion (en minutas)"
 
-#: settingsWidget.js:79
+#: settingsWidget.js:85
 msgid "Hide indicator if there are no devices"
 msgstr "Rescondre l’indicator s’i a pas de periferic"
 
-#: settingsWidget.js:132
+#: settingsWidget.js:138
 msgid "Name"
 msgstr "Nom"
 
-#: settingsWidget.js:133
+#: settingsWidget.js:139
 msgid "Status"
 msgstr "Estat"
 
-#: settingsWidget.js:134
+#: settingsWidget.js:140
 msgid "Icon"
 msgstr "Icòna"
 
-#: settingsWidget.js:154
+#: settingsWidget.js:141
+msgid "Port"
+msgstr "Pòrt"
+
+#: settingsWidget.js:142
+msgid "% Source"
+msgstr "Font %"
+
+#: settingsWidget.js:162
 msgid "Devices"
 msgstr "Periferics"
 
-#: settingsWidget.js:197
+#: settingsWidget.js:207 settingsWidget.js:241
 msgid "Default"
 msgstr "Per defaut"
 
-#: settingsWidget.js:198
+#: settingsWidget.js:208
 msgid "Headphones"
 msgstr "Escotadors"
 
-#: settingsWidget.js:199
+#: settingsWidget.js:209
 msgid "Mouse"
 msgstr "Mirga"
 
-#: settingsWidget.js:200
+#: settingsWidget.js:210
 msgid "Keyboard"
 msgstr "Clavièr"
 
-#: settingsWidget.js:201
+#: settingsWidget.js:211
 msgid "Headset"
 msgstr "Microcasc"
 
-#: settingsWidget.js:202
+#: settingsWidget.js:212
 msgid "Game Controller"
 msgstr "Maneta"
 
-#: settingsWidget.js:203
-msgid "Speaker"
-msgstr "Nautparlaire"
-
-#: settingsWidget.js:204
+#: settingsWidget.js:213
 msgid "Battery"
 msgstr "Batariá"
 
-#~ msgid "Force refresh bluetooth"
-#~ msgstr "Forçar l’actualizacion bluetooth"
+#: settingsWidget.js:288
+msgid "Python script"
+msgstr "Script Python"
 
-#~ msgid "Port"
-#~ msgstr "Pòrt"
+#: settingsWidget.js:289
+msgid "Bluetoothctl"
+msgstr "Bluetoothctl"
 
-#~ msgid "% Source"
-#~ msgstr "Font %"
-
-#~ msgid "Python script"
-#~ msgstr "Script Python"
-
-#~ msgid "Bluetoothctl"
-#~ msgstr "Bluetoothctl"
-
-#~ msgid "UPower"
-#~ msgstr "UPower"
+#: settingsWidget.js:290
+msgid "UPower"
+msgstr "UPower"

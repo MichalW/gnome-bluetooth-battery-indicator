@@ -25,3 +25,10 @@ cp -R gnome-bluetooth-battery-indicator ~/.local/share/gnome-shell/extensions/bl
 ## Troubleshoot
 
 Show debug log of this plugin: `journalctl -f -o cat /usr/bin/gnome-shell`
+
+## Testing
+
+Run nested GNOME Shell on Wayland:
+```sh
+dbus-run-session gnome-shell --devkit --wayland
+```
