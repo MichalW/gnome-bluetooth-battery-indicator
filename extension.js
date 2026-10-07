@@ -49,7 +49,7 @@ export default class BluetoothBatteryIndicatorExtension extends Extension {
         this._settings.setDevices(devices);
 
         if (settingsHideIndicator) {
-            Main.panel.statusArea[this.uuid].visible = !!devices.length;
+            Main.panel.statusArea[this.uuid].visible = !!devicesToShow.length;
         }
     }
 

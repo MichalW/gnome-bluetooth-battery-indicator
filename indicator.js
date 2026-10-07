@@ -15,7 +15,7 @@ export const IndicatorController = GObject.registerClass(
             this._container = new St.BoxLayout();
             this._labels = [];
             this._icons = [];
-            this._prevDevicesSettings = [];
+            this._prevDevicesSettings = null;
 
             this._addSettingsButton();
         }
